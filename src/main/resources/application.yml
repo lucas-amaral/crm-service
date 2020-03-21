@@ -1,1 +1,26 @@
+spring:
 
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  datasource:
+    url: jdbc:postgresql://ec2-52-207-93-32.compute-1.amazonaws.com:5432/ddv8lp8hi1cdgt
+    username: jvwftvrsapqljl
+    password: d25bfc8b89c4ccf7759940e8f5370d32b78820fe7dfb590d9a05948ac5abd845
+    driverClassName: org.postgresql.Driver
+    test-on-borrow: true
+    test-while-idle: true
+    validation-query: SELECT 1
+    validation-interval: 30000
+
+services:
+
+  internal:
+    user: internal
+    pass: tinr3kahcuth3gie8bohc4yiXhedcfgx
+
+  url:
+    notification: notification.com
+    match: match.com
