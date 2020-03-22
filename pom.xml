@@ -32,14 +32,6 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
-		<!-- Testing -->
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- Spring dependencies -->
 
 		<dependency>
@@ -58,7 +50,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -75,6 +66,14 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Hibernate-->
+		<dependency>
+			<groupId>com.vladmihalcea</groupId>
+			<artifactId>hibernate-types-52</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<profiles>
@@ -88,7 +87,7 @@
 						<version>5.2.4</version>
 						<configuration>
 							<url>jdbc:postgresql://localhost:5432/crm</url>
-							<user>user</user>
+							<user>postgres</user>
 							<password>internal123</password>
 							<driver>org.postgresql.Driver</driver>
 						</configuration>
@@ -111,7 +110,7 @@
 				<version>5.2.4</version>
 				<configuration>
 					<url>jdbc:postgresql://127.0.0.1:5432/crm</url>
-					<user>user</user>
+					<user>postgres</user>
 					<password>internal123</password>
 					<driver>org.postgresql.Driver</driver>
 				</configuration>
