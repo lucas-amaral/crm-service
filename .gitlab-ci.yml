@@ -18,6 +18,11 @@ test:
     - mvn -q package
   services:
     - postgres
+  variables:
+      POSTGRES_DB: crm
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: internal123
+
   cache:
     paths:
       - .m2/

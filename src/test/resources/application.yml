@@ -6,6 +6,6 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/crm
-    username: crm
+    username: postgres
     password: internal123
     driverClassName: org.postgresql.Driver
