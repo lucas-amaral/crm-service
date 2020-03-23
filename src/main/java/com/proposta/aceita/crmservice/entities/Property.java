@@ -24,7 +24,7 @@ public class Property {
     private PropertyType type;
     private BigDecimal area;
     private Integer registration;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
     private Integer iptu;
     private Integer dorms;
@@ -34,6 +34,8 @@ public class Property {
     private Boolean balcony;
     private Boolean elevator;
     private Boolean barbecueGrill;
+    @OneToMany(mappedBy="property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Garage> garages;
     @Type(type = "list-array")
     @Column(columnDefinition = "STRING ARRAY")
     private List<String> images;
@@ -185,3 +187,46 @@ public class Property {
         this.createdAt = createdAt;
     }
 }
+
+@Entity(name = "garages")
+class Garage {
+    @Id
+    private Integer id;
+    @ManyToOne
+    private Property property;
+    private Integer box;
+    private String registration;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Property getProperty() {
+        return property;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
+    }
+
+    public Integer getBox() {
+        return box;
+    }
+
+    public void setBox(Integer box) {
+        this.box = box;
+    }
+
+    public String getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(String registration) {
+        this.registration = registration;
+    }
+}
+

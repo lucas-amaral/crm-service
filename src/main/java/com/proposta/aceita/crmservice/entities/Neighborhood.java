@@ -14,6 +14,16 @@ public class Neighborhood {
     @OneToOne
     private City city;
 
+    public static Neighborhood create(Integer id, String name, City city) {
+        Neighborhood neighborhood = new Neighborhood();
+
+        neighborhood.setId(id);
+        neighborhood.setName(name);
+        neighborhood.setCity(city);
+
+        return neighborhood;
+    }
+
     public Integer getId() {
         return id;
     }

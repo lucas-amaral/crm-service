@@ -14,6 +14,16 @@ public class City {
     @Enumerated(EnumType.STRING)
     private State state;
 
+    public static City create(Integer id, String name, State state) {
+        City city = new City();
+
+        city.setId(id);
+        city.setName(name);
+        city.setState(state);
+
+        return city;
+    }
+
     public Integer getId() {
         return id;
     }

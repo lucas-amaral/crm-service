@@ -16,6 +16,16 @@ public class Street {
     @OneToOne
     private Neighborhood neighborhood;
 
+    public static Street create(String zipCode, String name, Neighborhood neighborhood) {
+        Street street = new Street();
+
+        street.setZipCode(zipCode);
+        street.setName(name);
+        street.setNeighborhood(neighborhood);
+
+        return street;
+    }
+
     public String getZipCode() {
         return zipCode;
     }

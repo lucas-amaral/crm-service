@@ -93,10 +93,10 @@ CREATE TABLE interests (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'UTC')
 );
 
-CREATE TABLE interests_neighborhoods (
-    interests_id INTEGER REFERENCES interests(id),
-    neighborhoods_id INTEGER REFERENCES neighborhoods(id),
-    PRIMARY KEY (interests_id, neighborhoods_id)
+CREATE TABLE interest_neighborhoods (
+    interest_id INTEGER REFERENCES interests(id),
+    neighborhood_id INTEGER REFERENCES neighborhoods(id),
+    PRIMARY KEY (interest_id, neighborhood_id)
 );
 
 CREATE TABLE barters (

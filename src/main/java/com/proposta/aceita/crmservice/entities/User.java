@@ -22,7 +22,7 @@ public class User {
     private String cpfCnpj;
     @Enumerated(EnumType.STRING)
     private Sex sex;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     @CreationTimestamp
     private OffsetDateTime createdAt;
