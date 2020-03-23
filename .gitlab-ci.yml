@@ -7,18 +7,18 @@ stages:
 
 test:
   stage: test
-  image: maven:3.6.2-jdk-11
+  image: postgres
   script:
-    - mvn -q clean
-    - mvn -q package
-  services:
-    - postgres
-  cache:
-    paths:
-      - .m2/
+    - export PGPASSWORD=$POSTGRES_PASSWORD
+    - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+#    - mvn -q clean
+#    - mvn -q package
+#  cache:
+#    paths:
+#      - .m2/
   artifacts:
     paths:
-      - target/reseller-api-gateway-service-1.0.0-SNAPSHOT.jar
+      - target/crm-service-1.0.0-SNAPSHOT.jar
 
 deploy:
   stage: deploy
