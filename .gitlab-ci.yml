@@ -13,10 +13,9 @@ test:
     - mvn -q package
   services:
     - postgres
-    container_name: postgres-stubb
   variables:
     POSTGRES_DB: crm
-    POSTGRES_HOST: postgres-stubb
+    POSTGRES_HOST: postgres
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: internal123
   cache:
