@@ -8,21 +8,11 @@ stages:
 test:
   stage: test
   image: maven:3.6.2-jdk-11
-  before_script:
-    - apt-get update -qy
-    - sudo apt-get install -y postgresql postgresql-client libpq-dev
-    - sudo -u postgres psql -d 'CREATE USER crm WITH PASSWORD 'internal123' CREATEDB;'
-    - sudo -u postgres psql -d CREATE DATABASE crm OWNER crm;'
   script:
     - mvn -q clean
     - mvn -q package
   services:
     - postgres
-  variables:
-      POSTGRES_DB: crm
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: internal123
-
   cache:
     paths:
       - .m2/
