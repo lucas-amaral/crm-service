@@ -4,10 +4,13 @@ import com.proposta.aceita.crmservice.entities.City;
 import com.proposta.aceita.crmservice.entities.Neighborhood;
 import com.proposta.aceita.crmservice.entities.Street;
 import com.proposta.aceita.crmservice.entities.enums.State;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -22,7 +25,7 @@ public class StreetRepositoryTest {
         final Neighborhood neighborhood = Neighborhood.create(1, "Pé de Plátano", city);
         final Street expected = Street.create("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
-        assertThat(streetRepository.findById("97110-564")).isEqualTo(expected);
+        assertThat(streetRepository.findById("97110-564")).isEqualTo(Optional.of(expected));
     }
 
     @Test
