@@ -14,14 +14,13 @@ public class Neighborhood {
     @OneToOne
     private City city;
 
-    public static Neighborhood create(Integer id, String name, City city) {
-        Neighborhood neighborhood = new Neighborhood();
+    public Neighborhood() {
+    }
 
-        neighborhood.setId(id);
-        neighborhood.setName(name);
-        neighborhood.setCity(city);
-
-        return neighborhood;
+    public Neighborhood(Integer id, String name, City city) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
     }
 
     public Integer getId() {

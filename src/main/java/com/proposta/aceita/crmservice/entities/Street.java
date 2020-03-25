@@ -16,14 +16,13 @@ public class Street {
     @OneToOne
     private Neighborhood neighborhood;
 
-    public static Street create(String zipCode, String name, Neighborhood neighborhood) {
-        Street street = new Street();
+    public Street() {
+    }
 
-        street.setZipCode(zipCode);
-        street.setName(name);
-        street.setNeighborhood(neighborhood);
-
-        return street;
+    public Street(String zipCode, String name, Neighborhood neighborhood) {
+        this.zipCode = zipCode;
+        this.name = name;
+        this.neighborhood = neighborhood;
     }
 
     public String getZipCode() {

@@ -1,6 +1,7 @@
 package com.proposta.aceita.crmservice.entities;
 
 import com.proposta.aceita.crmservice.entities.enums.State;
+import com.proposta.aceita.crmservice.entities.req.CityRequestBody;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,14 +15,17 @@ public class City {
     @Enumerated(EnumType.STRING)
     private State state;
 
-    public static City create(Integer id, String name, State state) {
-        City city = new City();
+    public City() {
+    }
 
-        city.setId(id);
-        city.setName(name);
-        city.setState(state);
+    public City(Integer id, String name, State state) {
+        this.id = id;
+        this.name = name;
+        this.state = state;
+    }
 
-        return city;
+    public static City from(CityRequestBody body) {
+        return new City(body.getId(), body.getName(), body.getState());
     }
 
     public Integer getId() {

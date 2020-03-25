@@ -3,9 +3,11 @@ package com.proposta.aceita.crmservice.services;
 import com.proposta.aceita.crmservice.entities.Street;
 import com.proposta.aceita.crmservice.repositories.StreetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,8 +24,8 @@ public class StreetService {
         return streetRepository.findById(zipCode);
     }
 
-    public List<Street> getList() {
-        return streetRepository.findAll();
+    public Page<Street> getList(Integer page, Integer limit) {
+        return streetRepository.findAll(PageRequest.of(page, limit, Sort.by("zipCode")));
     }
 
     public Street create(Street street) {

@@ -21,18 +21,18 @@ public class StreetRepositoryTest {
 
     @Test
     public void find() {
-        final City city = City.create(1, "Santa Maria", State.RS);
-        final Neighborhood neighborhood = Neighborhood.create(1, "Pé de Plátano", city);
-        final Street expected = Street.create("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
+        final City city = new City(1, "Santa Maria", State.RS);
+        final Neighborhood neighborhood = new Neighborhood(1, "Pé de Plátano", city);
+        final Street expected = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
         assertThat(streetRepository.findById("97110-564")).isEqualTo(Optional.of(expected));
     }
 
     @Test
     public void findAll() {
-        final City city = City.create(1, "Santa Maria", State.RS);
-        final Neighborhood neighborhood = Neighborhood.create(1, "Pé de Plátano", city);
-        final Street expected = Street.create("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
+        final City city = new City(1, "Santa Maria", State.RS);
+        final Neighborhood neighborhood = new Neighborhood(1, "Pé de Plátano", city);
+        final Street expected = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
         assertThat(streetRepository.findAll(PageRequest.of(0, 10))).contains(expected);
     }
