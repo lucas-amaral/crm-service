@@ -22,7 +22,7 @@ public class NeighborhoodService {
         return neighborhoodRepository.findById(id);
     }
 
-    public List<Neighborhood> getList() {
+    public List<Neighborhood> list() {
         return neighborhoodRepository.findAll();
     }
 }

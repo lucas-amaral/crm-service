@@ -1,7 +1,7 @@
 package com.proposta.aceita.crmservice.controllers;
 
-import com.proposta.aceita.crmservice.entities.req.CityRequestBody;
-import com.proposta.aceita.crmservice.services.CityService;
+import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
+import com.proposta.aceita.crmservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -10,43 +10,43 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
-@RequestMapping("/cities")
-public class CityController {
+@RequestMapping("/users")
+public class UserController {
 
-    private final CityService cityService;
+    private final UserService userService;
 
     @Autowired
-    public CityController(CityService cityService) {
-        this.cityService = cityService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Integer id) {
-        return cityService.getById(id)
+        return userService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(NOT_FOUND).build());
     }
 
     @GetMapping
     public ResponseEntity<?> get() {
-        return ResponseEntity.ok(cityService.list());
+        return ResponseEntity.ok(userService.list());
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@Validated @RequestBody CityRequestBody body) {
-        cityService.save(body);
+    public ResponseEntity<?> post(@Validated @RequestBody UserRequestBody body) {
+        userService.save(body);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@Validated @RequestBody CityRequestBody body) {
-        cityService.save(body);
+    public ResponseEntity<?> put(@Validated @RequestBody UserRequestBody body) {
+        userService.save(body);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
-        cityService.delete(id);
+        userService.delete(id);
         return ResponseEntity.ok().build();
     }
 }

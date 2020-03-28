@@ -24,11 +24,11 @@ public class StreetService {
         return streetRepository.findById(zipCode);
     }
 
-    public Page<Street> getList(Integer page, Integer limit) {
+    public Page<Street> list(Integer page, Integer limit) {
         return streetRepository.findAll(PageRequest.of(page, limit, Sort.by("zipCode")));
     }
 
-    public Street create(Street street) {
+    public Street save(Street street) {
         return streetRepository.save(street);
     }
 

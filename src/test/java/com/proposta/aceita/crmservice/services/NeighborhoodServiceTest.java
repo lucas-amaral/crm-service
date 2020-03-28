@@ -32,9 +32,9 @@ public class NeighborhoodServiceTest {
     }
 
     @Test
-    public void getList() {
+    public void list() {
 
-        neighborhoodService.getList();
+        neighborhoodService.list();
 
         verify(neighborhoodRepository).findAll();
     }

@@ -1,6 +1,10 @@
 package com.proposta.aceita.crmservice.entities;
 
+import com.proposta.aceita.crmservice.entities.req.AddressRequestBody;
+
 import javax.persistence.*;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity(name = "addresses")
 public class Address {
@@ -11,6 +15,20 @@ public class Address {
     @Column(length = 10, nullable = false)
     private String number;
     private String complement;
+
+    public Address() {
+    }
+
+    public Address(Integer id, Street street, String number, String complement) {
+        this.id = id;
+        this.street = street;
+        this.number = number;
+        this.complement = complement;
+    }
+
+    public static Address from(AddressRequestBody body, Street street) {
+        return new Address(body.getId(), street, body.getNumber(), body.getComplement());
+    }
 
     public Integer getId() {
         return id;
@@ -42,5 +60,31 @@ public class Address {
 
     public void setComplement(String complement) {
         this.complement = complement;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(id, address.id) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(number, address.number) &&
+                Objects.equals(complement, address.complement);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, street, number, complement);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Address.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("street=" + street)
+                .add("number='" + number + "'")
+                .add("complement='" + complement + "'")
+                .toString();
     }
 }

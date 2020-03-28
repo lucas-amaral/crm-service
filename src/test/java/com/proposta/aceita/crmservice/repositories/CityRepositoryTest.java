@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,9 +21,7 @@ public class CityRepositoryTest {
     public void update() {
         final City city = new City(2, "Caxias do Sul", State.RS);
 
-        assertThat(cityRepository.update(city.getId(), city.getName(), city.getState())).isEqualTo(1);
-
-        assertThat(cityRepository.findById(city.getId())).isPresent().isEqualTo(Optional.of(city));
+        assertThat(cityRepository.save(city)).isEqualTo(city);
     }
 
 }

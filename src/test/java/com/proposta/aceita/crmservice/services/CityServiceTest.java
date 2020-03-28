@@ -35,32 +35,22 @@ public class CityServiceTest {
     }
 
     @Test
-    public void getList() {
+    public void list() {
 
-        cityService.getList();
+        cityService.list();
 
         verify(cityRepository).findAll();
     }
 
     @Test
-    public void create() {
+    public void save() {
 
         final CityRequestBody body = new CityRequestBody(null, "Caxias do Sul", State.RS);
         final City city = new City(null, "Caxias do Sul", State.RS);
 
-        cityService.create(body);
+        cityService.save(body);
 
         verify(cityRepository).save(city);
-    }
-
-    @Test
-    public void update() {
-
-        final CityRequestBody body = new CityRequestBody(null, "Caxias do Sul", State.RS);
-
-        cityService.update(body);
-
-        verify(cityRepository).update(body.getId(), body.getName(), body.getState());
     }
 
     @Test

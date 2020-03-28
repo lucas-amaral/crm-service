@@ -23,16 +23,12 @@ public class CityService {
         return cityRepository.findById(id);
     }
 
-    public List<City> getList() {
+    public List<City> list() {
         return cityRepository.findAll();
     }
 
-    public void create(CityRequestBody body) {
+    public void save(CityRequestBody body) {
         cityRepository.save(City.from(body));
-    }
-
-    public void update(CityRequestBody body) {
-        cityRepository.update(body.getId(), body.getName(), body.getState());
     }
 
     public void delete(Integer id) {

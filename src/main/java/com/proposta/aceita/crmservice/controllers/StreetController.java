@@ -27,6 +27,6 @@ public class StreetController {
 
     @GetMapping
     public ResponseEntity<?> get(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit) {
-        return ResponseEntity.ok(streetService.getList(page, limit));
+        return ResponseEntity.ok(streetService.list(page, limit));
     }
 }

@@ -30,6 +30,6 @@ public class NeighborhoodController {
 
     @GetMapping
     public ResponseEntity<?> get() {
-        return ResponseEntity.ok(neighborhoodService.getList());
+        return ResponseEntity.ok(neighborhoodService.list());
     }
 }

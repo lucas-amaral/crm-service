@@ -38,9 +38,9 @@ public class StreetServiceTest {
     }
 
     @Test
-    public void getList() {
+    public void list() {
 
-        streetService.getList(0, 10);
+        streetService.list(0, 10);
 
         verify(streetRepository).findAll(PageRequest.of(0, 10, Sort.by("zipCode")));
     }
@@ -52,7 +52,7 @@ public class StreetServiceTest {
         final Neighborhood neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         final Street street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
-        streetService.create(street);
+        streetService.save(street);
 
         verify(streetRepository).save(street);
     }

@@ -2,11 +2,14 @@ package com.proposta.aceita.crmservice.entities;
 
 import com.proposta.aceita.crmservice.entities.enums.Sex;
 import com.proposta.aceita.crmservice.entities.enums.UserType;
+import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity(name = "users")
 public class User {
@@ -26,6 +29,26 @@ public class User {
     private Address address;
     @CreationTimestamp
     private OffsetDateTime createdAt;
+
+    public User() {
+    }
+
+    public User(Integer id, String name, LocalDate dateOfBirth, String email, UserType type, String cpfCnpj, Sex sex, Address address, OffsetDateTime createdAt) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.type = type;
+        this.cpfCnpj = cpfCnpj;
+        this.sex = sex;
+        this.address = address;
+        this.createdAt = createdAt;
+    }
+
+    public static User from(UserRequestBody body, Address address) {
+        return new User(body.getId(), body.getName(), body.getDateOfBirth(), body.getEmail(), body.getType(),
+                body.getCpfCnpj(), body.getSex(), address, null);
+    }
 
     public Integer getId() {
         return id;
@@ -97,5 +120,41 @@ public class User {
 
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(dateOfBirth, user.dateOfBirth) &&
+                Objects.equals(email, user.email) &&
+                type == user.type &&
+                Objects.equals(cpfCnpj, user.cpfCnpj) &&
+                sex == user.sex &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(createdAt, user.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, dateOfBirth, email, type, cpfCnpj, sex, address, createdAt);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("dateOfBirth=" + dateOfBirth)
+                .add("email='" + email + "'")
+                .add("type=" + type)
+                .add("cpfCnpj='" + cpfCnpj + "'")
+                .add("sex=" + sex)
+                .add("address=" + address)
+                .add("createdAt=" + createdAt)
+                .toString();
     }
 }
