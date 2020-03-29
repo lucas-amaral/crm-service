@@ -30,9 +30,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void save(UserRequestBody body) {
+    public Optional<User> save(UserRequestBody body) {
         final Address address = addressService.save(body.getAddress()).orElse(null);
-        userRepository.save(User.from(body, address));
+        return Optional.of(userRepository.save(User.from(body, address)));
     }
 
     public void delete(Integer id) {

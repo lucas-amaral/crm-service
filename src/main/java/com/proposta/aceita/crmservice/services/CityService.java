@@ -1,6 +1,7 @@
 package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.City;
+import com.proposta.aceita.crmservice.entities.enums.State;
 import com.proposta.aceita.crmservice.entities.req.CityRequestBody;
 import com.proposta.aceita.crmservice.repositories.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,12 @@ public class CityService {
         return cityRepository.findById(id);
     }
 
-    public List<City> list() {
-        return cityRepository.findAll();
+    public List<City> getByState(State state) {
+        return cityRepository.findByState(state);
     }
 
-    public void save(CityRequestBody body) {
-        cityRepository.save(City.from(body));
+    public Optional<City> save(CityRequestBody body) {
+        return Optional.of(cityRepository.save(City.from(body)));
     }
 
     public void delete(Integer id) {

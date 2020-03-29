@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class CityServiceTest {
@@ -35,11 +36,11 @@ public class CityServiceTest {
     }
 
     @Test
-    public void list() {
+    public void getByState() {
 
-        cityService.list();
+        cityService.getByState(State.SC);
 
-        verify(cityRepository).findAll();
+        verify(cityRepository).findByState(State.SC);
     }
 
     @Test
@@ -47,6 +48,8 @@ public class CityServiceTest {
 
         final CityRequestBody body = new CityRequestBody(null, "Caxias do Sul", State.RS);
         final City city = new City(null, "Caxias do Sul", State.RS);
+
+        when(cityRepository.save(city)).thenReturn(city);
 
         cityService.save(body);
 

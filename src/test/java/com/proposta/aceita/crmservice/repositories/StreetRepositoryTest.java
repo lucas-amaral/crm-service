@@ -37,4 +37,13 @@ public class StreetRepositoryTest {
         assertThat(streetRepository.findAll(PageRequest.of(0, 10))).contains(expected);
     }
 
+    @Test
+    public void findAllByNeighborhoodId() {
+        final City city = new City(1, "Santa Maria", State.RS);
+        final Neighborhood neighborhood = new Neighborhood(1, "Pé de Plátano", city);
+        final Street street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
+
+        assertThat(streetRepository.findAllByNeighborhoodId(1, PageRequest.of(0, 100))).contains(street);
+    }
+
 }

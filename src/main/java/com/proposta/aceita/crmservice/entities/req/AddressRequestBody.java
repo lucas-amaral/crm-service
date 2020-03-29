@@ -3,13 +3,18 @@ package com.proposta.aceita.crmservice.entities.req;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressRequestBody {
     private Integer id;
+    @Pattern(regexp = "\\d{5}-\\d{3}")
     private String streetId;
+    @NotEmpty
     private String number;
     private String complement;
 

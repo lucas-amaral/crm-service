@@ -3,11 +3,10 @@ package com.proposta.aceita.crmservice.controllers;
 import com.proposta.aceita.crmservice.entities.req.AddressRequestBody;
 import com.proposta.aceita.crmservice.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequestMapping("/addresses")
@@ -24,7 +23,7 @@ public class AddressController {
     public ResponseEntity<?> get(@PathVariable Integer id) {
         return addressService.getById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(NOT_FOUND).build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
@@ -34,19 +33,21 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<?> post(@Validated @RequestBody AddressRequestBody body) {
-        addressService.save(body);
-        return ResponseEntity.ok().build();
+        return addressService.save(body)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @PutMapping
     public ResponseEntity<?> put(@Validated @RequestBody AddressRequestBody body) {
-        addressService.save(body);
-        return ResponseEntity.ok().build();
+        return addressService.save(body)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         addressService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

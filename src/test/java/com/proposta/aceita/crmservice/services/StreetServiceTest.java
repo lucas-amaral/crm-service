@@ -40,9 +40,9 @@ public class StreetServiceTest {
     @Test
     public void list() {
 
-        streetService.list(0, 10);
+        streetService.list(1, 0, 10);
 
-        verify(streetRepository).findAll(PageRequest.of(0, 10, Sort.by("zipCode")));
+        verify(streetRepository).findAllByNeighborhoodId(1, PageRequest.of(0, 10, Sort.by("zipCode")));
     }
 
     @Test

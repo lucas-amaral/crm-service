@@ -24,8 +24,8 @@ public class StreetService {
         return streetRepository.findById(zipCode);
     }
 
-    public Page<Street> list(Integer page, Integer limit) {
-        return streetRepository.findAll(PageRequest.of(page, limit, Sort.by("zipCode")));
+    public Page<Street> list(Integer neighborhoodId, Integer page, Integer limit) {
+        return streetRepository.findAllByNeighborhoodId(neighborhoodId, PageRequest.of(page, limit, Sort.by("zipCode")));
     }
 
     public Street save(Street street) {

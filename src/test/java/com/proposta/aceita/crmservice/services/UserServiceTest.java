@@ -64,6 +64,7 @@ public class UserServiceTest {
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, address, null);
 
         when(addressService.save(addressBody)).thenReturn(Optional.of(address));
+        when(userRepository.save(user)).thenReturn(user);
 
         userService.save(body);
 
@@ -79,6 +80,7 @@ public class UserServiceTest {
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, null, null);
 
         when(addressService.save(body.getAddress())).thenReturn(Optional.empty());
+        when(userRepository.save(user)).thenReturn(user);
 
         userService.save(body);
 

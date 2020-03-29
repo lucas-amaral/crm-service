@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
 @RequestMapping("/users")
@@ -24,7 +24,7 @@ public class UserController {
     public ResponseEntity<?> get(@PathVariable Integer id) {
         return userService.getById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(NOT_FOUND).build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
@@ -34,19 +34,21 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> post(@Validated @RequestBody UserRequestBody body) {
-        userService.save(body);
-        return ResponseEntity.ok().build();
+        return userService.save(body)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
 
     @PutMapping
     public ResponseEntity<?> put(@Validated @RequestBody UserRequestBody body) {
-        userService.save(body);
-        return ResponseEntity.ok().build();
+        return userService.save(body)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         userService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

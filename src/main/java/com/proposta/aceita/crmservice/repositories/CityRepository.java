@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface CityRepository extends JpaRepository<City, Integer> {
 
@@ -15,4 +16,6 @@ public interface CityRepository extends JpaRepository<City, Integer> {
     @Modifying
     @Query("UPDATE cities c SET c.name = :name, c.state = :state WHERE c.id = :id")
     int update(@Param("id") Integer id, @Param("name") String name, @Param("state") State state);
+
+    List<City> findByState(State state);
 }

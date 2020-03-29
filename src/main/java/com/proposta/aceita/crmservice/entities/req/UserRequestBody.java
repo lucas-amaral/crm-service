@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proposta.aceita.crmservice.entities.enums.Sex;
 import com.proposta.aceita.crmservice.entities.enums.UserType;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ public class UserRequestBody {
     private final String name;
     private final LocalDate dateOfBirth;
     @NotBlank
+    @Email
     private final String email;
     @NotNull
     private final UserType type;

@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 @RestController
 @RequestMapping("/streets")
 public class StreetController {
@@ -22,11 +20,13 @@ public class StreetController {
     public ResponseEntity<?> get(@PathVariable String zipCode) {
         return streetService.getByZipCode(zipCode)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(NOT_FOUND).build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public ResponseEntity<?> get(@RequestParam("page") Integer page, @RequestParam("limit") Integer limit) {
-        return ResponseEntity.ok(streetService.list(page, limit));
+    public ResponseEntity<?> get(@RequestParam("neighborhoodId") Integer neighborhoodId,
+                                 @RequestParam("page") Integer page,
+                                 @RequestParam("limit") Integer limit) {
+        return ResponseEntity.ok(streetService.list(neighborhoodId, page, limit));
     }
 }

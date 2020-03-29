@@ -9,6 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 import static com.proposta.aceita.crmservice.entities.enums.Sex.MALE;
 import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
@@ -19,6 +20,9 @@ public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
@@ -38,7 +42,7 @@ public class UserRepositoryTest {
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23','joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
+            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
     })
     public void update() {
         final City city = new City(1, "Santa Maria", State.RS);
@@ -55,7 +59,7 @@ public class UserRepositoryTest {
     @Sql(scripts = "classpath:clearTables.sql", statements = {
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (2, '97015-440', '47', 'Apartamento 450')",
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23','joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
+            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
     })
     public void updateIfAddressChange() {
         final City city = new City(1, "Santa Maria", State.RS);
@@ -70,13 +74,26 @@ public class UserRepositoryTest {
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23','joao@joao.com', 'FISICAL', '45230929-04', 'MALE', null, '2020-01-20T10:30:00-3:00')"
+            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', null, '2020-01-20T10:30:00-3:00')"
     })
     public void updateWithoutAddress() {
         final User user = new User(1, "João", LocalDate.of(1979, 3, 24),
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, null, OffsetDateTime.parse("2020-01-20T10:30:00Z"));
 
         assertThat(userRepository.save(user)).isEqualTo(user);
+    }
+
+    @Test
+    @Sql(scripts = "classpath:clearTables.sql", statements = {
+            "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
+            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
+    })
+    public void delete() {
+        assertThat(addressRepository.findById(1)).isNotEmpty();
+
+        userRepository.deleteById(1);
+
+        assertThat(addressRepository.findById(1)).isEmpty();
     }
 
 }
