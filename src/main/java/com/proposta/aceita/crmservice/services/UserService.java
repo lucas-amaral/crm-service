@@ -6,6 +6,7 @@ import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
 import com.proposta.aceita.crmservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     public Optional<User> save(UserRequestBody body) {
         final Address address = addressService.save(body.getAddress()).orElse(null);
         return Optional.of(userRepository.save(User.from(body, address)));

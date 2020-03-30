@@ -5,6 +5,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity(name = "sales")
 public class Sale {
@@ -99,5 +101,43 @@ public class Sale {
 
     public void setAgencying(LocalDate agencying) {
         this.agencying = agencying;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sale sale = (Sale) o;
+        return Objects.equals(id, sale.id) &&
+                Objects.equals(property, sale.property) &&
+                Objects.equals(value, sale.value) &&
+                Objects.equals(financing, sale.financing) &&
+                Objects.equals(financingValue, sale.financingValue) &&
+                Objects.equals(barterVehicle, sale.barterVehicle) &&
+                Objects.equals(barterVehicleValue, sale.barterVehicleValue) &&
+                Objects.equals(barterProperty, sale.barterProperty) &&
+                Objects.equals(barterPropertyValue, sale.barterPropertyValue) &&
+                Objects.equals(agencying, sale.agencying);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, property, value, financing, financingValue, barterVehicle, barterVehicleValue, barterProperty, barterPropertyValue, agencying);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Sale.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("property=" + property)
+                .add("value=" + value)
+                .add("financing=" + financing)
+                .add("financingValue=" + financingValue)
+                .add("barterVehicle=" + barterVehicle)
+                .add("barterVehicleValue=" + barterVehicleValue)
+                .add("barterProperty=" + barterProperty)
+                .add("barterPropertyValue=" + barterPropertyValue)
+                .add("agencying=" + agencying)
+                .toString();
     }
 }

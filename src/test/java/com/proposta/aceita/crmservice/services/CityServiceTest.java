@@ -28,7 +28,7 @@ public class CityServiceTest {
     @Test
     public void getById() {
 
-        final Integer id = 23;
+        var id = 23;
 
         cityService.getById(id);
 
@@ -46,8 +46,8 @@ public class CityServiceTest {
     @Test
     public void save() {
 
-        final CityRequestBody body = new CityRequestBody(null, "Caxias do Sul", State.RS);
-        final City city = new City(null, "Caxias do Sul", State.RS);
+        var body = new CityRequestBody(null, "Caxias do Sul", State.RS);
+        var city = new City(null, "Caxias do Sul", State.RS);
 
         when(cityRepository.save(city)).thenReturn(city);
 
@@ -59,7 +59,7 @@ public class CityServiceTest {
     @Test
     public void delete() {
 
-        final Integer id = 23;
+        var id = 23;
 
         cityService.delete(id);
 

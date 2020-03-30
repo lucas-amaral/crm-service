@@ -2,7 +2,7 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Address;
 import com.proposta.aceita.crmservice.entities.Street;
-import com.proposta.aceita.crmservice.entities.req.AddressRequestBody;
+import com.proposta.aceita.crmservice.entities.req.AddAddressRequestBody;
 import com.proposta.aceita.crmservice.repositories.AddressRepository;
 import com.proposta.aceita.crmservice.repositories.StreetRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ public class AddressServiceTest {
     @Test
     public void getById() {
 
-        final Integer id = 23;
+        var id = 23;
 
         addressService.getById(id);
 
@@ -51,9 +51,9 @@ public class AddressServiceTest {
     @Test
     public void save() {
 
-        final Street street = new Street("95020-320", "Centro", null);
-        final AddressRequestBody body = new AddressRequestBody(null, "95020-320", "212", "Não consegue moisés");
-        final Address address = new Address(null, street, "212", "Não consegue moisés");
+        var street = new Street("95020-320", "Centro", null);
+        var body = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
+        var address = new Address(null, street, "212", "Não consegue moisés");
 
         when(streetRepository.findById("95020-320")).thenReturn(Optional.of(street));
 
@@ -65,7 +65,7 @@ public class AddressServiceTest {
     @Test
     public void saveWithInvalidStreetZipCode() {
 
-        final AddressRequestBody body = new AddressRequestBody(null, "95020-320", "212", "Não consegue moisés");
+        var body = new AddAddressRequestBody( "95020-320", "212", "Não consegue moisés");
 
         when(streetRepository.findById("95020-320")).thenReturn(Optional.empty());
 
@@ -77,7 +77,7 @@ public class AddressServiceTest {
     @Test
     public void delete() {
 
-        final Integer id = 23;
+        var id = 23;
 
         addressService.delete(id);
 

@@ -1,8 +1,8 @@
 package com.proposta.aceita.crmservice.controllers;
 
-import com.proposta.aceita.crmservice.entities.req.AddUserRequestBody;
-import com.proposta.aceita.crmservice.entities.req.EditUserRequestBody;
-import com.proposta.aceita.crmservice.services.UserService;
+import com.proposta.aceita.crmservice.entities.req.AddPropertyRequestBody;
+import com.proposta.aceita.crmservice.entities.req.EditPropertyRequestBody;
+import com.proposta.aceita.crmservice.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,45 +11,45 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/properties")
+public class PropertyController {
 
-    private final UserService userService;
+    private final PropertyService propertyService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public PropertyController(PropertyService propertyService) {
+        this.propertyService = propertyService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Integer id) {
-        return userService.getById(id)
+        return propertyService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
     public ResponseEntity<?> get() {
-        return ResponseEntity.ok(userService.list());
+        return ResponseEntity.ok(propertyService.list());
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@Validated @RequestBody AddUserRequestBody body) {
-        return userService.save(body)
+    public ResponseEntity<?> post(@Validated @RequestBody AddPropertyRequestBody body) {
+        return propertyService.save(body)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@Validated @RequestBody EditUserRequestBody body) {
-        return userService.save(body)
+    public ResponseEntity<?> put(@Validated @RequestBody EditPropertyRequestBody body) {
+        return propertyService.save(body)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
-        userService.delete(id);
+        propertyService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -2,8 +2,8 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Address;
 import com.proposta.aceita.crmservice.entities.User;
-import com.proposta.aceita.crmservice.entities.req.AddressRequestBody;
-import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
+import com.proposta.aceita.crmservice.entities.req.AddAddressRequestBody;
+import com.proposta.aceita.crmservice.entities.req.AddUserRequestBody;
 import com.proposta.aceita.crmservice.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class UserServiceTest {
     @Test
     public void getById() {
 
-        final Integer id = 23;
+        var id = 23;
 
         userService.getById(id);
 
@@ -55,12 +55,12 @@ public class UserServiceTest {
     @Test
     public void save() {
 
-        final AddressRequestBody addressBody = new AddressRequestBody(null, "95020-320", "212", "Não consegue moisés");
-        final Address address = new Address(null, null, "212", "Não consegue moisés");
+        var addressBody = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
+        var address = new Address(null, null, "212", "Não consegue moisés");
 
-        final UserRequestBody body = new UserRequestBody(null, "João", LocalDate.of(1979, 3, 24),
+        var body = new AddUserRequestBody("João", LocalDate.of(1979, 3, 24),
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, addressBody);
-        final User user = new User(null, "João", LocalDate.of(1979, 3, 24),
+        var user = new User(null, "João", LocalDate.of(1979, 3, 24),
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, address, null);
 
         when(addressService.save(addressBody)).thenReturn(Optional.of(address));
@@ -74,9 +74,9 @@ public class UserServiceTest {
     @Test
     public void saveWithoutAddress() {
 
-        final UserRequestBody body = new UserRequestBody(null, "João", LocalDate.of(1979, 3, 24),
+        var body = new AddUserRequestBody("João", LocalDate.of(1979, 3, 24),
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, null);
-        final User user = new User(null, "João", LocalDate.of(1979, 3, 24),
+        var user = new User(null, "João", LocalDate.of(1979, 3, 24),
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, null, null);
 
         when(addressService.save(body.getAddress())).thenReturn(Optional.empty());
@@ -90,7 +90,7 @@ public class UserServiceTest {
     @Test
     public void delete() {
 
-        final Integer id = 23;
+        var id = 23;
 
         userService.delete(id);
 

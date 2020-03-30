@@ -19,8 +19,8 @@ public class NeighborhoodRepositoryTest {
     @Test
     @Sql(scripts = "classpath:clearTables.sql")
     public void findByCIty() {
-        final City city = new City(1, "Santa Maria", State.RS);
-        final Neighborhood neighborhood = new Neighborhood(1, "Pé de Plátano", city);
+        var city = new City(1, "Santa Maria", State.RS);
+        var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
 
         assertThat(neighborhoodRepository.findByCityId(1)).contains(neighborhood);
     }

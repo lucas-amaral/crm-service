@@ -30,7 +30,7 @@ public class StreetServiceTest {
     @Test
     public void getByZipCode() {
 
-        final String zipCode = "97110-564";
+        var zipCode = "97110-564";
 
         streetService.getByZipCode(zipCode);
 
@@ -48,9 +48,9 @@ public class StreetServiceTest {
     @Test
     public void create() {
 
-        final City city = new City(1, "Santa Maria", State.RS);
-        final Neighborhood neighborhood = new Neighborhood(1, "Pé de Plátano", city);
-        final Street street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
+        var city = new City(1, "Santa Maria", State.RS);
+        var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
+        var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
         streetService.save(street);
 
@@ -60,9 +60,9 @@ public class StreetServiceTest {
     @Test
     public void delete() {
 
-        final City city = new City(1, "Santa Maria", State.RS);
-        final Neighborhood neighborhood = new Neighborhood(1, "Pé de Plátano", city);
-        final Street street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
+        var city = new City(1, "Santa Maria", State.RS);
+        var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
+        var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
         streetService.delete(street);
 

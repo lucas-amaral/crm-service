@@ -1,6 +1,7 @@
 package com.proposta.aceita.crmservice.controllers;
 
-import com.proposta.aceita.crmservice.entities.req.AddressRequestBody;
+import com.proposta.aceita.crmservice.entities.req.AddAddressRequestBody;
+import com.proposta.aceita.crmservice.entities.req.EditAddressRequestBody;
 import com.proposta.aceita.crmservice.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,14 +33,14 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<?> post(@Validated @RequestBody AddressRequestBody body) {
+    public ResponseEntity<?> post(@Validated @RequestBody AddAddressRequestBody body) {
         return addressService.save(body)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@Validated @RequestBody AddressRequestBody body) {
+    public ResponseEntity<?> put(@Validated @RequestBody EditAddressRequestBody body) {
         return addressService.save(body)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());

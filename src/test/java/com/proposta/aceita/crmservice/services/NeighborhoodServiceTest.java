@@ -24,7 +24,7 @@ public class NeighborhoodServiceTest {
     @Test
     public void getById() {
 
-        final Integer id = 46;
+        var id = 46;
 
         neighborhoodService.getById(id);
 
