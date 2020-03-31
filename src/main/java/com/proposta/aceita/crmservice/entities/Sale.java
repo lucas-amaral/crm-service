@@ -1,5 +1,7 @@
 package com.proposta.aceita.crmservice.entities;
 
+import com.proposta.aceita.crmservice.entities.req.SaleRequestBody;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -22,6 +24,27 @@ public class Sale {
     private Boolean barterProperty;
     private BigDecimal barterPropertyValue;
     private LocalDate agencying;
+
+    public Sale() {
+    }
+
+    public Sale(Integer id, Property property, BigDecimal value, Boolean financing, BigDecimal financingValue, Boolean barterVehicle, BigDecimal barterVehicleValue, Boolean barterProperty, BigDecimal barterPropertyValue, LocalDate agencying) {
+        this.id = id;
+        this.property = property;
+        this.value = value;
+        this.financing = financing;
+        this.financingValue = financingValue;
+        this.barterVehicle = barterVehicle;
+        this.barterVehicleValue = barterVehicleValue;
+        this.barterProperty = barterProperty;
+        this.barterPropertyValue = barterPropertyValue;
+        this.agencying = agencying;
+    }
+
+    public static Sale from(SaleRequestBody body, Property property) {
+        return new Sale(body.getId(), property, body.getValue(), body.isFinancing(), body.getFinancingValue(),
+                body.isBarterVehicle(), body.getBarterVehicleValue(), body.isBarterProperty(), body.getBarterPropertyValue(), body.getAgencying());
+    }
 
     public Integer getId() {
         return id;

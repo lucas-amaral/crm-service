@@ -31,7 +31,7 @@ public class PropertyService {
         return propertyRepository.findById(id);
     }
 
-    public List<Property> findByUser(Integer userId) {
+    public List<Property> getByUser(Integer userId) {
         return propertyRepository.findByUserId(userId);
     }
 

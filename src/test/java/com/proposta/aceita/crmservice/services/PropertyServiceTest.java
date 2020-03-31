@@ -52,9 +52,9 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void findByUser() {
+    public void getByUser() {
 
-        propertyService.findByUser(54);
+        propertyService.getByUser(54);
 
         verify(propertyRepository).findByUserId(54);
     }
@@ -94,7 +94,6 @@ public class PropertyServiceTest {
                 "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), LocalDateTime.of(2020,1,20,10,30));
         var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
         var garage = new Garage(3, property, 20, "snajknjkasnsa");
-
 
         when(userService.getById(35)).thenReturn(Optional.of(user));
         when(addressService.save(null)).thenReturn(Optional.empty());
