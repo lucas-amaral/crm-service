@@ -9,7 +9,8 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -44,7 +45,7 @@ public class Property {
     private List<String> images;
     private Boolean enable;
     @CreationTimestamp
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
 
     public Property() {
     }
@@ -52,7 +53,7 @@ public class Property {
     public Property(Integer id, User user, String description, PropertyType type, BigDecimal area,
                                Integer registration, Address address, Integer iptu, Integer dorms, Integer suites,
                                Integer bathrooms, Boolean pool, Boolean balcony, Boolean elevator, Boolean barbecueGrill,
-                               List<Garage> garages, Boolean enable, OffsetDateTime createdAt) {
+                               List<Garage> garages, Boolean enable, LocalDateTime createdAt) {
         this.id = id;
         this.user = user;
         this.description = description;
@@ -224,11 +225,11 @@ public class Property {
         this.enable = enable;
     }
 
-    public OffsetDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -280,7 +281,6 @@ public class Property {
                 .add("balcony=" + balcony)
                 .add("elevator=" + elevator)
                 .add("barbecueGrill=" + barbecueGrill)
-                .add("garages=" + garages)
                 .add("images=" + images)
                 .add("enable=" + enable)
                 .add("createdAt=" + createdAt)

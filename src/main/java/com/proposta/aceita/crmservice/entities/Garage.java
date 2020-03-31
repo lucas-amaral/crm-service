@@ -92,7 +92,6 @@ public class Garage {
     public String toString() {
         return new StringJoiner(", ", Garage.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("property=" + property)
                 .add("box=" + box)
                 .add("registration='" + registration + "'")
                 .toString();

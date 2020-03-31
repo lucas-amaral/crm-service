@@ -6,7 +6,7 @@ import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -34,7 +34,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
     private final List<GarageRequestBody> garages;
     private final Boolean enable;
     @NotNull
-    private final OffsetDateTime createdAt;
+    private final LocalDateTime createdAt;
 
     public EditPropertyRequestBody(@JsonProperty("id") Integer id,
                                    @JsonProperty("userId") Integer userId,
@@ -53,7 +53,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
                                    @JsonProperty("barbecueGrill") Boolean barbecueGrill,
                                    @JsonProperty("garages") List<GarageRequestBody> garages,
                                    @JsonProperty("enable") Boolean enable,
-                                   @JsonProperty("createdAt") OffsetDateTime createdAt) {
+                                   @JsonProperty("createdAt") LocalDateTime createdAt) {
         this.id = id;
         this.userId = userId;
         this.description = description;
@@ -142,7 +142,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
         return enable;
     }
 
-    public OffsetDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

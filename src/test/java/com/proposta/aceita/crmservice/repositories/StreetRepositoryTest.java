@@ -43,7 +43,7 @@ public class StreetRepositoryTest {
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
-        assertThat(streetRepository.findAllByNeighborhoodId(1, PageRequest.of(0, 100))).contains(street);
+        assertThat(streetRepository.findByNeighborhoodId(1, PageRequest.of(0, 100))).contains(street);
     }
 
 }

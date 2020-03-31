@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StreetRepository extends JpaRepository<Street, String> {
-    Page<Street> findAllByNeighborhoodId(Integer neighborhoodId, Pageable pageable);
+    Page<Street> findByNeighborhoodId(Integer neighborhoodId, Pageable pageable);
 }

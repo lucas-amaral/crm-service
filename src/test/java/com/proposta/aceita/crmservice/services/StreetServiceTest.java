@@ -42,7 +42,7 @@ public class StreetServiceTest {
 
         streetService.list(1, 0, 10);
 
-        verify(streetRepository).findAllByNeighborhoodId(1, PageRequest.of(0, 10, Sort.by("zipCode")));
+        verify(streetRepository).findByNeighborhoodId(1, PageRequest.of(0, 10, Sort.by("zipCode")));
     }
 
     @Test

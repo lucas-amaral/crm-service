@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,11 +52,11 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void list() {
+    public void findByUser() {
 
-        propertyService.list();
+        propertyService.findByUser(54);
 
-        verify(propertyRepository).findAll();
+        verify(propertyRepository).findByUserId(54);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class PropertyServiceTest {
 
         var address = new Address(56, new Street(), "403B", "Ap 203");
         var user = new User(35, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), OffsetDateTime.parse("2020-01-20T10:30:00Z"));
+                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), LocalDateTime.of(2020,1,20,10,30));
         var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, address, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
         var garage = new Garage(3, property, 20, "snajknjkasnsa");
 
@@ -91,7 +91,7 @@ public class PropertyServiceTest {
         var body = new EditPropertyRequestBody(234, 35, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true, null);
 
         var user = new User(35, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), OffsetDateTime.parse("2020-01-20T10:30:00Z"));
+                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), LocalDateTime.of(2020,1,20,10,30));
         var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
         var garage = new Garage(3, property, 20, "snajknjkasnsa");
 
@@ -132,7 +132,7 @@ public class PropertyServiceTest {
 
         var address = new Address(56, new Street(), "403B", "Ap 203");
         var user = new User(35, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), OffsetDateTime.parse("2020-01-20T10:30:00Z"));
+                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), LocalDateTime.of(2020,1,20,10,30));
         var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, address, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
 
         when(userService.getById(35)).thenReturn(Optional.of(user));

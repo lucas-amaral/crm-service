@@ -29,8 +29,8 @@ public class PropertyController {
     }
 
     @GetMapping
-    public ResponseEntity<?> get() {
-        return ResponseEntity.ok(propertyService.list());
+    public ResponseEntity<?> getByUser(@RequestParam("userId") Integer userId) {
+        return ResponseEntity.ok(propertyService.findByUser(userId));
     }
 
     @PostMapping

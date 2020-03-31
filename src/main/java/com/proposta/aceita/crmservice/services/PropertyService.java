@@ -31,8 +31,8 @@ public class PropertyService {
         return propertyRepository.findById(id);
     }
 
-    public List<Property> list() {
-        return propertyRepository.findAll();
+    public List<Property> findByUser(Integer userId) {
+        return propertyRepository.findByUserId(userId);
     }
 
     @Transactional

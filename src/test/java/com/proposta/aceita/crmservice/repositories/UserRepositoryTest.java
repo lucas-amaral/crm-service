@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.proposta.aceita.crmservice.entities.enums.Sex.MALE;
@@ -42,7 +42,7 @@ public class UserRepositoryTest {
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
+            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00')"
     })
     public void update() {
         var city = new City(1, "Santa Maria", State.RS);
@@ -50,7 +50,7 @@ public class UserRepositoryTest {
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
         var address = new Address(1, street, "43", "Apartamento 23");
         var user = new User(1, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, OffsetDateTime.parse("2020-01-20T10:30:00Z"));
+                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, LocalDateTime.of(2020, 1, 20, 10, 30));
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }
@@ -59,7 +59,7 @@ public class UserRepositoryTest {
     @Sql(scripts = "classpath:clearTables.sql", statements = {
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (2, '97015-440', '47', 'Apartamento 450')",
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
+            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00')"
     })
     public void updateIfAddressChange() {
         var city = new City(1, "Santa Maria", State.RS);
@@ -67,18 +67,18 @@ public class UserRepositoryTest {
         var street = new Street("97015-440", "Rua Olavo Bilac", neighborhood);
         var address = new Address(2, street, "47", "Apartamento 450");
         var user = new User(1, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, OffsetDateTime.parse("2020-01-20T10:30:00Z"));
+                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, LocalDateTime.of(2020,1,20,10,30));
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', null, '2020-01-20T10:30:00-3:00')"
+            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', null, '2020-01-20T10:30:00')"
     })
     public void updateWithoutAddress() {
         var user = new User(1, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, null, OffsetDateTime.parse("2020-01-20T10:30:00Z"));
+                "joao@gmail.com", FISICAL, "45230929-04", MALE, null, LocalDateTime.of(2020,1,20,10,30));
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }

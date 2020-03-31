@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -28,12 +28,12 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     @CreationTimestamp
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
 
     public User() {
     }
 
-    public User(Integer id, String name, LocalDate dateOfBirth, String email, UserType type, String cpfCnpj, Sex sex, Address address, OffsetDateTime createdAt) {
+    public User(Integer id, String name, LocalDate dateOfBirth, String email, UserType type, String cpfCnpj, Sex sex, Address address, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -114,11 +114,11 @@ public class User {
         this.address = address;
     }
 
-    public OffsetDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
