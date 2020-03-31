@@ -29,8 +29,10 @@ public class SaleController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getByUser(@RequestParam("propertyId") Integer propertyId) {
-        return ResponseEntity.ok(saleService.getByProperty(propertyId));
+    public ResponseEntity<?> getByProperty(@RequestParam("propertyId") Integer propertyId) {
+        return saleService.getByProperty(propertyId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

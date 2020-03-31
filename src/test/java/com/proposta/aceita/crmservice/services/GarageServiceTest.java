@@ -41,7 +41,7 @@ public class GarageServiceTest {
 
         garageService.getByPropertyId(2);
 
-        verify(garageRepository).findAllByPropertyId(2);
+        verify(garageRepository).findByPropertyId(2);
     }
 
     @Test

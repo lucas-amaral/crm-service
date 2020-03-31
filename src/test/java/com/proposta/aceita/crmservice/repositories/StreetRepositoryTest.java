@@ -25,7 +25,7 @@ public class StreetRepositoryTest {
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var expected = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
 
-        assertThat(streetRepository.findById("97110-564")).isEqualTo(Optional.of(expected));
+        assertThat(streetRepository.findById("97110-564")).hasValue(expected);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class StreetRepositoryTest {
     }
 
     @Test
-    public void findAllByNeighborhoodId() {
+    public void findByNeighborhoodId() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);

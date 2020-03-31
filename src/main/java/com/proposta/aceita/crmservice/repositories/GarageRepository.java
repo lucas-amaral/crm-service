@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface GarageRepository extends JpaRepository<Garage, Integer> {
-    List<Garage> findAllByPropertyId(Integer propertyId);
+    List<Garage> findByPropertyId(Integer propertyId);
 }

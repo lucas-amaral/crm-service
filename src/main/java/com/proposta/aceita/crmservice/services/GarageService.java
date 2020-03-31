@@ -26,7 +26,7 @@ public class GarageService {
     }
 
     public List<Garage> getByPropertyId(Integer propertyId) {
-        return garageRepository.findAllByPropertyId(propertyId);
+        return garageRepository.findByPropertyId(propertyId);
     }
 
     @Transactional

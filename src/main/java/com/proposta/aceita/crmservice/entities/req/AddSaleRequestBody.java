@@ -11,7 +11,6 @@ import java.util.StringJoiner;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddSaleRequestBody implements SaleRequestBody {
-    private final Integer id;
     @NotNull
     private final Integer propertyId;
     @NotNull
@@ -24,8 +23,7 @@ public class AddSaleRequestBody implements SaleRequestBody {
     private final BigDecimal barterPropertyValue;
     private final LocalDate agencying;
 
-    public AddSaleRequestBody(@JsonProperty("id") Integer id,
-                              @JsonProperty("propertyId") Integer propertyId,
+    public AddSaleRequestBody(@JsonProperty("propertyId") Integer propertyId,
                               @JsonProperty("value") BigDecimal value,
                               @JsonProperty("financing") boolean financing,
                               @JsonProperty("financingValue") BigDecimal financingValue,
@@ -34,7 +32,6 @@ public class AddSaleRequestBody implements SaleRequestBody {
                               @JsonProperty("barterProperty") boolean barterProperty,
                               @JsonProperty("barterPropertyValue") BigDecimal barterPropertyValue,
                               @JsonProperty("agencying") LocalDate agencying) {
-        this.id = id;
         this.propertyId = propertyId;
         this.value = value;
         this.financing = financing;
@@ -46,17 +43,14 @@ public class AddSaleRequestBody implements SaleRequestBody {
         this.agencying = agencying;
     }
 
-    @Override
     public Integer getId() {
-        return id;
+        return null;
     }
 
-    @Override
     public Integer getPropertyId() {
         return propertyId;
     }
 
-    @Override
     public BigDecimal getValue() {
         return value;
     }
@@ -65,7 +59,6 @@ public class AddSaleRequestBody implements SaleRequestBody {
         return financing;
     }
 
-    @Override
     public BigDecimal getFinancingValue() {
         return financingValue;
     }
@@ -74,7 +67,6 @@ public class AddSaleRequestBody implements SaleRequestBody {
         return barterVehicle;
     }
 
-    @Override
     public BigDecimal getBarterVehicleValue() {
         return barterVehicleValue;
     }
@@ -83,12 +75,10 @@ public class AddSaleRequestBody implements SaleRequestBody {
         return barterProperty;
     }
 
-    @Override
     public BigDecimal getBarterPropertyValue() {
         return barterPropertyValue;
     }
 
-    @Override
     public LocalDate getAgencying() {
         return agencying;
     }
@@ -101,7 +91,6 @@ public class AddSaleRequestBody implements SaleRequestBody {
         return financing == that.financing &&
                 barterVehicle == that.barterVehicle &&
                 barterProperty == that.barterProperty &&
-                Objects.equals(id, that.id) &&
                 Objects.equals(propertyId, that.propertyId) &&
                 Objects.equals(value, that.value) &&
                 Objects.equals(financingValue, that.financingValue) &&
@@ -112,13 +101,12 @@ public class AddSaleRequestBody implements SaleRequestBody {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, propertyId, value, financing, financingValue, barterVehicle, barterVehicleValue, barterProperty, barterPropertyValue, agencying);
+        return Objects.hash(propertyId, value, financing, financingValue, barterVehicle, barterVehicleValue, barterProperty, barterPropertyValue, agencying);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", AddSaleRequestBody.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
                 .add("propertyId=" + propertyId)
                 .add("value=" + value)
                 .add("financing=" + financing)

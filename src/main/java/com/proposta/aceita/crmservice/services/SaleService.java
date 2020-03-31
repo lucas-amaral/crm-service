@@ -26,7 +26,7 @@ public class SaleService {
         return saleRepository.findById(id);
     }
 
-    public List<Sale> getByProperty(Integer propertyId) {
+    public Optional<Sale> getByProperty(Integer propertyId) {
         return saleRepository.findByPropertyId(propertyId);
     }
 
