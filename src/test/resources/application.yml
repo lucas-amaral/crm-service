@@ -9,3 +9,4 @@ spring:
     username: postgres
     password: internal123
     driverClassName: org.postgresql.Driver
+    hikari.maximum-pool-size: 2

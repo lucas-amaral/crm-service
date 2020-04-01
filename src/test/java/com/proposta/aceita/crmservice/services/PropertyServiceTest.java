@@ -79,8 +79,6 @@ public class PropertyServiceTest {
 
         propertyService.save(body);
 
-        property.setGarages(List.of(garage));
-
         verify(propertyRepository).save(property);
     }
 
@@ -101,8 +99,6 @@ public class PropertyServiceTest {
         when(propertyRepository.save(property)).thenReturn(property);
 
         propertyService.save(body);
-
-        property.setGarages(List.of(garage));
 
         verify(propertyRepository).save(property);
     }

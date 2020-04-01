@@ -1,6 +1,7 @@
 package com.proposta.aceita.crmservice.entities;
 
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
+import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,7 +50,30 @@ public class Interest {
     public Interest() {
     }
 
+    public Interest(Integer id, User user, BigDecimal value, Boolean financing, BigDecimal financingValue,
+                    List<PropertyType> types, List<Neighborhood> neighborhoods, Integer dorms, Integer suites,
+                    Integer bathrooms, Boolean pool, Boolean balcony, Boolean elevator, Boolean barbecueGrill) {
+        this.id = id;
+        this.user = user;
+        this.value = value;
+        this.financing = financing;
+        this.financingValue = financingValue;
+        this.types = types;
+        this.neighborhoods = neighborhoods;
+        this.dorms = dorms;
+        this.suites = suites;
+        this.bathrooms = bathrooms;
+        this.pool = pool;
+        this.balcony = balcony;
+        this.elevator = elevator;
+        this.barbecueGrill = barbecueGrill;
+    }
 
+    public static Interest from(InterestRequestBody body, User user, List<Neighborhood> neighborhoods) {
+        return new Interest(body.getId(), user, body.getValue(), body.getFinancing(), body.getFinancingValue(),
+                body.getTypes(), neighborhoods, body.getDorms(), body.getSuites(), body.getBathrooms(),
+                body.getPool(), body.getBalcony(), body.getElevator(), body.getBarbecueGrill());
+    }
 
     public Integer getId() {
         return id;
@@ -63,52 +87,112 @@ public class Interest {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public BigDecimal getValue() {
         return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
     }
 
     public Boolean getFinancing() {
         return financing;
     }
 
+    public void setFinancing(Boolean financing) {
+        this.financing = financing;
+    }
+
     public BigDecimal getFinancingValue() {
         return financingValue;
+    }
+
+    public void setFinancingValue(BigDecimal financingValue) {
+        this.financingValue = financingValue;
     }
 
     public List<PropertyType> getTypes() {
         return types;
     }
 
+    public void setTypes(List<PropertyType> types) {
+        this.types = types;
+    }
+
     public List<Neighborhood> getNeighborhoods() {
         return neighborhoods;
+    }
+
+    public void setNeighborhoods(List<Neighborhood> neighborhoods) {
+        this.neighborhoods = neighborhoods;
     }
 
     public Integer getDorms() {
         return dorms;
     }
 
+    public void setDorms(Integer dorms) {
+        this.dorms = dorms;
+    }
+
     public Integer getSuites() {
         return suites;
+    }
+
+    public void setSuites(Integer suites) {
+        this.suites = suites;
     }
 
     public Integer getBathrooms() {
         return bathrooms;
     }
 
+    public void setBathrooms(Integer bathrooms) {
+        this.bathrooms = bathrooms;
+    }
+
     public Boolean getPool() {
         return pool;
+    }
+
+    public void setPool(Boolean pool) {
+        this.pool = pool;
     }
 
     public Boolean getBalcony() {
         return balcony;
     }
 
+    public void setBalcony(Boolean balcony) {
+        this.balcony = balcony;
+    }
+
     public Boolean getElevator() {
         return elevator;
     }
 
+    public void setElevator(Boolean elevator) {
+        this.elevator = elevator;
+    }
+
     public Boolean getBarbecueGrill() {
         return barbecueGrill;
+    }
+
+    public void setBarbecueGrill(Boolean barbecueGrill) {
+        this.barbecueGrill = barbecueGrill;
+    }
+
+    public List<Barter> getBarters() {
+        return barters;
+    }
+
+    public void setBarters(List<Barter> barters) {
+        this.barters = barters;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -134,13 +218,12 @@ public class Interest {
                 Objects.equals(balcony, interest.balcony) &&
                 Objects.equals(elevator, interest.elevator) &&
                 Objects.equals(barbecueGrill, interest.barbecueGrill) &&
-                Objects.equals(barters, interest.barters) &&
                 Objects.equals(createdAt, interest.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, value, financing, financingValue, types, neighborhoods, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, barters, createdAt);
+        return Objects.hash(id, user, value, financing, financingValue, types, neighborhoods, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, createdAt);
     }
 
     @Override
@@ -160,7 +243,6 @@ public class Interest {
                 .add("balcony=" + balcony)
                 .add("elevator=" + elevator)
                 .add("barbecueGrill=" + barbecueGrill)
-                .add("barters=" + barters)
                 .add("createdAt=" + createdAt)
                 .toString();
     }

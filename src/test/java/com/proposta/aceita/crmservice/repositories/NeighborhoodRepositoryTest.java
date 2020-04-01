@@ -25,4 +25,9 @@ public class NeighborhoodRepositoryTest {
         assertThat(neighborhoodRepository.findByCityId(1)).contains(neighborhood);
     }
 
+    @Test
+    public void findAllByIdWithNull() {
+        assertThat(neighborhoodRepository.findByCityId(null)).isEmpty();
+    }
+
 }

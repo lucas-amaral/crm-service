@@ -1,6 +1,5 @@
 package com.proposta.aceita.crmservice.services;
 
-import com.proposta.aceita.crmservice.entities.Address;
 import com.proposta.aceita.crmservice.entities.User;
 import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
 import com.proposta.aceita.crmservice.repositories.UserRepository;
@@ -33,7 +32,7 @@ public class UserService {
 
     @Transactional
     public Optional<User> save(UserRequestBody body) {
-        final Address address = addressService.save(body.getAddress()).orElse(null);
+        var address = addressService.save(body.getAddress()).orElse(null);
         return Optional.of(userRepository.save(User.from(body, address)));
     }
 

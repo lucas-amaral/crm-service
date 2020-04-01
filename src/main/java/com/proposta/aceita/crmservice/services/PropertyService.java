@@ -1,6 +1,5 @@
 package com.proposta.aceita.crmservice.services;
 
-import com.proposta.aceita.crmservice.entities.Address;
 import com.proposta.aceita.crmservice.entities.Property;
 import com.proposta.aceita.crmservice.entities.req.PropertyRequestBody;
 import com.proposta.aceita.crmservice.repositories.PropertyRepository;
@@ -38,9 +37,9 @@ public class PropertyService {
     @Transactional
     public Optional<Property> save(PropertyRequestBody body) {
         return userService.getById(body.getUserId()).map(u -> {
-            Address address = addressService.save(body.getAddress()).orElse(null);
+            var address = addressService.save(body.getAddress()).orElse(null);
 
-            Property property = propertyRepository.save(Property.from(body, u, address));
+            var property = propertyRepository.save(Property.from(body, u, address));
 
             garageService.save(body.getGarages(), property).ifPresent(property::setGarages);
 

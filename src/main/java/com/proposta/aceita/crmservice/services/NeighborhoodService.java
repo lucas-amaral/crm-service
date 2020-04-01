@@ -25,4 +25,8 @@ public class NeighborhoodService {
     public List<Neighborhood> getByCity(Integer cityId) {
         return neighborhoodRepository.findByCityId(cityId);
     }
+
+    public List<Neighborhood> list(List<Integer> ids) {
+        return neighborhoodRepository.findAllById(ids);
+    }
 }
