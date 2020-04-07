@@ -59,15 +59,15 @@ public class InterestServiceTest {
     public void save() {
 
         var barterBody = new EditBarterRequestBody(3, 234, CAR, BigDecimal.valueOf(3432, 2));
-        var body = new EditInterestRequestBody(234, 35, BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, false, true, true, true, List.of(barterBody), null);
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, false, true, true, true, List.of(barterBody), null);
 
         var neighborhood = new Neighborhood(2, "Pé de Plátano", null);
-        var user = new User(35, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true, LocalDateTime.of(2020,1,20,10,30));
         var interest = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(neighborhood), 3, 1, 3, false, true, true, true);
         var barter = new Barter(3, interest,  CAR, BigDecimal.valueOf(3432, 2));
 
-        when(userService.getById(35)).thenReturn(Optional.of(user));
+        when(userService.getById("joao@joao.com")).thenReturn(Optional.of(user));
         when(neighborhoodService.list(List.of(2))).thenReturn(List.of(neighborhood));
         when(barterService.save(body.getBarters(), interest)).thenReturn(Optional.of(List.of(barter)));
         when(interestRepository.save(interest)).thenReturn(interest);
@@ -84,14 +84,14 @@ public class InterestServiceTest {
     public void saveWithoutNeighborhoods() {
 
         var barterBody = new EditBarterRequestBody(3, 234, CAR, BigDecimal.valueOf(3432, 2));
-        var body = new EditInterestRequestBody(234, 35, BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, false, true, true, true, List.of(barterBody), null);
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, false, true, true, true, List.of(barterBody), null);
 
-        var user = new User(35, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true, LocalDateTime.of(2020,1,20,10,30));
         var interest = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), Collections.emptyList(), 3, 1, 3, false, true, true, true);
         var barter = new Barter(3, interest,  CAR, BigDecimal.valueOf(3432, 2));
 
-        when(userService.getById(35)).thenReturn(Optional.of(user));
+        when(userService.getById("joao@joao.com")).thenReturn(Optional.of(user));
         when(neighborhoodService.list(null)).thenReturn(Collections.emptyList());
         when(barterService.save(body.getBarters(), interest)).thenReturn(Optional.of(List.of(barter)));
         when(interestRepository.save(interest)).thenReturn(interest);
@@ -105,9 +105,9 @@ public class InterestServiceTest {
     public void saveWithoutUser() {
 
         var barterBody = new EditBarterRequestBody(3, 234, CAR, BigDecimal.valueOf(3432, 2));
-        var body = new EditInterestRequestBody(234, 35, BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, false, true, true, true, List.of(barterBody), null);
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, false, true, true, true, List.of(barterBody), null);
 
-        when(userService.getById(35)).thenReturn(Optional.empty());
+        when(userService.getById("joao@joao.com")).thenReturn(Optional.empty());
 
         interestService.save(body);
 
@@ -119,14 +119,14 @@ public class InterestServiceTest {
     @Test
     public void saveWithoutBarters() {
 
-        var body = new EditInterestRequestBody(234, 35, BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, false, true, true, true, null, null);
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, false, true, true, true, null, null);
 
         var neighborhood = new Neighborhood(2, "Pé de Plátano", null);
-        var user = new User(35, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, new Address(), LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true, LocalDateTime.of(2020,1,20,10,30));
         var interest = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(neighborhood), 3, 1, 3, false, true, true, true);
 
-        when(userService.getById(35)).thenReturn(Optional.of(user));
+        when(userService.getById("joao@joao.com")).thenReturn(Optional.of(user));
         when(neighborhoodService.list(List.of(2))).thenReturn(List.of(neighborhood));
         when(barterService.save(body.getBarters(), interest)).thenReturn(Optional.empty());
         when(interestRepository.save(interest)).thenReturn(interest);

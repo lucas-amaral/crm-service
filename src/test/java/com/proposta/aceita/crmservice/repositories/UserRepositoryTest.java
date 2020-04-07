@@ -9,7 +9,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static com.proposta.aceita.crmservice.entities.enums.Sex.MALE;
 import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
@@ -33,8 +32,8 @@ public class UserRepositoryTest {
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
         var address = new Address(1, street, "43", "Apartamento 23");
-        var user = new User(1, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, null);
+        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, address, true, LocalDateTime.of(2020,1,20,10,30));
 
         assertThat(userRepository.save(user).getCreatedAt()).isNotNull();
     }
@@ -42,15 +41,15 @@ public class UserRepositoryTest {
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00')"
+            "INSERT INTO users(username, name, date_of_birth, type, cpf_cnpj, sex, address_id, created_at) VALUES ('joao@joao.com', 'Joao', '1978-3-23', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00')"
     })
     public void update() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
         var address = new Address(1, street, "43", "Apartamento 23");
-        var user = new User(1, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, LocalDateTime.of(2020, 1, 20, 10, 30));
+        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, address, true, LocalDateTime.of(2020,1,20,10,30));
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }
@@ -59,26 +58,26 @@ public class UserRepositoryTest {
     @Sql(scripts = "classpath:clearTables.sql", statements = {
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (2, '97015-440', '47', 'Apartamento 450')",
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00')"
+            "INSERT INTO users(username, name, date_of_birth, type, cpf_cnpj, sex, address_id, created_at) VALUES ('joao@joao.com',  'Joao', '1978-3-23', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00')"
     })
     public void updateIfAddressChange() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(32, "Nossa Senhora de Fátima", city);
         var street = new Street("97015-440", "Rua Olavo Bilac", neighborhood);
         var address = new Address(2, street, "47", "Apartamento 450");
-        var user = new User(1, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, address, true, LocalDateTime.of(2020,1,20,10,30));
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', null, '2020-01-20T10:30:00')"
+            "INSERT INTO users(username, name, date_of_birth, type, cpf_cnpj, sex, address_id, created_at) VALUES ('joao@joao.com',  'Joao', '1978-3-23', 'FISICAL', '45230929-04', 'MALE', null, '2020-01-20T10:30:00')"
     })
     public void updateWithoutAddress() {
-        var user = new User(1, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, null, LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, null, true, LocalDateTime.of(2020,1,20,10,30));
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }
@@ -86,12 +85,12 @@ public class UserRepositoryTest {
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = {
             "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97110-564', '43', 'Apartamento 23')",
-            "INSERT INTO users(id, name, date_of_birth, email, type, cpf_cnpj, sex, address_id, created_at) VALUES (1, 'Joao', '1978-3-23', 'joao@joao.com', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
+            "INSERT INTO users(username, name, date_of_birth, type, cpf_cnpj, sex, address_id, created_at) VALUES ('joao@joao.com',  'Joao', '1978-3-23', 'FISICAL', '45230929-04', 'MALE', 1, '2020-01-20T10:30:00-3:00')"
     })
     public void delete() {
         assertThat(addressRepository.findById(1)).isNotEmpty();
 
-        userRepository.deleteById(1);
+        userRepository.deleteById("joao@joao.com");
 
         assertThat(addressRepository.findById(1)).isEmpty();
     }

@@ -14,14 +14,12 @@ import java.util.StringJoiner;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EditUserRequestBody implements UserRequestBody {
-    @NotNull
-    private final Integer id;
+    @NotBlank
+    @Email
+    private final String username;
     @NotBlank
     private final String name;
     private final LocalDate dateOfBirth;
-    @NotBlank
-    @Email
-    private final String email;
     @NotNull
     private final UserType type;
     @NotBlank
@@ -29,26 +27,24 @@ public class EditUserRequestBody implements UserRequestBody {
     private final Sex sex;
     private final AddressRequestBody address;
 
-    public EditUserRequestBody(@JsonProperty("id") Integer id,
+    public EditUserRequestBody(@JsonProperty("username") String username,
                                @JsonProperty("name") String name,
                                @JsonProperty("dateOfBirth") LocalDate dateOfBirth,
-                               @JsonProperty("email") String email,
                                @JsonProperty("type") UserType type,
                                @JsonProperty("cpfCnpj") String cpfCnpj,
                                @JsonProperty("sex") Sex sex,
                                @JsonProperty("address") AddressRequestBody address) {
-        this.id = id;
+        this.username = username;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
-        this.email = email;
         this.type = type;
         this.cpfCnpj = cpfCnpj;
         this.sex = sex;
         this.address = address;
     }
 
-    public Integer getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
     public String getName() {
@@ -57,10 +53,6 @@ public class EditUserRequestBody implements UserRequestBody {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public UserType getType() {
@@ -84,30 +76,30 @@ public class EditUserRequestBody implements UserRequestBody {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EditUserRequestBody that = (EditUserRequestBody) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(username, that.username) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(dateOfBirth, that.dateOfBirth) &&
-                Objects.equals(email, that.email) &&
                 type == that.type &&
                 Objects.equals(cpfCnpj, that.cpfCnpj) &&
-                sex == that.sex;
+                sex == that.sex &&
+                Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, dateOfBirth, email, type, cpfCnpj, sex);
+        return Objects.hash(username, name, dateOfBirth, type, cpfCnpj, sex, address);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", EditUserRequestBody.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
+                .add("username='" + username + "'")
                 .add("name='" + name + "'")
                 .add("dateOfBirth=" + dateOfBirth)
-                .add("email='" + email + "'")
                 .add("type=" + type)
                 .add("cpfCnpj='" + cpfCnpj + "'")
                 .add("sex=" + sex)
+                .add("address=" + address)
                 .toString();
     }
 }

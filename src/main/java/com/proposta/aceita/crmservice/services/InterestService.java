@@ -29,13 +29,13 @@ public class InterestService {
         return interestRepository.findById(id);
     }
 
-    public Optional<Interest> getByUser(Integer userId) {
-        return interestRepository.findByUserId(userId);
+    public Optional<Interest> getByUser(String username) {
+        return interestRepository.findByUserUsername(username);
     }
 
     @Transactional
     public Optional<Interest> save(InterestRequestBody body) {
-        return userService.getById(body.getUserId()).map(u -> {
+        return userService.getById(body.getUsername()).map(u -> {
             var neighborhoods = neighborhoodService.list(body.getNeighborhoodIds());
 
             var interest = interestRepository.save(Interest.from(body, u, neighborhoods));

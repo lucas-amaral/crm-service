@@ -6,12 +6,17 @@ import com.proposta.aceita.crmservice.entities.enums.UserType;
 import java.time.LocalDate;
 
 public interface UserRequestBody {
-    Integer getId();
+    String getUsername();
+
     String getName();
+
     LocalDate getDateOfBirth();
-    String getEmail();
+
     UserType getType();
+
     String getCpfCnpj();
+
     Sex getSex();
+
     AddressRequestBody getAddress();
 }

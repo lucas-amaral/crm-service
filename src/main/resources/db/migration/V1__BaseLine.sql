@@ -24,20 +24,26 @@ CREATE TABLE addresses (
 );
 
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     date_of_birth DATE,
-    email VARCHAR(40) NOT NULL,
     type VARCHAR(20),
     cpf_cnpj TEXT,
     sex VARCHAR(20),
     address_id INTEGER REFERENCES addresses(id),
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'UTC')
+);
+
+CREATE TABLE authorities (
+    username VARCHAR(50) NOT NULL,
+    authority VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_authorities_users FOREIGN KEY(username) REFERENCES users(username)
 );
 
 CREATE TABLE properties (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    username VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
     description TEXT NOT NULL,
     type VARCHAR(20),
     area NUMERIC(19, 2),
@@ -52,7 +58,7 @@ CREATE TABLE properties (
     elevator BOOLEAN,
     barbecue_grill BOOLEAN,
     images TEXT ARRAY,
-    enable BOOLEAN DEFAULT TRUE,
+    enable BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'UTC')
 );
 
@@ -78,7 +84,7 @@ CREATE TABLE sales (
 
 CREATE TABLE interests (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    username VARCHAR(50) REFERENCES users(username) ON UPDATE CASCADE ON DELETE CASCADE,
     value NUMERIC(19, 2),
     financing BOOLEAN,
     financing_value NUMERIC(19, 2),

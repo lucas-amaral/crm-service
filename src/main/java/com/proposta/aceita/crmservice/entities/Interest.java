@@ -22,6 +22,7 @@ public class Interest {
     @Id
     private Integer id;
     @OneToOne
+    @JoinColumn(name = "username")
     private User user;
     private BigDecimal value;
     private Boolean financing;

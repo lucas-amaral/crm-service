@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InterestRepository extends JpaRepository<Interest, Integer> {
-    Optional<Interest> findByUserId(Integer userId);
+    Optional<Interest> findByUserUsername(String username);
 }

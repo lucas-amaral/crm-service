@@ -3,16 +3,17 @@ package com.proposta.aceita.crmservice.entities.req;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class AddInterestRequestBody implements InterestRequestBody{
     @NotNull
-    private final Integer userId;
+    @Email
+    private final String username;
     @NotNull
     private final BigDecimal value;
     private final Boolean financing;
@@ -28,7 +29,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
     private final Boolean barbecueGrill;
     private final List<BarterRequestBody> barters;
 
-    public AddInterestRequestBody(@JsonProperty("userId") Integer userId,
+    public AddInterestRequestBody(@JsonProperty("username") String username,
                                   @JsonProperty("value") BigDecimal value,
                                   @JsonProperty("financing") Boolean financing,
                                   @JsonProperty("financingValue") BigDecimal financingValue,
@@ -42,7 +43,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
                                   @JsonProperty("elevator") Boolean elevator,
                                   @JsonProperty("barbecueGrill") Boolean barbecueGrill,
                                   @JsonProperty("garages") List<BarterRequestBody> barters) {
-        this.userId = userId;
+        this.username = username;
         this.value = value;
         this.financing = financing;
         this.financingValue = financingValue;
@@ -62,8 +63,8 @@ public class AddInterestRequestBody implements InterestRequestBody{
         return null;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
     public BigDecimal getValue() {
@@ -124,7 +125,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AddInterestRequestBody that = (AddInterestRequestBody) o;
-        return Objects.equals(userId, that.userId) &&
+        return Objects.equals(username, that.username) &&
                 Objects.equals(value, that.value) &&
                 Objects.equals(financing, that.financing) &&
                 Objects.equals(financingValue, that.financingValue) &&
@@ -142,13 +143,13 @@ public class AddInterestRequestBody implements InterestRequestBody{
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, barters);
+        return Objects.hash(username, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, barters);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", AddInterestRequestBody.class.getSimpleName() + "[", "]")
-                .add("userId=" + userId)
+                .add("username=" + username)
                 .add("value=" + value)
                 .add("financing=" + financing)
                 .add("financingValue=" + financingValue)

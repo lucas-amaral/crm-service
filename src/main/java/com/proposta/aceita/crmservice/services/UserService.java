@@ -22,8 +22,8 @@ public class UserService {
         this.addressService = addressService;
     }
 
-    public Optional<User> getById(Integer id) {
-        return userRepository.findById(id);
+    public Optional<User> getById(String username) {
+        return userRepository.findById(username);
     }
 
     public List<User> list() {
@@ -36,7 +36,7 @@ public class UserService {
         return Optional.of(userRepository.save(User.from(body, address)));
     }
 
-    public void delete(Integer id) {
-        userRepository.deleteById(id);
+    public void delete(String username) {
+        userRepository.deleteById(username);
     }
 }

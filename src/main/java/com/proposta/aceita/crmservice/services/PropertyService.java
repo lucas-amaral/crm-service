@@ -30,13 +30,13 @@ public class PropertyService {
         return propertyRepository.findById(id);
     }
 
-    public List<Property> getByUser(Integer userId) {
-        return propertyRepository.findByUserId(userId);
+    public List<Property> getByUser(String username) {
+        return propertyRepository.findByUserUsername(username);
     }
 
     @Transactional
     public Optional<Property> save(PropertyRequestBody body) {
-        return userService.getById(body.getUserId()).map(u -> {
+        return userService.getById(body.getUsername()).map(u -> {
             var address = addressService.save(body.getAddress()).orElse(null);
 
             var property = propertyRepository.save(Property.from(body, u, address));

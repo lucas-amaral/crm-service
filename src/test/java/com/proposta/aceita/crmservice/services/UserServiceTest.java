@@ -37,11 +37,11 @@ public class UserServiceTest {
     @Test
     public void getById() {
 
-        var id = 23;
+        var username = "joao@joao.com";
 
-        userService.getById(id);
+        userService.getById(username);
 
-        verify(userRepository).findById(id);
+        verify(userRepository).findById(username);
     }
 
     @Test
@@ -58,10 +58,10 @@ public class UserServiceTest {
         var addressBody = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
         var address = new Address(null, null, "212", "Não consegue moisés");
 
-        var body = new AddUserRequestBody("João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, addressBody);
-        var user = new User(null, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, address, null);
+        var body = new AddUserRequestBody("joao@gmail.com","João", LocalDate.of(1979, 3, 24),
+                 FISICAL, "45230929-04", MALE, addressBody);
+        var user = new User("joao@gmail.com", "João", LocalDate.of(1979, 3, 24),
+                 FISICAL, "45230929-04", MALE, address, true, null);
 
         when(addressService.save(addressBody)).thenReturn(Optional.of(address));
         when(userRepository.save(user)).thenReturn(user);
@@ -74,10 +74,11 @@ public class UserServiceTest {
     @Test
     public void saveWithoutAddress() {
 
-        var body = new AddUserRequestBody("João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, null);
-        var user = new User(null, "João", LocalDate.of(1979, 3, 24),
-                "joao@gmail.com", FISICAL, "45230929-04", MALE, null, null);
+        var body = new AddUserRequestBody("joao@gmail.com","João", LocalDate.of(1979, 3, 24),
+                FISICAL, "45230929-04", MALE, null);
+        var user = new User("joao@gmail.com", "João", LocalDate.of(1979, 3, 24),
+                FISICAL, "45230929-04", MALE, null, true, null);
+
 
         when(addressService.save(body.getAddress())).thenReturn(Optional.empty());
         when(userRepository.save(user)).thenReturn(user);
@@ -90,11 +91,11 @@ public class UserServiceTest {
     @Test
     public void delete() {
 
-        var id = 23;
+        var username = "joao@joao.com";
 
-        userService.delete(id);
+        userService.delete(username);
 
-        verify(userRepository).deleteById(id);
+        verify(userRepository).deleteById(username);
     }
 
 }

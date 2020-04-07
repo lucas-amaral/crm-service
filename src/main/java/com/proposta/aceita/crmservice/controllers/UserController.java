@@ -21,9 +21,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Integer id) {
-        return userService.getById(id)
+    @GetMapping("/{username}")
+    public ResponseEntity<?> get(@PathVariable String username) {
+        return userService.getById(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -47,9 +47,9 @@ public class UserController {
                 .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-        userService.delete(id);
+    @DeleteMapping("/{username}")
+    public ResponseEntity<?> delete(@PathVariable String username) {
+        userService.delete(username);
         return ResponseEntity.noContent().build();
     }
 }

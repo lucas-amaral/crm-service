@@ -29,8 +29,8 @@ public class InterestController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getByUser(@RequestParam("userId") Integer userId) {
-        return interestService.getByUser(userId)
+    public ResponseEntity<?> getByUser(@RequestParam("username") String username) {
+        return interestService.getByUser(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

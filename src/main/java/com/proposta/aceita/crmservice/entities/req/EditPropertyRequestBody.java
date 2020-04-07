@@ -16,7 +16,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
     @NotNull
     private final Integer id;
     @NotNull
-    private final Integer userId;
+    private final String username;
     private final String description;
     @NotNull
     private final PropertyType type;
@@ -37,7 +37,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
     private final LocalDateTime createdAt;
 
     public EditPropertyRequestBody(@JsonProperty("id") Integer id,
-                                   @JsonProperty("userId") Integer userId,
+                                   @JsonProperty("username") String username,
                                    @JsonProperty("description") String description,
                                    @JsonProperty("type") PropertyType type,
                                    @JsonProperty("area") BigDecimal area,
@@ -55,7 +55,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
                                    @JsonProperty("enable") Boolean enable,
                                    @JsonProperty("createdAt") LocalDateTime createdAt) {
         this.id = id;
-        this.userId = userId;
+        this.username = username;
         this.description = description;
         this.type = type;
         this.area = area;
@@ -78,8 +78,8 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
         return id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
     public String getDescription() {
@@ -152,7 +152,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
         if (o == null || getClass() != o.getClass()) return false;
         EditPropertyRequestBody that = (EditPropertyRequestBody) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(userId, that.userId) &&
+                Objects.equals(username, that.username) &&
                 Objects.equals(description, that.description) &&
                 type == that.type &&
                 Objects.equals(area, that.area) &&
@@ -172,14 +172,14 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, garages, enable, createdAt);
+        return Objects.hash(id, username, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, garages, enable, createdAt);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", EditPropertyRequestBody.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("userId=" + userId)
+                .add("username=" + username)
                 .add("description='" + description + "'")
                 .add("type=" + type)
                 .add("area=" + area)

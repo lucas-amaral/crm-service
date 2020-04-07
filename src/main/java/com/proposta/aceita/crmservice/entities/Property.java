@@ -21,6 +21,7 @@ public class Property {
     @Id
     private Integer id;
     @ManyToOne
+    @JoinColumn(name = "username")
     private User user;
     @Column(nullable = false)
     private String description;

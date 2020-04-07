@@ -14,7 +14,7 @@ import java.util.StringJoiner;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddPropertyRequestBody implements PropertyRequestBody{
     @NotNull
-    private final Integer userId;
+    private final String username;
     private final String description;
     @NotNull
     private final PropertyType type;
@@ -33,7 +33,7 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
     private final List<GarageRequestBody> garages;
     private final Boolean enable;
 
-    public AddPropertyRequestBody(@JsonProperty("userId") Integer userId,
+    public AddPropertyRequestBody(@JsonProperty("username") String username,
                                   @JsonProperty("description") String description,
                                   @JsonProperty("type") PropertyType type,
                                   @JsonProperty("area") BigDecimal area,
@@ -49,7 +49,7 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
                                   @JsonProperty("barbecueGrill") Boolean barbecueGrill,
                                   @JsonProperty("garages") List<GarageRequestBody> garages,
                                   @JsonProperty("enable") Boolean enable) {
-        this.userId = userId;
+        this.username = username;
         this.description = description;
         this.type = type;
         this.area = area;
@@ -71,8 +71,8 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
         return null;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
     public String getDescription() {
@@ -140,7 +140,7 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AddPropertyRequestBody that = (AddPropertyRequestBody) o;
-        return Objects.equals(userId, that.userId) &&
+        return Objects.equals(username, that.username) &&
                 Objects.equals(description, that.description) &&
                 type == that.type &&
                 Objects.equals(area, that.area) &&
@@ -160,13 +160,13 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, garages, enable);
+        return Objects.hash(username, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, garages, enable);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", AddPropertyRequestBody.class.getSimpleName() + "[", "]")
-                .add("userId=" + userId)
+                .add("username=" + username)
                 .add("description='" + description + "'")
                 .add("type=" + type)
                 .add("area=" + area)
