@@ -32,8 +32,8 @@ public class UserRepositoryTest {
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
         var address = new Address(1, street, "43", "Apartamento 23");
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, address, true, LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, address, true);
 
         assertThat(userRepository.save(user).getCreatedAt()).isNotNull();
     }
@@ -48,8 +48,8 @@ public class UserRepositoryTest {
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
         var address = new Address(1, street, "43", "Apartamento 23");
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, address, true, LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, address, true);
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }
@@ -65,8 +65,8 @@ public class UserRepositoryTest {
         var neighborhood = new Neighborhood(32, "Nossa Senhora de Fátima", city);
         var street = new Street("97015-440", "Rua Olavo Bilac", neighborhood);
         var address = new Address(2, street, "47", "Apartamento 450");
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, address, true, LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, address, true);
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }
@@ -76,8 +76,8 @@ public class UserRepositoryTest {
             "INSERT INTO users(username, name, date_of_birth, type, cpf_cnpj, sex, address_id, created_at) VALUES ('joao@joao.com',  'Joao', '1978-3-23', 'FISICAL', '45230929-04', 'MALE', null, '2020-01-20T10:30:00')"
     })
     public void updateWithoutAddress() {
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, null, true, LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, null, true);
 
         assertThat(userRepository.save(user)).isEqualTo(user);
     }

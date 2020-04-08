@@ -18,8 +18,8 @@ spring:
 services:
 
   internal:
-    user: internal
-    pass: tinr3kahcuth3gie8bohc4yiXhedcfgx
+    username: internal
+    password: tinr3kahcuth3gie8bohc4yiXhedcfgx
 
   url:
     notification: notification.com

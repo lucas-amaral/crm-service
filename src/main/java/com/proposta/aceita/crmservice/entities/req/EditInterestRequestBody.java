@@ -31,8 +31,6 @@ public class EditInterestRequestBody implements InterestRequestBody{
     private final Boolean elevator;
     private final Boolean barbecueGrill;
     private final List<BarterRequestBody> barters;
-    @NotNull
-    private final LocalDateTime createdAt;
 
     public EditInterestRequestBody(@JsonProperty("id") Integer id,
                                    @JsonProperty("username") String username,
@@ -48,8 +46,7 @@ public class EditInterestRequestBody implements InterestRequestBody{
                                    @JsonProperty("balcony") Boolean balcony,
                                    @JsonProperty("elevator") Boolean elevator,
                                    @JsonProperty("barbecueGrill") Boolean barbecueGrill,
-                                   @JsonProperty("garages") List<BarterRequestBody> barters,
-                                   @JsonProperty("createdAt") LocalDateTime createdAt) {
+                                   @JsonProperty("garages") List<BarterRequestBody> barters) {
         this.id = id;
         this.username = username;
         this.value = value;
@@ -65,7 +62,6 @@ public class EditInterestRequestBody implements InterestRequestBody{
         this.elevator = elevator;
         this.barbecueGrill = barbecueGrill;
         this.barters = barters;
-        this.createdAt = createdAt;
     }
 
     public Integer getId() {
@@ -128,10 +124,6 @@ public class EditInterestRequestBody implements InterestRequestBody{
         return barters;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -151,13 +143,12 @@ public class EditInterestRequestBody implements InterestRequestBody{
                 Objects.equals(balcony, that.balcony) &&
                 Objects.equals(elevator, that.elevator) &&
                 Objects.equals(barbecueGrill, that.barbecueGrill) &&
-                Objects.equals(barters, that.barters) &&
-                Objects.equals(createdAt, that.createdAt);
+                Objects.equals(barters, that.barters);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, barters, createdAt);
+        return Objects.hash(id, username, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, barters);
     }
 
     @Override
@@ -178,7 +169,6 @@ public class EditInterestRequestBody implements InterestRequestBody{
                 .add("elevator=" + elevator)
                 .add("barbecueGrill=" + barbecueGrill)
                 .add("barters=" + barters)
-                .add("createdAt=" + createdAt)
                 .toString();
     }
 }

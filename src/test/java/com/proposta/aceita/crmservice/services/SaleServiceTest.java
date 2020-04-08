@@ -55,7 +55,7 @@ public class SaleServiceTest {
 
         var body = new EditSaleRequestBody(356, 234, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
-        var property = new Property(234, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
+        var property = new Property(234, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
         var sale = new Sale(356, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
         when(propertyService.getById(234)).thenReturn(Optional.of(property));

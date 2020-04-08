@@ -64,12 +64,12 @@ public class PropertyServiceTest {
 
         var addressBody = new EditAddressRequestBody(56, "95020-320", "212", "Perto do tio joão");
         var garageBody = new GarageRequestBody(3, 20, "snajknjkasnsa");
-        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, addressBody, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true, null);
+        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, addressBody, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true);
 
         var address = new Address(56, new Street(), "403B", "Ap 203");
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, new Address(), true, LocalDateTime.of(2020,1,20,10,30));
-        var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, address, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true);
+        var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, address, 23423422, 3, 2, 2, true, true, true, false, null, true);
         var garage = new Garage(3, property, 20, "snajknjkasnsa");
 
         when(userService.getById("joao@joao.com")).thenReturn(Optional.of(user));
@@ -86,11 +86,11 @@ public class PropertyServiceTest {
     public void saveWithoutAddress() {
 
         var garageBody = new GarageRequestBody(3, 20, "snajknjkasnsa");
-        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true, null);
+        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true);
 
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, new Address(), true, LocalDateTime.of(2020,1,20,10,30));
-        var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true);
+        var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
         var garage = new Garage(3, property, 20, "snajknjkasnsa");
 
         when(userService.getById("joao@joao.com")).thenReturn(Optional.of(user));
@@ -108,7 +108,7 @@ public class PropertyServiceTest {
 
         var addressBody = new EditAddressRequestBody(56, "95020-320", "212", "Perto do tio joão");
         var garageBody = new GarageRequestBody(3, 20, "snajknjkasnsa");
-        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, addressBody, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true, null);
+        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, addressBody, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true);
 
         when(userService.getById("joao@joao.com")).thenReturn(Optional.empty());
 
@@ -123,12 +123,12 @@ public class PropertyServiceTest {
     public void saveWithoutGarages() {
 
         var addressBody = new EditAddressRequestBody(56, "95020-320", "212", "Perto do tio joão");
-        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, addressBody, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
+        var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, addressBody, 23423422, 3, 2, 2, true, true, true, false, null, true);
 
         var address = new Address(56, new Street(), "403B", "Ap 203");
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, new Address(), true, LocalDateTime.of(2020,1,20,10,30));
-        var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, address, 23423422, 3, 2, 2, true, true, true, false, null, true, null);
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true);
+        var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, address, 23423422, 3, 2, 2, true, true, true, false, null, true);
 
         when(userService.getById("joao@joao.com")).thenReturn(Optional.of(user));
         when(addressService.save(addressBody)).thenReturn(Optional.of(address));

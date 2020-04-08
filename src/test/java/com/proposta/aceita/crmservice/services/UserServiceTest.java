@@ -58,10 +58,10 @@ public class UserServiceTest {
         var addressBody = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
         var address = new Address(null, null, "212", "Não consegue moisés");
 
-        var body = new AddUserRequestBody("joao@gmail.com","João", LocalDate.of(1979, 3, 24),
+        var body = new AddUserRequestBody("joao@gmail.com", "1234", "João", LocalDate.of(1979, 3, 24),
                  FISICAL, "45230929-04", MALE, addressBody);
-        var user = new User("joao@gmail.com", "João", LocalDate.of(1979, 3, 24),
-                 FISICAL, "45230929-04", MALE, address, true, null);
+        var user = new User("joao@gmail.com", "1234", "João", LocalDate.of(1979, 3, 24),
+                 FISICAL, "45230929-04", MALE, address, true);
 
         when(addressService.save(addressBody)).thenReturn(Optional.of(address));
         when(userRepository.save(user)).thenReturn(user);
@@ -74,10 +74,10 @@ public class UserServiceTest {
     @Test
     public void saveWithoutAddress() {
 
-        var body = new AddUserRequestBody("joao@gmail.com","João", LocalDate.of(1979, 3, 24),
+        var body = new AddUserRequestBody("joao@gmail.com", "1234", "João", LocalDate.of(1979, 3, 24),
                 FISICAL, "45230929-04", MALE, null);
-        var user = new User("joao@gmail.com", "João", LocalDate.of(1979, 3, 24),
-                FISICAL, "45230929-04", MALE, null, true, null);
+        var user = new User("joao@gmail.com", "1234", "João", LocalDate.of(1979, 3, 24),
+                FISICAL, "45230929-04", MALE, null, true);
 
 
         when(addressService.save(body.getAddress())).thenReturn(Optional.empty());

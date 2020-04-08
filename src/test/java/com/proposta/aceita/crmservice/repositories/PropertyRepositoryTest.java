@@ -36,14 +36,14 @@ public class PropertyRepositoryTest {
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
         var address = new Address(1, street, "43", "Apartamento 23");
-        var user = new User("joao@joao.com", "Joao", LocalDate.of(1978, 3, 23),
-                FISICAL, "45230929-04", MALE, address, true, LocalDateTime.of(2020,1,20,10,30));
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, address, true);
 
 
         var property43 = new Property(43, user, "Casa bacana", HOUSE, BigDecimal.valueOf(3423.23), 13133, null, 12414,
-                2, 3, 1, false, false, false, true, null, true, LocalDateTime.of(2020, 1, 20, 10, 30));
+                2, 3, 1, false, false, false, true, null, true);
         var property76 = new Property(76, user, "Apartamento centro", APARTMENT, BigDecimal.valueOf(267.14), 14536, null, 1432,
-                3, 0, 2,true, false, true, true, null, true, LocalDateTime.of(2020, 1, 20, 13, 45, 30));
+                3, 0, 2,true, false, true, true, null, true);
 
         assertThat(propertyRepository.findByUserUsername("joao@joao.com")).containsOnly(property43, property76);
     }

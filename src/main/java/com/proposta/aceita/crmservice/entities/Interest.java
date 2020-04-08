@@ -46,6 +46,7 @@ public class Interest {
     @OneToMany(mappedBy="interest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Barter> barters;
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     public Interest() {

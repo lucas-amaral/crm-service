@@ -1,9 +1,11 @@
 package com.proposta.aceita.crmservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proposta.aceita.crmservice.entities.enums.Sex;
 import com.proposta.aceita.crmservice.entities.enums.UserType;
 import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,6 +18,8 @@ public class User {
     @Id
     @Column(name = "username")
     private String username;
+    @Column(updatable = false)
+    private String password;
     @Column(nullable = false)
     private String name;
     private LocalDate dateOfBirth;
@@ -28,13 +32,15 @@ public class User {
     private Address address;
     private boolean enabled;
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     public User() {
     }
 
-    public User(String username, String name, LocalDate dateOfBirth, UserType type, String cpfCnpj, Sex sex, Address address, boolean enabled, LocalDateTime createdAt) {
+    public User(String username, String password, String name, LocalDate dateOfBirth, UserType type, String cpfCnpj, Sex sex, Address address, boolean enabled) {
         this.username = username;
+        this.password = new BCryptPasswordEncoder().encode(password);
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.type = type;
@@ -42,12 +48,11 @@ public class User {
         this.sex = sex;
         this.address = address;
         this.enabled = enabled;
-        this.createdAt = createdAt;
-    }
+        }
 
     public static User from(UserRequestBody body, Address address) {
-        return new User(body.getUsername(), body.getName(), body.getDateOfBirth(), body.getType(),
-                body.getCpfCnpj(), body.getSex(), address, true, null);
+        return new User(body.getUsername(), body.getPassword(), body.getName(), body.getDateOfBirth(), body.getType(),
+                body.getCpfCnpj(), body.getSex(), address, true);
     }
 
     public String getUsername() {
@@ -56,6 +61,15 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -134,8 +148,7 @@ public class User {
                 type == user.type &&
                 Objects.equals(cpfCnpj, user.cpfCnpj) &&
                 sex == user.sex &&
-                Objects.equals(address, user.address) &&
-                Objects.equals(createdAt, user.createdAt);
+                Objects.equals(address, user.address);
     }
 
     @Override

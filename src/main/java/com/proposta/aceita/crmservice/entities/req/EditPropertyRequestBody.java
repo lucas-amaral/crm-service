@@ -33,8 +33,6 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
     private final Boolean barbecueGrill;
     private final List<GarageRequestBody> garages;
     private final Boolean enable;
-    @NotNull
-    private final LocalDateTime createdAt;
 
     public EditPropertyRequestBody(@JsonProperty("id") Integer id,
                                    @JsonProperty("username") String username,
@@ -52,8 +50,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
                                    @JsonProperty("elevator") Boolean elevator,
                                    @JsonProperty("barbecueGrill") Boolean barbecueGrill,
                                    @JsonProperty("garages") List<GarageRequestBody> garages,
-                                   @JsonProperty("enable") Boolean enable,
-                                   @JsonProperty("createdAt") LocalDateTime createdAt) {
+                                   @JsonProperty("enable") Boolean enable) {
         this.id = id;
         this.username = username;
         this.description = description;
@@ -71,7 +68,6 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
         this.barbecueGrill = barbecueGrill;
         this.garages = garages;
         this.enable = (null == enable) ? true : enable;
-        this.createdAt = createdAt;
     }
 
     public Integer getId() {
@@ -142,10 +138,6 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
         return enable;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -172,7 +164,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, garages, enable, createdAt);
+        return Objects.hash(id, username, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, garages, enable);
     }
 
     @Override
@@ -195,7 +187,6 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
                 .add("barbecueGrill=" + barbecueGrill)
                 .add("garages=" + garages)
                 .add("enable=" + enable)
-                .add("createdAt=" + createdAt)
                 .toString();
     }
 }

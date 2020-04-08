@@ -18,6 +18,8 @@ public class AddUserRequestBody implements UserRequestBody {
     @Email
     private final String username;
     @NotBlank
+    private final String password;
+    @NotBlank
     private final String name;
     private final LocalDate dateOfBirth;
     @NotNull
@@ -28,6 +30,7 @@ public class AddUserRequestBody implements UserRequestBody {
     private final AddressRequestBody address;
 
     public AddUserRequestBody(@JsonProperty("username") String username,
+                              @JsonProperty("password") String password,
                               @JsonProperty("name") String name,
                               @JsonProperty("dateOfBirth") LocalDate dateOfBirth,
                               @JsonProperty("type") UserType type,
@@ -35,6 +38,7 @@ public class AddUserRequestBody implements UserRequestBody {
                               @JsonProperty("sex") Sex sex,
                               @JsonProperty("address") AddressRequestBody address) {
         this.username = username;
+        this.password = password;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.type = type;
@@ -45,6 +49,10 @@ public class AddUserRequestBody implements UserRequestBody {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getName() {
@@ -77,6 +85,7 @@ public class AddUserRequestBody implements UserRequestBody {
         if (o == null || getClass() != o.getClass()) return false;
         AddUserRequestBody that = (AddUserRequestBody) o;
         return Objects.equals(username, that.username) &&
+                Objects.equals(password, that.password) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(dateOfBirth, that.dateOfBirth) &&
                 type == that.type &&
@@ -87,13 +96,14 @@ public class AddUserRequestBody implements UserRequestBody {
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, name, dateOfBirth, type, cpfCnpj, sex, address);
+        return Objects.hash(username, password, name, dateOfBirth, type, cpfCnpj, sex, address);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", AddUserRequestBody.class.getSimpleName() + "[", "]")
                 .add("username='" + username + "'")
+                .add("password='" + password + "'")
                 .add("name='" + name + "'")
                 .add("dateOfBirth=" + dateOfBirth)
                 .add("type=" + type)

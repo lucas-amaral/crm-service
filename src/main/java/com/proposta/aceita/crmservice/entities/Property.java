@@ -10,7 +10,6 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -46,6 +45,7 @@ public class Property {
     private List<String> images;
     private Boolean enable;
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     public Property() {
@@ -54,7 +54,7 @@ public class Property {
     public Property(Integer id, User user, String description, PropertyType type, BigDecimal area,
                                Integer registration, Address address, Integer iptu, Integer dorms, Integer suites,
                                Integer bathrooms, Boolean pool, Boolean balcony, Boolean elevator, Boolean barbecueGrill,
-                               List<Garage> garages, Boolean enable, LocalDateTime createdAt) {
+                               List<Garage> garages, Boolean enable) {
         this.id = id;
         this.user = user;
         this.description = description;
@@ -72,14 +72,13 @@ public class Property {
         this.barbecueGrill = barbecueGrill;
         this.garages = garages;
         this.enable = enable;
-        this.createdAt = createdAt;
     }
 
     public static Property from(PropertyRequestBody body, User user, Address address) {
         return new Property(body.getId(), user, body.getDescription(), body.getType(), body.getArea(),
                 body.getRegistration(), address, body.getIptu(), body.getDorms(), body.getSuites(), body.getBathrooms(),
                 body.getPool(), body.getBalcony(), body.getElevator(), body.getBarbecueGrill(), null,
-                body.getEnable(), null);
+                body.getEnable());
     }
 
     public Integer getId() {
@@ -255,8 +254,7 @@ public class Property {
                 Objects.equals(elevator, property.elevator) &&
                 Objects.equals(barbecueGrill, property.barbecueGrill) &&
                 Objects.equals(images, property.images) &&
-                Objects.equals(enable, property.enable) &&
-                Objects.equals(createdAt, property.createdAt);
+                Objects.equals(enable, property.enable);
     }
 
     @Override
