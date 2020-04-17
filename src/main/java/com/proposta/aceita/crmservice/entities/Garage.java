@@ -1,20 +1,22 @@
 package com.proposta.aceita.crmservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proposta.aceita.crmservice.entities.req.GarageRequestBody;
 import com.proposta.aceita.crmservice.util.CheckUtils;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "garages")
 public class Garage {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     @ManyToOne
     private Property property;
@@ -48,6 +50,7 @@ public class Garage {
         this.id = id;
     }
 
+    @JsonIgnore
     public Property getProperty() {
         return property;
     }

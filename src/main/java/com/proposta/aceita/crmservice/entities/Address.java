@@ -6,9 +6,12 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "addresses")
 public class Address {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     @OneToOne
     private Street street;

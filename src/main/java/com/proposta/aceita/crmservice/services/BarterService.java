@@ -30,8 +30,8 @@ public class BarterService {
     }
 
     @Transactional
-    public Optional<List<Barter>> save(List<BarterRequestBody> body, Interest interest) {
-        return Optional.ofNullable(body).map(b -> barterRepository.saveAll(Barter.fromList(b, interest)));
+    public Optional<List<Barter>> save(List<? extends BarterRequestBody> body, Interest interest) {
+        return Optional.ofNullable(body).map(barter -> barterRepository.saveAll(Barter.fromList(barter, interest)));
     }
 
     public void delete(Integer id) {

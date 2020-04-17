@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.EnumType.*;
+
 @Entity(name = "users")
 public class User {
     @Id
@@ -23,12 +26,12 @@ public class User {
     @Column(nullable = false)
     private String name;
     private LocalDate dateOfBirth;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private UserType type;
     private String cpfCnpj;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private Sex sex;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = ALL)
     private Address address;
     private boolean enabled;
     @CreationTimestamp

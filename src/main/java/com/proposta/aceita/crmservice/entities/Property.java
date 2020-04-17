@@ -2,10 +2,7 @@ package com.proposta.aceita.crmservice.entities;
 
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 import com.proposta.aceita.crmservice.entities.req.PropertyRequestBody;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,21 +11,26 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity(name = "properties")
-@TypeDef(name = "list-array", typeClass = StringArrayType.class)
 public class Property {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "username")
     private User user;
     @Column(nullable = false)
     private String description;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private PropertyType type;
     private BigDecimal area;
     private Integer registration;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = ALL)
     private Address address;
     private Integer iptu;
     private Integer dorms;
@@ -38,11 +40,8 @@ public class Property {
     private Boolean balcony;
     private Boolean elevator;
     private Boolean barbecueGrill;
-    @OneToMany(mappedBy="property", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="property", fetch = LAZY, cascade = ALL)
     private List<Garage> garages;
-    @Type(type = "list-array")
-    @Column(columnDefinition = "STRING ARRAY")
-    private List<String> images;
     private Boolean enable;
     @CreationTimestamp
     @Column(updatable = false)
@@ -209,14 +208,6 @@ public class Property {
         this.garages = garages;
     }
 
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
     public Boolean getEnable() {
         return enable;
     }
@@ -253,13 +244,12 @@ public class Property {
                 Objects.equals(balcony, property.balcony) &&
                 Objects.equals(elevator, property.elevator) &&
                 Objects.equals(barbecueGrill, property.barbecueGrill) &&
-                Objects.equals(images, property.images) &&
                 Objects.equals(enable, property.enable);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, images, enable, createdAt);
+        return Objects.hash(id, user, description, type, area, registration, address, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, enable, createdAt);
     }
 
     @Override
@@ -280,7 +270,6 @@ public class Property {
                 .add("balcony=" + balcony)
                 .add("elevator=" + elevator)
                 .add("barbecueGrill=" + barbecueGrill)
-                .add("images=" + images)
                 .add("enable=" + enable)
                 .add("createdAt=" + createdAt)
                 .toString();

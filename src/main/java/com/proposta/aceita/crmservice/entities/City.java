@@ -7,12 +7,16 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static javax.persistence.EnumType.*;
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "cities")
 public class City {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     private String name;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private State state;
 
     public City() {

@@ -32,8 +32,8 @@ public class GarageService {
     @Transactional
     public Optional<List<Garage>> save(List<GarageRequestBody> body, Property property) {
         return Optional.ofNullable(body)
-                .flatMap(g -> Optional.ofNullable(property)
-                        .map(p -> garageRepository.saveAll(Garage.fromList(g, p))));
+                .flatMap(garage -> Optional.ofNullable(property)
+                        .map(p -> garageRepository.saveAll(Garage.fromList(garage, p))));
     }
 
     public void delete(Integer id) {

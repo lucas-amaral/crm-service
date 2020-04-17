@@ -2,17 +2,18 @@ package com.proposta.aceita.crmservice.entities;
 
 import com.proposta.aceita.crmservice.entities.req.SaleRequestBody;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "sales")
 public class Sale {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     @OneToOne
     private Property property;

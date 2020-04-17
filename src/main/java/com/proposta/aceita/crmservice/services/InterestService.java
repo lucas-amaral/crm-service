@@ -3,6 +3,7 @@ package com.proposta.aceita.crmservice.services;
 import com.proposta.aceita.crmservice.entities.Interest;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
 import com.proposta.aceita.crmservice.repositories.InterestRepository;
+import com.proposta.aceita.crmservice.util.CheckUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,10 +36,15 @@ public class InterestService {
 
     @Transactional
     public Optional<Interest> save(InterestRequestBody body) {
-        return userService.getById(body.getUsername()).map(u -> {
+        return userService.getById(body.getUsername()).map(user -> {
             var neighborhoods = neighborhoodService.list(body.getNeighborhoodIds());
 
-            var interest = interestRepository.save(Interest.from(body, u, neighborhoods));
+            var interest = interestRepository.save(Interest.from(body, user, neighborhoods));
+
+            if (!CheckUtils.listIsNullOrEmpty(body.getTypes())) {
+                interestRepository.updateTypes(interest.getId(), body.getStringTypes());
+                interest.setTypes(body.getTypes());
+            }
 
             barterService.save(body.getBarters(), interest).ifPresent(interest::setBarters);
 

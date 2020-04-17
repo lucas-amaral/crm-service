@@ -2,13 +2,13 @@ package com.proposta.aceita.crmservice.entities.req;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
+import com.proposta.aceita.crmservice.util.CheckUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddInterestRequestBody implements InterestRequestBody{
     @NotNull
@@ -27,7 +27,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
     private final Boolean balcony;
     private final Boolean elevator;
     private final Boolean barbecueGrill;
-    private final List<BarterRequestBody> barters;
+    private final List<AddBarterRequestBody> barters;
 
     public AddInterestRequestBody(@JsonProperty("username") String username,
                                   @JsonProperty("value") BigDecimal value,
@@ -42,7 +42,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
                                   @JsonProperty("balcony") Boolean balcony,
                                   @JsonProperty("elevator") Boolean elevator,
                                   @JsonProperty("barbecueGrill") Boolean barbecueGrill,
-                                  @JsonProperty("garages") List<BarterRequestBody> barters) {
+                                  @JsonProperty("barters") List<AddBarterRequestBody> barters) {
         this.username = username;
         this.value = value;
         this.financing = financing;
@@ -115,10 +115,14 @@ public class AddInterestRequestBody implements InterestRequestBody{
         return barbecueGrill;
     }
 
-    public List<BarterRequestBody> getBarters() {
+    public List<? extends BarterRequestBody> getBarters() {
         return barters;
     }
 
+    public String getStringTypes() {
+        return CheckUtils.listIsNullOrEmpty(types) ? null
+                : types.stream().map(type -> String.format("'%s'", type)).collect(Collectors.joining(", "));
+    }
 
     @Override
     public boolean equals(Object o) {

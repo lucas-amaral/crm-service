@@ -1,5 +1,6 @@
 package com.proposta.aceita.crmservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proposta.aceita.crmservice.entities.enums.BarterType;
 import com.proposta.aceita.crmservice.entities.req.BarterRequestBody;
 import com.proposta.aceita.crmservice.util.CheckUtils;
@@ -15,19 +16,19 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "barters")
 @TypeDef(name = "str-array", typeClass = StringArrayType.class)
 public class Barter {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     @ManyToOne
     private Interest interest;
     @Enumerated(EnumType.STRING)
     private BarterType type;
     private BigDecimal value;
-    @Type(type = "str-array")
-    @Column(columnDefinition = "STRING ARRAY")
-    private List<String> images;
 
     public Barter() {
     }
@@ -43,7 +44,7 @@ public class Barter {
         return new Barter(body.getId(), interest, body.getType(), body.getValue());
     }
 
-    public static List<Barter> fromList(List<BarterRequestBody> body, Interest interest) {
+    public static List<Barter> fromList(List<? extends BarterRequestBody> body, Interest interest) {
         return (CheckUtils.listIsNullOrEmpty(body)) ? Collections.emptyList()
                 : body.stream().map(g -> Barter.from(g, interest)).collect(Collectors.toList());
     }
@@ -56,6 +57,7 @@ public class Barter {
         this.id = id;
     }
 
+    @JsonIgnore
     public Interest getInterest() {
         return interest;
     }
@@ -80,14 +82,6 @@ public class Barter {
         this.value = value;
     }
 
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,13 +89,12 @@ public class Barter {
         Barter barter = (Barter) o;
         return Objects.equals(id, barter.id) &&
                 type == barter.type &&
-                Objects.equals(value, barter.value) &&
-                Objects.equals(images, barter.images);
+                Objects.equals(value, barter.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, interest, type, value, images);
+        return Objects.hash(id, interest, type, value);
     }
 
     @Override
@@ -110,7 +103,6 @@ public class Barter {
                 .add("id=" + id)
                 .add("type=" + type)
                 .add("value=" + value)
-                .add("images=" + images)
                 .toString();
     }
 }

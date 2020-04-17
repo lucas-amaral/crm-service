@@ -2,11 +2,10 @@ package com.proposta.aceita.crmservice.entities;
 
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
-import com.vladmihalcea.hibernate.type.array.IntArrayType;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,11 +14,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import static com.vladmihalcea.hibernate.type.array.ListArrayType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity(name = "interests")
-@TypeDef(name = "str-array", typeClass = StringArrayType.class)
-@TypeDef(name = "int-array", typeClass = IntArrayType.class)
 public class Interest {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     @OneToOne
     @JoinColumn(name = "username")
@@ -27,14 +30,12 @@ public class Interest {
     private BigDecimal value;
     private Boolean financing;
     private BigDecimal financingValue;
-    @Enumerated(EnumType.STRING)
-    @Type(type = "str-array")
-    @Column(columnDefinition = "STRING ARRAY")
+    @Type(type = "com.vladmihalcea.hibernate.type.array.ListArrayType", parameters = {@Parameter(name = SQL_ARRAY_TYPE, value = "text")})
+    @Column(columnDefinition = "text[]")
     private List<PropertyType> types;
-    @JoinTable(name = "interest_neighborhoods",
-            joinColumns = @JoinColumn(name = "interest_id", referencedColumnName = "id"),
+    @JoinTable(name = "interest_neighborhoods", joinColumns = @JoinColumn(name = "interest_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "neighborhood_id", referencedColumnName = "id"))
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = LAZY)
     private List<Neighborhood> neighborhoods;
     private Integer dorms;
     private Integer suites;
@@ -43,7 +44,7 @@ public class Interest {
     private Boolean balcony;
     private Boolean elevator;
     private Boolean barbecueGrill;
-    @OneToMany(mappedBy="interest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="interest", fetch = LAZY, cascade = ALL)
     private List<Barter> barters;
     @CreationTimestamp
     @Column(updatable = false)
@@ -73,7 +74,7 @@ public class Interest {
 
     public static Interest from(InterestRequestBody body, User user, List<Neighborhood> neighborhoods) {
         return new Interest(body.getId(), user, body.getValue(), body.getFinancing(), body.getFinancingValue(),
-                body.getTypes(), neighborhoods, body.getDorms(), body.getSuites(), body.getBathrooms(),
+                null, neighborhoods, body.getDorms(), body.getSuites(), body.getBathrooms(),
                 body.getPool(), body.getBalcony(), body.getElevator(), body.getBarbecueGrill());
     }
 
@@ -199,6 +200,10 @@ public class Interest {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

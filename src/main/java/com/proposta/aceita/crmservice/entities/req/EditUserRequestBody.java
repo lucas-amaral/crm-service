@@ -36,7 +36,7 @@ public class EditUserRequestBody implements UserRequestBody {
                                @JsonProperty("type") UserType type,
                                @JsonProperty("cpfCnpj") String cpfCnpj,
                                @JsonProperty("sex") Sex sex,
-                               @JsonProperty("address") AddressRequestBody address) {
+                               @JsonProperty("address") EditAddressRequestBody address) {
         this.username = username;
         this.password = password;
         this.name = name;

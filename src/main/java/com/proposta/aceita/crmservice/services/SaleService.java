@@ -32,7 +32,8 @@ public class SaleService {
 
     @Transactional
     public Optional<Sale> save(SaleRequestBody body) {
-        return propertyService.getById(body.getPropertyId()).map(p -> saleRepository.save(Sale.from(body, p)));
+        return propertyService.getById(body.getPropertyId())
+                .map(property -> saleRepository.save(Sale.from(body, property)));
     }
 
     public void delete(Integer id) {

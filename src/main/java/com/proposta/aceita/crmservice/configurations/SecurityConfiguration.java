@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
@@ -19,7 +18,7 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-    private static final String[] OPENED_ENDPOINTS = { "/login" };
+    private static final String[] OPENED_ENDPOINTS = { "/login", "/users" };
 
     private final DataSource dataSource;
 
@@ -46,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .permitAll()
 
-                .antMatchers(OPENED_ENDPOINTS)
+                .antMatchers(HttpMethod.POST, OPENED_ENDPOINTS)
                 .permitAll()
 
                 .anyRequest()
@@ -59,7 +58,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", HttpMethod.DELETE.name()))
-                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 
                 .and()
                 .httpBasic();

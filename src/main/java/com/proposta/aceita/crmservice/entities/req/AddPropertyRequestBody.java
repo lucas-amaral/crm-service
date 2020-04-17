@@ -20,7 +20,7 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
     private final PropertyType type;
     private final BigDecimal area;
     private final Integer registration;
-    @NotEmpty
+    @NotNull
     private final AddressRequestBody address;
     private final Integer iptu;
     private final Integer dorms;
@@ -38,7 +38,7 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
                                   @JsonProperty("type") PropertyType type,
                                   @JsonProperty("area") BigDecimal area,
                                   @JsonProperty("registration") Integer registration,
-                                  @JsonProperty("address") AddressRequestBody address,
+                                  @JsonProperty("address") AddAddressRequestBody address,
                                   @JsonProperty("iptu") Integer iptu,
                                   @JsonProperty("dorms") Integer dorms,
                                   @JsonProperty("suites") Integer suites,

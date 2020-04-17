@@ -34,5 +34,7 @@ public interface InterestRequestBody {
 
     Boolean getBarbecueGrill();
 
-    List<BarterRequestBody> getBarters();
+    List<? extends BarterRequestBody> getBarters();
+
+    String getStringTypes();
 }

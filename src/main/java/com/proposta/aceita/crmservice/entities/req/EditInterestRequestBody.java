@@ -2,14 +2,15 @@ package com.proposta.aceita.crmservice.entities.req;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
+import com.proposta.aceita.crmservice.util.CheckUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class EditInterestRequestBody implements InterestRequestBody{
     @NotNull
@@ -30,7 +31,7 @@ public class EditInterestRequestBody implements InterestRequestBody{
     private final Boolean balcony;
     private final Boolean elevator;
     private final Boolean barbecueGrill;
-    private final List<BarterRequestBody> barters;
+    private final List<EditBarterRequestBody> barters;
 
     public EditInterestRequestBody(@JsonProperty("id") Integer id,
                                    @JsonProperty("username") String username,
@@ -46,7 +47,7 @@ public class EditInterestRequestBody implements InterestRequestBody{
                                    @JsonProperty("balcony") Boolean balcony,
                                    @JsonProperty("elevator") Boolean elevator,
                                    @JsonProperty("barbecueGrill") Boolean barbecueGrill,
-                                   @JsonProperty("garages") List<BarterRequestBody> barters) {
+                                   @JsonProperty("barters") List<EditBarterRequestBody> barters) {
         this.id = id;
         this.username = username;
         this.value = value;
@@ -120,8 +121,13 @@ public class EditInterestRequestBody implements InterestRequestBody{
         return barbecueGrill;
     }
 
-    public List<BarterRequestBody> getBarters() {
+    public List<? extends BarterRequestBody> getBarters() {
         return barters;
+    }
+
+    public String getStringTypes() {
+        return CheckUtils.listIsNullOrEmpty(types) ? null
+                : types.stream().map(type -> String.format("'%s'", type)).collect(Collectors.joining(", "));
     }
 
     @Override

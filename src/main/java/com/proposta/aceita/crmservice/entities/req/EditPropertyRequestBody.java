@@ -22,6 +22,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
     private final PropertyType type;
     private final BigDecimal area;
     private final Integer registration;
+    @NotNull
     private final AddressRequestBody address;
     private final Integer iptu;
     private final Integer dorms;
@@ -40,7 +41,7 @@ public class EditPropertyRequestBody implements PropertyRequestBody {
                                    @JsonProperty("type") PropertyType type,
                                    @JsonProperty("area") BigDecimal area,
                                    @JsonProperty("registration") Integer registration,
-                                   @JsonProperty("address") AddressRequestBody address,
+                                   @JsonProperty("address") EditAddressRequestBody address,
                                    @JsonProperty("iptu") Integer iptu,
                                    @JsonProperty("dorms") Integer dorms,
                                    @JsonProperty("suites") Integer suites,

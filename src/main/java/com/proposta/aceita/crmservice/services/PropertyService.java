@@ -36,10 +36,10 @@ public class PropertyService {
 
     @Transactional
     public Optional<Property> save(PropertyRequestBody body) {
-        return userService.getById(body.getUsername()).map(u -> {
+        return userService.getById(body.getUsername()).map(user -> {
             var address = addressService.save(body.getAddress()).orElse(null);
 
-            var property = propertyRepository.save(Property.from(body, u, address));
+            var property = propertyRepository.save(Property.from(body, user, address));
 
             garageService.save(body.getGarages(), property).ifPresent(property::setGarages);
 

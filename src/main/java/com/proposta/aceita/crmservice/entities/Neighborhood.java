@@ -1,14 +1,15 @@
 package com.proposta.aceita.crmservice.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
+
+import static javax.persistence.GenerationType.*;
 
 @Entity(name = "neighborhoods")
 public class Neighborhood {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
     private String name;
     @OneToOne

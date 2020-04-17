@@ -32,8 +32,8 @@ public class AddressService {
 
     public Optional<Address> save(AddressRequestBody body) {
         return Optional.ofNullable(body)
-                .flatMap(a -> streetRepository.findById(a.getStreetId())
-                        .map(s -> addressRepository.save(Address.from(a, s))));
+                .flatMap(address -> streetRepository.findById(address.getStreetId())
+                        .map(street -> addressRepository.save(Address.from(address, street))));
     }
 
     public void delete(Integer id) {
