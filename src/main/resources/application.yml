@@ -1,5 +1,10 @@
 spring:
 
+  data:
+    mongodb:
+      uri: mongodb+srv://crm:evAwhbzOstemqUPv@clusterpropostaaceita-yhkgq.mongodb.net/test?retryWrites=true&w=majority
+      database: crm
+
   jpa:
     hibernate:
       ddl-auto: validate
