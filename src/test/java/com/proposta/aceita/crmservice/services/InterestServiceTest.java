@@ -59,7 +59,7 @@ public class InterestServiceTest {
     public void save() {
 
         var barterBody = new EditBarterRequestBody(3, 234, CAR, BigDecimal.valueOf(3432, 2));
-        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, null, List.of(2), 3, 1, 3, false, true, true, true, List.of(barterBody));
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, false, true, true, true, List.of(barterBody));
 
         var neighborhood = new Neighborhood(2, "Pé de Plátano", null);
         var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
@@ -74,9 +74,10 @@ public class InterestServiceTest {
 
         interestService.save(body);
 
-        interest.setBarters(List.of(barter));
+        var expected = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, null, List.of(neighborhood), 3, 1, 3, false, true, true, true);
 
-        verify(interestRepository).save(interest);
+        verify(interestRepository).save(expected);
+        verify(interestRepository).updateTypes(234, "'HOUSE', 'APARTMENT'");
 
     }
 
@@ -84,7 +85,7 @@ public class InterestServiceTest {
     public void saveWithoutNeighborhoods() {
 
         var barterBody = new EditBarterRequestBody(3, 234, CAR, BigDecimal.valueOf(3432, 2));
-        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, null, null, 3, 1, 3, false, true, true, true, List.of(barterBody));
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, false, true, true, true, List.of(barterBody));
 
         var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
                 FISICAL, "45230929-04", MALE, new Address(), true);
@@ -98,14 +99,17 @@ public class InterestServiceTest {
 
         interestService.save(body);
 
-        verify(interestRepository).save(interest);
+        var expected = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, null, Collections.emptyList(), 3, 1, 3, false, true, true, true);
+
+        verify(interestRepository).save(expected);
+        verify(interestRepository).updateTypes(234, "'HOUSE', 'APARTMENT'");
     }
 
     @Test
     public void saveWithoutUser() {
 
         var barterBody = new EditBarterRequestBody(3, 234, CAR, BigDecimal.valueOf(3432, 2));
-        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, null, null, 3, 1, 3, false, true, true, true, List.of(barterBody));
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, false, true, true, true, List.of(barterBody));
 
         when(userService.getById("joao@joao.com")).thenReturn(Optional.empty());
 
@@ -119,7 +123,7 @@ public class InterestServiceTest {
     @Test
     public void saveWithoutBarters() {
 
-        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, null, List.of(2), 3, 1, 3, false, true, true, true, null);
+        var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, false, true, true, true, null);
 
         var neighborhood = new Neighborhood(2, "Pé de Plátano", null);
         var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
@@ -133,7 +137,10 @@ public class InterestServiceTest {
 
         interestService.save(body);
 
-        verify(interestRepository).save(interest);
+        var expected = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, null, List.of(neighborhood), 3, 1, 3, false, true, true, true);
+
+        verify(interestRepository).save(expected);
+        verify(interestRepository).updateTypes(234, "'HOUSE', 'APARTMENT'");
     }
 
     @Test

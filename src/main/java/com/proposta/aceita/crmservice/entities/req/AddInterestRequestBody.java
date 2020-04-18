@@ -121,7 +121,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
 
     public String getStringTypes() {
         return CheckUtils.listIsNullOrEmpty(types) ? null
-                : types.stream().map(type -> String.format("'%s'", type)).collect(Collectors.joining(", "));
+                : types.stream().map(type -> PropertyType.toString(type)).collect(Collectors.joining(", "));
     }
 
     @Override

@@ -41,15 +41,19 @@ public class InterestService {
 
             var interest = interestRepository.save(Interest.from(body, user, neighborhoods));
 
-            if (!CheckUtils.listIsNullOrEmpty(body.getTypes())) {
-                interestRepository.updateTypes(interest.getId(), body.getStringTypes());
-                interest.setTypes(body.getTypes());
-            }
+            updateTypes(body, interest);
 
             barterService.save(body.getBarters(), interest).ifPresent(interest::setBarters);
 
             return interest;
         });
+    }
+
+    private void updateTypes(InterestRequestBody body, Interest interest) {
+        if (!CheckUtils.listIsNullOrEmpty(body.getTypes())) {
+            interestRepository.updateTypes(interest.getId(), body.getStringTypes());
+            interest.setTypes(body.getTypes());
+        }
     }
 
     public void delete(Integer id) {

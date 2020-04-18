@@ -1,7 +1,7 @@
 package com.proposta.aceita.crmservice.entities.enums;
 
 public enum PropertyType {
-    HOUSE("casa"), APARTMENT("apartamento"), COMERCIAL("comercial"), FARM("Chácara"), GROUND("Terreno");
+    HOUSE("Casa"), APARTMENT("Apartamento"), COMERCIAL("Comercial"), FARM("Chácara"), GROUND("Terreno");
 
     private String type;
 
@@ -11,5 +11,9 @@ public enum PropertyType {
 
     public String getType() {
         return type;
+    }
+
+    public static String toString(PropertyType propertyType) {
+        return String.format("'%s'", propertyType);
     }
 }
