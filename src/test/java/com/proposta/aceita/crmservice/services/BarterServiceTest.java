@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static com.proposta.aceita.crmservice.entities.enums.BarterType.CAR;
+import static com.proposta.aceita.crmservice.entities.enums.BarterType.VEHICLE;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -50,8 +50,8 @@ public class BarterServiceTest {
     public void save() {
 
         var interest = new Interest();
-        var body = new EditBarterRequestBody(3, null, CAR, BigDecimal.TEN);
-        var barter = new Barter(3, interest, CAR, BigDecimal.TEN);
+        var body = new EditBarterRequestBody(3, null, VEHICLE, BigDecimal.TEN);
+        var barter = new Barter(3, interest, VEHICLE, BigDecimal.TEN);
 
         barterService.save(List.of(body), interest);
 

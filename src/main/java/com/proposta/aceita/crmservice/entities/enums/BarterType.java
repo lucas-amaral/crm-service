@@ -1,7 +1,7 @@
 package com.proposta.aceita.crmservice.entities.enums;
 
 public enum BarterType {
-    CAR("carro"), PROPERTY("imóvel");
+    VEHICLE("Veículo"), PROPERTY("Imóvel");
 
     private String type;
 
