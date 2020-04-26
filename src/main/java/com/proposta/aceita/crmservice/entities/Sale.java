@@ -42,7 +42,7 @@ public class Sale {
         this.agencying = agencying;
     }
 
-    public static Sale from(SaleRequestBody body, Property property) {
+    public static Sale of(SaleRequestBody body, Property property) {
         return new Sale(body.getId(), property, body.getValue(), body.isFinancing(), body.getFinancingValue(),
                 body.isBarterVehicle(), body.getBarterVehicleValue(), body.isBarterProperty(), body.getBarterPropertyValue(), body.getAgencying());
     }

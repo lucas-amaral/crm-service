@@ -26,6 +26,13 @@ services:
     username: internal
     password: tinr3kahcuth3gie8bohc4yiXhedcfgx
 
-  url:
-    notification: notification.com
-    match: match.com
+  match:
+    name: match-service
+    url: https://match-pa-service.herokuapp.com
+    username: internal
+    password: yblYhVyCtFB0aSm5
+  notification:
+    name: notification-service
+    url: https://notification-pa-service.herokuapp.com
+    username: internal
+    password: wUrw93cGGYczZKsU

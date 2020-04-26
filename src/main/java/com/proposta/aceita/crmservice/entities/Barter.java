@@ -5,7 +5,6 @@ import com.proposta.aceita.crmservice.entities.enums.BarterType;
 import com.proposta.aceita.crmservice.entities.req.BarterRequestBody;
 import com.proposta.aceita.crmservice.util.CheckUtils;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
@@ -40,13 +39,13 @@ public class Barter {
         this.value = value;
     }
 
-    public static Barter from(BarterRequestBody body, Interest interest) {
+    public static Barter of(BarterRequestBody body, Interest interest) {
         return new Barter(body.getId(), interest, body.getType(), body.getValue());
     }
 
-    public static List<Barter> fromList(List<? extends BarterRequestBody> body, Interest interest) {
+    public static List<Barter> ofList(List<? extends BarterRequestBody> body, Interest interest) {
         return (CheckUtils.listIsNullOrEmpty(body)) ? Collections.emptyList()
-                : body.stream().map(g -> Barter.from(g, interest)).collect(Collectors.toList());
+                : body.stream().map(g -> Barter.of(g, interest)).collect(Collectors.toList());
     }
 
     public Integer getId() {

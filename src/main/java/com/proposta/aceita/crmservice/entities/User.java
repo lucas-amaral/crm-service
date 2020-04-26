@@ -53,7 +53,7 @@ public class User {
         this.enabled = enabled;
         }
 
-    public static User from(UserRequestBody body, Address address) {
+    public static User of(UserRequestBody body, Address address) {
         return new User(body.getUsername(), body.getPassword(), body.getName(), body.getDateOfBirth(), body.getType(),
                 body.getCpfCnpj(), body.getSex(), address, true);
     }

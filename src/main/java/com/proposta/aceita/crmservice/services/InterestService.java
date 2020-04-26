@@ -3,6 +3,7 @@ package com.proposta.aceita.crmservice.services;
 import com.proposta.aceita.crmservice.entities.Interest;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
 import com.proposta.aceita.crmservice.repositories.InterestRepository;
+import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import com.proposta.aceita.crmservice.util.CheckUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,15 @@ public class InterestService {
     private final UserService userService;
     private final NeighborhoodService neighborhoodService;
     private final BarterService barterService;
+    private final MatchService matchService;
 
     @Autowired
-    public InterestService(InterestRepository interestRepository, UserService userService, NeighborhoodService neighborhoodService, BarterService barterService) {
+    public InterestService(InterestRepository interestRepository, UserService userService, NeighborhoodService neighborhoodService, BarterService barterService, MatchService matchService) {
         this.interestRepository = interestRepository;
         this.userService = userService;
         this.neighborhoodService = neighborhoodService;
         this.barterService = barterService;
+        this.matchService = matchService;
     }
 
     public Optional<Interest> getById(Integer id) {
@@ -39,11 +42,13 @@ public class InterestService {
         return userService.getById(body.getUsername()).map(user -> {
             var neighborhoods = neighborhoodService.list(body.getNeighborhoodIds());
 
-            var interest = interestRepository.save(Interest.from(body, user, neighborhoods));
+            var interest = interestRepository.save(Interest.of(body, user, neighborhoods));
 
             updateTypes(body, interest);
 
             barterService.save(body.getBarters(), interest).ifPresent(interest::setBarters);
+
+            matchService.saveInterest(interest);
 
             return interest;
         });
@@ -58,5 +63,6 @@ public class InterestService {
 
     public void delete(Integer id) {
         interestRepository.deleteById(id);
+        matchService.deleteInterest(id);
     }
 }

@@ -26,6 +26,8 @@ public interface InterestRequestBody {
 
     Integer getBathrooms();
 
+    Integer getGarages();
+
     Boolean getPool();
 
     Boolean getBalcony();

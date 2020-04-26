@@ -23,6 +23,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
     private final Integer dorms;
     private final Integer suites;
     private final Integer bathrooms;
+    private final Integer garages;
     private final Boolean pool;
     private final Boolean balcony;
     private final Boolean elevator;
@@ -38,6 +39,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
                                   @JsonProperty("dorms") Integer dorms,
                                   @JsonProperty("suites") Integer suites,
                                   @JsonProperty("bathrooms") Integer bathrooms,
+                                  @JsonProperty("garages") Integer garages,
                                   @JsonProperty("pool") Boolean pool,
                                   @JsonProperty("balcony") Boolean balcony,
                                   @JsonProperty("elevator") Boolean elevator,
@@ -52,6 +54,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
         this.dorms = dorms;
         this.suites = suites;
         this.bathrooms = bathrooms;
+        this.garages = garages;
         this.pool = pool;
         this.balcony = balcony;
         this.elevator = elevator;
@@ -99,6 +102,11 @@ public class AddInterestRequestBody implements InterestRequestBody{
         return bathrooms;
     }
 
+    @Override
+    public Integer getGarages() {
+        return garages;
+    }
+
     public Boolean getPool() {
         return pool;
     }
@@ -138,6 +146,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
                 Objects.equals(dorms, that.dorms) &&
                 Objects.equals(suites, that.suites) &&
                 Objects.equals(bathrooms, that.bathrooms) &&
+                Objects.equals(garages, that.garages) &&
                 Objects.equals(pool, that.pool) &&
                 Objects.equals(balcony, that.balcony) &&
                 Objects.equals(elevator, that.elevator) &&
@@ -147,7 +156,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, barters);
+        return Objects.hash(username, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, garages, pool, balcony, elevator, barbecueGrill, barters);
     }
 
     @Override
@@ -162,6 +171,7 @@ public class AddInterestRequestBody implements InterestRequestBody{
                 .add("dorms=" + dorms)
                 .add("suites=" + suites)
                 .add("bathrooms=" + bathrooms)
+                .add("garages=" + garages)
                 .add("pool=" + pool)
                 .add("balcony=" + balcony)
                 .add("elevator=" + elevator)

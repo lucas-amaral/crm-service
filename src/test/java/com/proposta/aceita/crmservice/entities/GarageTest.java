@@ -22,7 +22,7 @@ public class GarageTest {
         var garageBox23 = new Garage(4, property, 23, "snajknjkasnsa");
         var garageBox37 = new Garage(4, property, 37, "snajknjkasnsa");
 
-        assertThat(Garage.fromList(List.of(bodyBox20, bodyBox23, bodyBox37), property))
+        assertThat(Garage.ofList(List.of(bodyBox20, bodyBox23, bodyBox37), property))
                 .isEqualTo(List.of(garageBox20, garageBox23, garageBox37));
 
     }
@@ -31,14 +31,14 @@ public class GarageTest {
     public void fromListWithEmptyList() {
         var property = new Property();
 
-        assertThat(Garage.fromList(Collections.emptyList(), property)).isEqualTo(Collections.emptyList());
+        assertThat(Garage.ofList(Collections.emptyList(), property)).isEqualTo(Collections.emptyList());
 
     }
 
     @Test
     public void fromListWithNull() {
 
-        assertThat(Garage.fromList(null, null)).isEqualTo(Collections.emptyList());
+        assertThat(Garage.ofList(null, null)).isEqualTo(Collections.emptyList());
 
     }
 }

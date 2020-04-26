@@ -1,24 +1,19 @@
-package com.proposta.aceita.crmservice.entities.req;
+package com.proposta.aceita.crmservice.entities.req.match;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.proposta.aceita.crmservice.entities.Interest;
+import com.proposta.aceita.crmservice.entities.Neighborhood;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 import com.proposta.aceita.crmservice.util.CheckUtils;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
-public class EditInterestRequestBody implements InterestRequestBody{
-    @NotNull
+public class MatchInterestRequestBody {
     private final Integer id;
-    @NotNull
-    @Email
-    private final String username;
-    @NotNull
     private final BigDecimal value;
     private final Boolean financing;
     private final BigDecimal financingValue;
@@ -32,26 +27,11 @@ public class EditInterestRequestBody implements InterestRequestBody{
     private final Boolean balcony;
     private final Boolean elevator;
     private final Boolean barbecueGrill;
-    private final List<EditBarterRequestBody> barters;
+    private final List<MatchBarterRequestBody> barters;
 
-    public EditInterestRequestBody(@JsonProperty("id") Integer id,
-                                   @JsonProperty("username") String username,
-                                   @JsonProperty("value") BigDecimal value,
-                                   @JsonProperty("financing") Boolean financing,
-                                   @JsonProperty("financingValue") BigDecimal financingValue,
-                                   @JsonProperty("types") List<PropertyType> types,
-                                   @JsonProperty("neighborhoodIds") List<Integer> neighborhoodIds,
-                                   @JsonProperty("dorms") Integer dorms,
-                                   @JsonProperty("suites") Integer suites,
-                                   @JsonProperty("bathrooms") Integer bathrooms,
-                                   @JsonProperty("garages") Integer garages,
-                                   @JsonProperty("pool") Boolean pool,
-                                   @JsonProperty("balcony") Boolean balcony,
-                                   @JsonProperty("elevator") Boolean elevator,
-                                   @JsonProperty("barbecueGrill") Boolean barbecueGrill,
-                                   @JsonProperty("barters") List<EditBarterRequestBody> barters) {
+
+    public MatchInterestRequestBody(Integer id, BigDecimal value, Boolean financing, BigDecimal financingValue, List<PropertyType> types, List<Integer> neighborhoodIds, Integer dorms, Integer suites, Integer bathrooms, Integer garages, Boolean pool, Boolean balcony, Boolean elevator, Boolean barbecueGrill, List<MatchBarterRequestBody> barters) {
         this.id = id;
-        this.username = username;
         this.value = value;
         this.financing = financing;
         this.financingValue = financingValue;
@@ -68,12 +48,32 @@ public class EditInterestRequestBody implements InterestRequestBody{
         this.barters = barters;
     }
 
-    public Integer getId() {
-        return id;
+    public static MatchInterestRequestBody of(Interest interest) {
+        List<MatchBarterRequestBody> barters = CheckUtils.listIsNullOrEmpty(interest.getBarters()) ? Collections.emptyList()
+                : interest.getBarters().stream().map(MatchBarterRequestBody::of).collect(Collectors.toList());
+
+        List<Integer> neighborhoodIs = CheckUtils.listIsNullOrEmpty(interest.getNeighborhoods()) ? Collections.emptyList()
+                : interest.getNeighborhoods().stream().map(Neighborhood::getId).collect(Collectors.toList());
+
+        return new MatchInterestRequestBody(interest.getId(),
+                interest.getValue(),
+                interest.getFinancing(),
+                interest.getFinancingValue(),
+                interest.getTypes(),
+                neighborhoodIs,
+                interest.getDorms(),
+                interest.getSuites(),
+                interest.getBathrooms(),
+                interest.getGarages(),
+                interest.getPool(),
+                interest.getBalcony(),
+                interest.getElevator(),
+                interest.getBarbecueGrill(),
+                barters);
     }
 
-    public String getUsername() {
-        return username;
+    public Integer getId() {
+        return id;
     }
 
     public BigDecimal getValue() {
@@ -108,7 +108,6 @@ public class EditInterestRequestBody implements InterestRequestBody{
         return bathrooms;
     }
 
-    @Override
     public Integer getGarages() {
         return garages;
     }
@@ -129,31 +128,25 @@ public class EditInterestRequestBody implements InterestRequestBody{
         return barbecueGrill;
     }
 
-    public List<? extends BarterRequestBody> getBarters() {
+    public List<MatchBarterRequestBody> getBarters() {
         return barters;
-    }
-
-    public String getStringTypes() {
-        return CheckUtils.listIsNullOrEmpty(types) ? null
-                : types.stream().map(type -> PropertyType.toString(type)).collect(Collectors.joining(", "));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EditInterestRequestBody that = (EditInterestRequestBody) o;
+        MatchInterestRequestBody that = (MatchInterestRequestBody) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(username, that.username) &&
                 Objects.equals(value, that.value) &&
                 Objects.equals(financing, that.financing) &&
                 Objects.equals(financingValue, that.financingValue) &&
                 Objects.equals(types, that.types) &&
                 Objects.equals(neighborhoodIds, that.neighborhoodIds) &&
-                Objects.equals(garages, that.garages) &&
                 Objects.equals(dorms, that.dorms) &&
                 Objects.equals(suites, that.suites) &&
                 Objects.equals(bathrooms, that.bathrooms) &&
+                Objects.equals(garages, that.garages) &&
                 Objects.equals(pool, that.pool) &&
                 Objects.equals(balcony, that.balcony) &&
                 Objects.equals(elevator, that.elevator) &&
@@ -163,14 +156,13 @@ public class EditInterestRequestBody implements InterestRequestBody{
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, garages, balcony, elevator, barbecueGrill, barters);
+        return Objects.hash(id, value, financing, financingValue, types, neighborhoodIds, dorms, suites, bathrooms, garages, pool, balcony, elevator, barbecueGrill, barters);
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", EditInterestRequestBody.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", MatchInterestRequestBody.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("username=" + username)
                 .add("value=" + value)
                 .add("financing=" + financing)
                 .add("financingValue=" + financingValue)
@@ -179,7 +171,7 @@ public class EditInterestRequestBody implements InterestRequestBody{
                 .add("dorms=" + dorms)
                 .add("suites=" + suites)
                 .add("bathrooms=" + bathrooms)
-                .add("bathrooms=" + bathrooms)
+                .add("garages=" + garages)
                 .add("pool=" + pool)
                 .add("balcony=" + balcony)
                 .add("elevator=" + elevator)

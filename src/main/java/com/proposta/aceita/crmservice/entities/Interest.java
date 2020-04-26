@@ -2,7 +2,6 @@ package com.proposta.aceita.crmservice.entities;
 
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
-import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -40,6 +39,7 @@ public class Interest {
     private Integer dorms;
     private Integer suites;
     private Integer bathrooms;
+    private Integer garages;
     private Boolean pool;
     private Boolean balcony;
     private Boolean elevator;
@@ -55,7 +55,7 @@ public class Interest {
 
     public Interest(Integer id, User user, BigDecimal value, Boolean financing, BigDecimal financingValue,
                     List<PropertyType> types, List<Neighborhood> neighborhoods, Integer dorms, Integer suites,
-                    Integer bathrooms, Boolean pool, Boolean balcony, Boolean elevator, Boolean barbecueGrill) {
+                    Integer bathrooms, Integer garages, Boolean pool, Boolean balcony, Boolean elevator, Boolean barbecueGrill) {
         this.id = id;
         this.user = user;
         this.value = value;
@@ -66,16 +66,17 @@ public class Interest {
         this.dorms = dorms;
         this.suites = suites;
         this.bathrooms = bathrooms;
+        this.garages = this.garages;
         this.pool = pool;
         this.balcony = balcony;
         this.elevator = elevator;
         this.barbecueGrill = barbecueGrill;
     }
 
-    public static Interest from(InterestRequestBody body, User user, List<Neighborhood> neighborhoods) {
+    public static Interest of(InterestRequestBody body, User user, List<Neighborhood> neighborhoods) {
         return new Interest(body.getId(), user, body.getValue(), body.getFinancing(), body.getFinancingValue(),
                 null, neighborhoods, body.getDorms(), body.getSuites(), body.getBathrooms(),
-                body.getPool(), body.getBalcony(), body.getElevator(), body.getBarbecueGrill());
+                body.getGarages(), body.getPool(), body.getBalcony(), body.getElevator(), body.getBarbecueGrill());
     }
 
     public Integer getId() {
@@ -158,6 +159,14 @@ public class Interest {
         this.bathrooms = bathrooms;
     }
 
+    public Integer getGarages() {
+        return garages;
+    }
+
+    public void setGarages(Integer garages) {
+        this.garages = garages;
+    }
+
     public Boolean getPool() {
         return pool;
     }
@@ -221,6 +230,7 @@ public class Interest {
                 Objects.equals(dorms, interest.dorms) &&
                 Objects.equals(suites, interest.suites) &&
                 Objects.equals(bathrooms, interest.bathrooms) &&
+                Objects.equals(garages, interest.garages) &&
                 Objects.equals(pool, interest.pool) &&
                 Objects.equals(balcony, interest.balcony) &&
                 Objects.equals(elevator, interest.elevator) &&
@@ -230,7 +240,7 @@ public class Interest {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, value, financing, financingValue, types, neighborhoods, dorms, suites, bathrooms, pool, balcony, elevator, barbecueGrill, createdAt);
+        return Objects.hash(id, user, value, financing, financingValue, types, neighborhoods, dorms, suites, bathrooms, garages, pool, balcony, elevator, barbecueGrill, createdAt);
     }
 
     @Override
@@ -246,6 +256,7 @@ public class Interest {
                 .add("dorms=" + dorms)
                 .add("suites=" + suites)
                 .add("bathrooms=" + bathrooms)
+                .add("garages=" + garages)
                 .add("pool=" + pool)
                 .add("balcony=" + balcony)
                 .add("elevator=" + elevator)

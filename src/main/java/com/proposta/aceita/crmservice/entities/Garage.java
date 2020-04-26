@@ -33,13 +33,13 @@ public class Garage {
         this.registration = registration;
     }
 
-    public static Garage from(GarageRequestBody body, Property property) {
+    public static Garage of(GarageRequestBody body, Property property) {
         return new Garage(body.getId(), property, body.getBox(), body.getRegistration());
     }
 
-    public static List<Garage> fromList(List<GarageRequestBody> body, Property property) {
+    public static List<Garage> ofList(List<GarageRequestBody> body, Property property) {
         return (CheckUtils.listIsNullOrEmpty(body)) ? Collections.emptyList()
-                : body.stream().map(g -> Garage.from(g, property)).collect(Collectors.toList());
+                : body.stream().map(g -> Garage.of(g, property)).collect(Collectors.toList());
     }
 
     public Integer getId() {

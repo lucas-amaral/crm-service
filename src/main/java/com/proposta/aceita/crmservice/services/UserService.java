@@ -33,7 +33,7 @@ public class UserService {
     @Transactional
     public Optional<User> save(UserRequestBody body) {
         var address = addressService.save(body.getAddress()).orElse(null);
-        return Optional.of(userRepository.save(User.from(body, address)));
+        return Optional.of(userRepository.save(User.of(body, address)));
     }
 
     public void delete(String username) {

@@ -10,3 +10,15 @@ spring:
     password: internal123
     driverClassName: org.postgresql.Driver
     hikari.maximum-pool-size: 2
+
+services:
+  match:
+    name: match-service
+    url: match-service.com
+    username: user
+    password: password
+  notification:
+    name: notification-service
+    url: notification-service.com
+    username: user
+    password: password

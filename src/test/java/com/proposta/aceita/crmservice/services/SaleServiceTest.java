@@ -4,6 +4,7 @@ import com.proposta.aceita.crmservice.entities.Property;
 import com.proposta.aceita.crmservice.entities.Sale;
 import com.proposta.aceita.crmservice.entities.req.EditSaleRequestBody;
 import com.proposta.aceita.crmservice.repositories.SaleRepository;
+import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,11 +26,14 @@ public class SaleServiceTest {
     @MockBean
     private PropertyService propertyService;
 
+    @MockBean
+    private MatchService matchService;
+
     private SaleService saleService;
 
     @BeforeEach
     public void setup() {
-        saleService = new SaleService(saleRepository, propertyService);
+        saleService = new SaleService(saleRepository, propertyService, matchService);
     }
     
     @Test
@@ -59,10 +63,12 @@ public class SaleServiceTest {
         var sale = new Sale(356, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
         when(propertyService.getById(234)).thenReturn(Optional.of(property));
+        when(saleRepository.save(sale)).thenReturn(sale);
 
         saleService.save(body);
 
         verify(saleRepository).save(sale);
+        verify(matchService).saveSale(sale);
     }
 
     @Test

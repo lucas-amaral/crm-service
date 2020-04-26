@@ -33,7 +33,7 @@ public class GarageService {
     public Optional<List<Garage>> save(List<GarageRequestBody> body, Property property) {
         return Optional.ofNullable(body)
                 .flatMap(garage -> Optional.ofNullable(property)
-                        .map(p -> garageRepository.saveAll(Garage.fromList(garage, p))));
+                        .map(p -> garageRepository.saveAll(Garage.ofList(garage, p))));
     }
 
     public void delete(Integer id) {

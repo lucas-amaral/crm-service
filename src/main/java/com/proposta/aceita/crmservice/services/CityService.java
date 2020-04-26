@@ -29,7 +29,7 @@ public class CityService {
     }
 
     public Optional<City> save(CityRequestBody body) {
-        return Optional.of(cityRepository.save(City.from(body)));
+        return Optional.of(cityRepository.save(City.of(body)));
     }
 
     public void delete(Integer id) {

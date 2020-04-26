@@ -28,7 +28,7 @@ public class City {
         this.state = state;
     }
 
-    public static City from(CityRequestBody body) {
+    public static City of(CityRequestBody body) {
         return new City(body.getId(), body.getName(), body.getState());
     }
 

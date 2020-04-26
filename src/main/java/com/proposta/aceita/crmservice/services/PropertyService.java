@@ -39,7 +39,7 @@ public class PropertyService {
         return userService.getById(body.getUsername()).map(user -> {
             var address = addressService.save(body.getAddress()).orElse(null);
 
-            var property = propertyRepository.save(Property.from(body, user, address));
+            var property = propertyRepository.save(Property.of(body, user, address));
 
             garageService.save(body.getGarages(), property).ifPresent(property::setGarages);
 

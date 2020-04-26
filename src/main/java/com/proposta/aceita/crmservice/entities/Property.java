@@ -73,7 +73,7 @@ public class Property {
         this.enable = enable;
     }
 
-    public static Property from(PropertyRequestBody body, User user, Address address) {
+    public static Property of(PropertyRequestBody body, User user, Address address) {
         return new Property(body.getId(), user, body.getDescription(), body.getType(), body.getArea(),
                 body.getRegistration(), address, body.getIptu(), body.getDorms(), body.getSuites(), body.getBathrooms(),
                 body.getPool(), body.getBalcony(), body.getElevator(), body.getBarbecueGrill(), null,

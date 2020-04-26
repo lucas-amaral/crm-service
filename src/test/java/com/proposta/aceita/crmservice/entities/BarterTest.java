@@ -25,7 +25,7 @@ public class BarterTest {
         var barter23 = new Barter(4, interest, PROPERTY, BigDecimal.TEN);
         var barter37 = new Barter(4, interest, VEHICLE, BigDecimal.ONE);
 
-        assertThat(Barter.fromList(List.of(body20, body23, body37), interest))
+        assertThat(Barter.ofList(List.of(body20, body23, body37), interest))
                 .isEqualTo(List.of(barter20, barter23, barter37));
 
     }
@@ -34,14 +34,14 @@ public class BarterTest {
     public void fromListWithEmptyList() {
         var interest = new Interest();
 
-        assertThat(Barter.fromList(Collections.emptyList(), interest)).isEqualTo(Collections.emptyList());
+        assertThat(Barter.ofList(Collections.emptyList(), interest)).isEqualTo(Collections.emptyList());
 
     }
 
     @Test
     public void fromListWithNull() {
 
-        assertThat(Barter.fromList(null, null)).isEqualTo(Collections.emptyList());
+        assertThat(Barter.ofList(null, null)).isEqualTo(Collections.emptyList());
 
     }
 }

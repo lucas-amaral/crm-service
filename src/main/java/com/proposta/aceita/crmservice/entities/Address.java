@@ -29,7 +29,7 @@ public class Address {
         this.complement = complement;
     }
 
-    public static Address from(AddressRequestBody body, Street street) {
+    public static Address of(AddressRequestBody body, Street street) {
         return new Address(body.getId(), street, body.getNumber(), body.getComplement());
     }
 
