@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("internal/properties/users")
+@RequestMapping("internal/properties")
 public class InternalPropertyController {
 
     private final PropertyService propertyService;

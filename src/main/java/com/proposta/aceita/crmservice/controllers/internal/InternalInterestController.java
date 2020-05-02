@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("internal/interests/users")
+@RequestMapping("internal/interests")
 public class InternalInterestController {
 
     private final InterestService interestService;
