@@ -1,6 +1,6 @@
 package com.proposta.aceita.crmservice.services.integrations.clients;
 
-import com.proposta.aceita.crmservice.entities.req.NegotiationRequestBody;
+import com.proposta.aceita.crmservice.entities.req.intergrations.NegotiationRequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;

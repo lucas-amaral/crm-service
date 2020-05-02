@@ -2,6 +2,7 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Interest;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
+import com.proposta.aceita.crmservice.entities.res.UserResponseBody;
 import com.proposta.aceita.crmservice.repositories.InterestRepository;
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class InterestService {
 
     public Optional<Interest> getById(Integer id) {
         return interestRepository.findById(id);
+    }
+
+    public Optional<UserResponseBody> getUserById(Integer id) {
+        return interestRepository.findById(id)
+                .map(property -> new UserResponseBody(property.getUser().getName(), property.getUser().getUsername()));
     }
 
     public Optional<Interest> getByUser(String username) {

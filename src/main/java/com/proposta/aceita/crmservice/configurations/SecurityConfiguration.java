@@ -1,7 +1,8 @@
 package com.proposta.aceita.crmservice.configurations;
 
-import com.proposta.aceita.crmservice.entities.enums.Authority;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,6 +14,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
+import static com.proposta.aceita.crmservice.entities.enums.Authority.ADMIN;
+import static com.proposta.aceita.crmservice.entities.enums.Authority.SYSTEM;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -20,48 +24,96 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
     private static final String[] OPENED_ENDPOINTS = { "/login", "/users" };
 
-    private final DataSource dataSource;
+    @Configuration
+    @Order(1)
+    public static class InternalApiSecurityConfiguration extends WebSecurityConfigurerAdapter {
+        @Value("${services.internal.username}")
+        private String internalUsername;
 
-    public SecurityConfiguration(DataSource dataSource) {
-        this.dataSource = dataSource;
+        @Value("${services.internal.password}")
+        private String internalPassword;
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+            auth
+                    .inMemoryAuthentication()
+                    .passwordEncoder(PASSWORD_ENCODER)
+                    .withUser(internalUsername)
+                    .password(PASSWORD_ENCODER.encode(internalPassword))
+                    .authorities(SYSTEM.name());
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+
+            http
+
+                    .antMatcher("/internal/**")
+                    .authorizeRequests()
+                    .anyRequest()
+                    .hasAuthority(SYSTEM.name())
+
+                    .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+
+                    .and()
+                    .httpBasic()
+                    .and()
+                    .csrf()
+                    .disable();
+        }
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(PASSWORD_ENCODER);
-    }
+    @Order(2)
+    @Configuration
+    public static class CrmSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
+        private final DataSource dataSource;
 
-                .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**")
-                .permitAll()
+        public CrmSecurityConfiguration(DataSource dataSource) {
+            this.dataSource = dataSource;
+        }
 
-                .antMatchers(HttpMethod.POST, OPENED_ENDPOINTS)
-                .permitAll()
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-                .anyRequest()
-                .hasAuthority(Authority.ADMIN.name())
+            auth
+                    .jdbcAuthentication()
+                    .dataSource(dataSource)
+                    .passwordEncoder(PASSWORD_ENCODER);
+        }
 
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .csrf()
+                    .disable()
 
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", HttpMethod.DELETE.name()))
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.OPTIONS, "/**")
+                    .permitAll()
 
-                .and()
-                .httpBasic();
+                    .antMatchers(HttpMethod.POST, OPENED_ENDPOINTS)
+                    .permitAll()
 
+                    .anyRequest()
+                    .hasAuthority(ADMIN.name())
+
+                    .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+
+                    .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", HttpMethod.DELETE.name()))
+
+                    .and()
+                    .httpBasic();
+
+        }
     }
 
 }

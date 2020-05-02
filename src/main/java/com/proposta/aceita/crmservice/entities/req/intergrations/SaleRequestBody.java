@@ -1,4 +1,4 @@
-package com.proposta.aceita.crmservice.entities.req.match;
+package com.proposta.aceita.crmservice.entities.req.intergrations;
 
 import com.proposta.aceita.crmservice.entities.Sale;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class MatchSaleRequestBody {
+public class SaleRequestBody {
     private final Integer id;
     private final Integer propertyId;
     private final Integer neighborhoodId;
@@ -29,7 +29,7 @@ public class MatchSaleRequestBody {
     private final boolean barterProperty;
     private final BigDecimal barterPropertyValue;
 
-    public MatchSaleRequestBody(Integer id, Integer propertyId, Integer neighborhoodId, PropertyType type, Integer dorms, Integer suites, Integer bathrooms, Integer garages, boolean pool, boolean balcony, boolean elevator, boolean barbecueGrill, BigDecimal value, boolean financing, BigDecimal financingValue, boolean barterVehicle, BigDecimal barterVehicleValue, boolean barterProperty, BigDecimal barterPropertyValue) {
+    public SaleRequestBody(Integer id, Integer propertyId, Integer neighborhoodId, PropertyType type, Integer dorms, Integer suites, Integer bathrooms, Integer garages, boolean pool, boolean balcony, boolean elevator, boolean barbecueGrill, BigDecimal value, boolean financing, BigDecimal financingValue, boolean barterVehicle, BigDecimal barterVehicleValue, boolean barterProperty, BigDecimal barterPropertyValue) {
         this.id = id;
         this.propertyId = propertyId;
         this.neighborhoodId = neighborhoodId;
@@ -51,11 +51,11 @@ public class MatchSaleRequestBody {
         this.barterPropertyValue = barterPropertyValue;
     }
     
-    public static MatchSaleRequestBody of(Sale sale) {
+    public static SaleRequestBody of(Sale sale) {
         var garages = CollectionUtils.isEmpty(sale.getProperty().getGarages()) ? 0
                 : sale.getProperty().getGarages().size();
         
-        return new MatchSaleRequestBody(
+        return new SaleRequestBody(
                 sale.getId(), 
                 sale.getProperty().getId(),
                 sale.getProperty().getAddress().getStreet().getNeighborhood().getId(),
@@ -158,7 +158,7 @@ public class MatchSaleRequestBody {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MatchSaleRequestBody that = (MatchSaleRequestBody) o;
+        SaleRequestBody that = (SaleRequestBody) o;
         return pool == that.pool &&
                 balcony == that.balcony &&
                 elevator == that.elevator &&
@@ -187,7 +187,7 @@ public class MatchSaleRequestBody {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", MatchSaleRequestBody.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", SaleRequestBody.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("propertyId=" + propertyId)
                 .add("neighborhoodId=" + neighborhoodId)

@@ -1,7 +1,7 @@
 package com.proposta.aceita.crmservice.services.integrations.clients;
 
-import com.proposta.aceita.crmservice.entities.req.match.MatchInterestRequestBody;
-import com.proposta.aceita.crmservice.entities.req.match.MatchSaleRequestBody;
+import com.proposta.aceita.crmservice.entities.req.intergrations.InterestRequestBody;
+import com.proposta.aceita.crmservice.entities.req.intergrations.SaleRequestBody;
 import com.proposta.aceita.crmservice.entities.res.NegotiationResponseBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +13,13 @@ import java.util.Optional;
 public interface MatchClient {
 
     @PostMapping("/interest")
-    void saveInterest(@RequestHeader("Authorization") String authHeader, MatchInterestRequestBody body);
+    void saveInterest(@RequestHeader("Authorization") String authHeader, InterestRequestBody body);
 
     @DeleteMapping("/interest/{interestId}")
     void deleteInterest(@RequestHeader("Authorization") String authHeader, @PathVariable Integer interestId);
 
     @PostMapping("/sales")
-    void saveSale(@RequestHeader("Authorization") String authHeader, MatchSaleRequestBody body);
+    void saveSale(@RequestHeader("Authorization") String authHeader, SaleRequestBody body);
 
     @DeleteMapping("/sales/{saleId}")
     void deleteSale(@RequestHeader("Authorization") String authHeader, @PathVariable Integer saleId);

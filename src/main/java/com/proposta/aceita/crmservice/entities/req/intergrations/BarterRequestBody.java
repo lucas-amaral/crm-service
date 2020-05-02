@@ -1,4 +1,4 @@
-package com.proposta.aceita.crmservice.entities.req.match;
+package com.proposta.aceita.crmservice.entities.req.intergrations;
 
 import com.proposta.aceita.crmservice.entities.Barter;
 import com.proposta.aceita.crmservice.entities.enums.BarterType;
@@ -7,18 +7,18 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class MatchBarterRequestBody {
+public class BarterRequestBody {
     private final BarterType type;
     private final BigDecimal value;
 
 
-    public MatchBarterRequestBody(BarterType type, BigDecimal value) {
+    public BarterRequestBody(BarterType type, BigDecimal value) {
         this.type = type;
         this.value = value;
     }
 
-    public static MatchBarterRequestBody of(Barter barter) {
-        return new MatchBarterRequestBody(barter.getType(), barter.getValue());
+    public static BarterRequestBody of(Barter barter) {
+        return new BarterRequestBody(barter.getType(), barter.getValue());
     }
 
     public BarterType getType() {
@@ -33,7 +33,7 @@ public class MatchBarterRequestBody {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MatchBarterRequestBody that = (MatchBarterRequestBody) o;
+        BarterRequestBody that = (BarterRequestBody) o;
         return type == that.type &&
                 Objects.equals(value, that.value);
     }
@@ -45,7 +45,7 @@ public class MatchBarterRequestBody {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", MatchBarterRequestBody.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", BarterRequestBody.class.getSimpleName() + "[", "]")
                 .add("type=" + type)
                 .add("value=" + value)
                 .toString();

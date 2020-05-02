@@ -1,8 +1,4 @@
-package com.proposta.aceita.crmservice.entities.req;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.proposta.aceita.crmservice.entities.Interest;
-import com.proposta.aceita.crmservice.entities.req.match.MatchSaleRequestBody;
+package com.proposta.aceita.crmservice.entities.req.intergrations;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -11,14 +7,11 @@ import java.util.StringJoiner;
 
 public class NegotiationRequestBody {
     private final String id;
-    private final Interest interest;
-    private final MatchSaleRequestBody sale;
+    private final InterestRequestBody interest;
+    private final SaleRequestBody sale;
     private final LocalDateTime createdAt;
 
-    public NegotiationRequestBody(@JsonProperty("id") String id,
-                                  @JsonProperty("interest") Interest interest,
-                                  @JsonProperty("sale") MatchSaleRequestBody sale,
-                                  @JsonProperty("createdAt") LocalDateTime createdAt) {
+    public NegotiationRequestBody(String id, InterestRequestBody interest, SaleRequestBody sale, LocalDateTime createdAt) {
         this.id = id;
         this.interest = interest;
         this.sale = sale;
@@ -29,11 +22,11 @@ public class NegotiationRequestBody {
         return id;
     }
 
-    public Interest getInterest() {
+    public InterestRequestBody getInterest() {
         return interest;
     }
 
-    public MatchSaleRequestBody getSale() {
+    public SaleRequestBody getSale() {
         return sale;
     }
 

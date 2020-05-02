@@ -3,6 +3,7 @@ package com.proposta.aceita.crmservice.services;
 import com.proposta.aceita.crmservice.entities.*;
 import com.proposta.aceita.crmservice.entities.req.EditBarterRequestBody;
 import com.proposta.aceita.crmservice.entities.req.EditInterestRequestBody;
+import com.proposta.aceita.crmservice.entities.res.UserResponseBody;
 import com.proposta.aceita.crmservice.repositories.InterestRepository;
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,7 @@ import static com.proposta.aceita.crmservice.entities.enums.PropertyType.APARTME
 import static com.proposta.aceita.crmservice.entities.enums.PropertyType.HOUSE;
 import static com.proposta.aceita.crmservice.entities.enums.Sex.MALE;
 import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -56,6 +58,34 @@ public class InterestServiceTest {
         interestService.getById(id);
 
         verify(interestRepository).findById(id);
+    }
+
+    @Test
+    public void getUserById() {
+
+        var id = 23;
+
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true);
+        var interest = new Interest(id, user, BigDecimal.valueOf(121323,2), false, null, null, null, 3, 1, 3, 1, false, true, true, true);
+
+        when(interestRepository.findById(id)).thenReturn(Optional.of(interest));
+
+        var expected = new UserResponseBody("Joao", "joao@joao.com");
+
+        assertThat(interestService.getUserById(id)).isNotEmpty().hasValue(expected);
+
+        verify(interestRepository).findById(id);
+    }
+
+    @Test
+    public void getByUser() {
+
+        var username = "joao@joao.com";
+
+        interestService.getByUser(username);
+
+        verify(interestRepository).findByUserUsername(username);
     }
 
     @Test

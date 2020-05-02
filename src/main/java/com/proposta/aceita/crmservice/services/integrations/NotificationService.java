@@ -1,6 +1,6 @@
 package com.proposta.aceita.crmservice.services.integrations;
 
-import com.proposta.aceita.crmservice.entities.req.NegotiationRequestBody;
+import com.proposta.aceita.crmservice.entities.req.intergrations.NegotiationRequestBody;
 import com.proposta.aceita.crmservice.services.integrations.clients.NotificationClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

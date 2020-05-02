@@ -12,6 +12,10 @@ spring:
     hikari.maximum-pool-size: 2
 
 services:
+  internal:
+    username: internal
+    password: tinr3kahcuth3gie8bohc4yiXhedcfgx
+
   match:
     name: match-service
     url: match-service.com

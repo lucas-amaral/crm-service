@@ -2,8 +2,8 @@ package com.proposta.aceita.crmservice.services.integrations;
 
 import com.proposta.aceita.crmservice.entities.Interest;
 import com.proposta.aceita.crmservice.entities.Sale;
-import com.proposta.aceita.crmservice.entities.req.match.MatchInterestRequestBody;
-import com.proposta.aceita.crmservice.entities.req.match.MatchSaleRequestBody;
+import com.proposta.aceita.crmservice.entities.req.intergrations.InterestRequestBody;
+import com.proposta.aceita.crmservice.entities.req.intergrations.SaleRequestBody;
 import com.proposta.aceita.crmservice.entities.res.NegotiationResponseBody;
 import com.proposta.aceita.crmservice.services.integrations.clients.MatchClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +38,7 @@ public class MatchService extends IntegrationService {
     }
 
     public void saveInterest(Interest interest) {
-        matchClient.saveInterest(authHeader, MatchInterestRequestBody.of(interest));
+        matchClient.saveInterest(authHeader, InterestRequestBody.of(interest));
     }
 
     public void deleteInterest(Integer interestId) {
@@ -46,7 +46,7 @@ public class MatchService extends IntegrationService {
     }
 
     public void saveSale(Sale sale) {
-        matchClient.saveSale(authHeader, MatchSaleRequestBody.of(sale));
+        matchClient.saveSale(authHeader, SaleRequestBody.of(sale));
     }
 
     public void deleteSale(Integer saleId) {
