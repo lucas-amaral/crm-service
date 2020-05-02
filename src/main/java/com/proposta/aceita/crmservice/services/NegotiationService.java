@@ -2,6 +2,7 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.res.NegotiationResponseBody;
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
+import com.proposta.aceita.crmservice.services.integrations.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class NegotiationService {
 
     private final MatchService matchService;
+    private final NotificationService notificationService;
 
     @Autowired
-    public NegotiationService(MatchService matchService) {
+    public NegotiationService(MatchService matchService, NotificationService notificationService) {
         this.matchService = matchService;
+        this.notificationService = notificationService;
     }
 
     public Optional<List<NegotiationResponseBody>> getByInterest(Integer interestId) {

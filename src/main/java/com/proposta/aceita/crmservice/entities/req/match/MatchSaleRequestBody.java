@@ -2,7 +2,7 @@ package com.proposta.aceita.crmservice.entities.req.match;
 
 import com.proposta.aceita.crmservice.entities.Sale;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
-import com.proposta.aceita.crmservice.util.CheckUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -52,7 +52,7 @@ public class MatchSaleRequestBody {
     }
     
     public static MatchSaleRequestBody of(Sale sale) {
-        var garages = CheckUtils.listIsNullOrEmpty(sale.getProperty().getGarages()) ? 0
+        var garages = CollectionUtils.isEmpty(sale.getProperty().getGarages()) ? 0
                 : sale.getProperty().getGarages().size();
         
         return new MatchSaleRequestBody(

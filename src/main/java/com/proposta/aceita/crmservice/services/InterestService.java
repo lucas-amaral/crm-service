@@ -4,10 +4,10 @@ import com.proposta.aceita.crmservice.entities.Interest;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
 import com.proposta.aceita.crmservice.repositories.InterestRepository;
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
-import com.proposta.aceita.crmservice.util.CheckUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
 
@@ -55,7 +55,7 @@ public class InterestService {
     }
 
     private void updateTypes(InterestRequestBody body, Interest interest) {
-        if (!CheckUtils.listIsNullOrEmpty(body.getTypes())) {
+        if (!CollectionUtils.isEmpty(body.getTypes())) {
             interestRepository.updateTypes(interest.getId(), body.getStringTypes());
             interest.setTypes(body.getTypes());
         }

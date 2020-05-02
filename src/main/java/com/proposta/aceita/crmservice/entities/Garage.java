@@ -2,7 +2,7 @@ package com.proposta.aceita.crmservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proposta.aceita.crmservice.entities.req.GarageRequestBody;
-import com.proposta.aceita.crmservice.util.CheckUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class Garage {
     }
 
     public static List<Garage> ofList(List<GarageRequestBody> body, Property property) {
-        return (CheckUtils.listIsNullOrEmpty(body)) ? Collections.emptyList()
+        return (CollectionUtils.isEmpty(body)) ? Collections.emptyList()
                 : body.stream().map(g -> Garage.of(g, property)).collect(Collectors.toList());
     }
 

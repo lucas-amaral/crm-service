@@ -2,6 +2,7 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.*;
 import com.proposta.aceita.crmservice.entities.req.*;
+import com.proposta.aceita.crmservice.entities.res.UserResponseBody;
 import com.proposta.aceita.crmservice.repositories.PropertyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import static com.proposta.aceita.crmservice.entities.enums.PropertyType.APARTMENT;
 import static com.proposta.aceita.crmservice.entities.enums.Sex.MALE;
 import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -47,6 +49,25 @@ public class PropertyServiceTest {
         var id = 23;
 
         propertyService.getById(id);
+
+        verify(propertyRepository).findById(id);
+    }
+
+    @Test
+    public void getUserById() {
+
+        var id = 23;
+
+        var address = new Address(id, new Street(), "403B", "Ap 203");
+        var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
+                FISICAL, "45230929-04", MALE, new Address(), true);
+        var property = new Property(234, user, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, address, 23423422, 3, 2, 2, true, true, true, false, null, true);
+
+        when(propertyRepository.findById(id)).thenReturn(Optional.of(property));
+
+        var expected = new UserResponseBody("Joao", "joao@joao.com");
+
+        assertThat(propertyService.getUserById(id)).isNotEmpty().hasValue(expected);
 
         verify(propertyRepository).findById(id);
     }

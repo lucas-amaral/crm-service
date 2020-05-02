@@ -3,9 +3,9 @@ package com.proposta.aceita.crmservice.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proposta.aceita.crmservice.entities.enums.BarterType;
 import com.proposta.aceita.crmservice.entities.req.BarterRequestBody;
-import com.proposta.aceita.crmservice.util.CheckUtils;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import org.hibernate.annotations.TypeDef;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -44,7 +44,7 @@ public class Barter {
     }
 
     public static List<Barter> ofList(List<? extends BarterRequestBody> body, Interest interest) {
-        return (CheckUtils.listIsNullOrEmpty(body)) ? Collections.emptyList()
+        return (CollectionUtils.isEmpty(body)) ? Collections.emptyList()
                 : body.stream().map(g -> Barter.of(g, interest)).collect(Collectors.toList());
     }
 

@@ -30,16 +30,16 @@ public interface MatchClient {
     @GetMapping("/negotiations/interest/{interestId}")
     Optional<List<NegotiationResponseBody>> getNegotiationsByInterest(@RequestHeader("Authorization") String authHeader, @PathVariable Integer interestId);
 
-    @PutMapping("/negotiations/{negotiationId}/approved_by_seller")
+    @PutMapping("/negotiations/{negotiationId}/approved-by-seller")
     void approvedNegotiationBySeller(@RequestHeader("Authorization") String authHeader, @PathVariable String negotiationId);
 
-    @PutMapping("/negotiations/{negotiationId}/approved_by_buyer")
+    @PutMapping("/negotiations/{negotiationId}/approved-by-buyer")
     void approvedNegotiationByBuyer(@RequestHeader("Authorization") String authHeader, @PathVariable String negotiationId);
 
-    @DeleteMapping("/negotiations/{negotiationId}/reproved_by_seller")
+    @DeleteMapping("/negotiations/{negotiationId}/reproved-by-seller")
     void reprovedNegotiationBySeller(@RequestHeader("Authorization") String authHeader, @PathVariable String negotiationId);
 
-    @DeleteMapping("/negotiations/{negotiationId}/reproved_by_buyer")
+    @DeleteMapping("/negotiations/{negotiationId}/reproved-by-buyer")
     void reprovedNegotiationByBuyer(@RequestHeader("Authorization") String authHeader, @PathVariable String negotiationId);
 
     @DeleteMapping("/negotiations/{negotiationId}")

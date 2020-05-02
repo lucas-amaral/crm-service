@@ -1,6 +1,7 @@
 package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
+import com.proposta.aceita.crmservice.services.integrations.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +15,14 @@ public class NegotiationServiceTest {
     @MockBean
     private MatchService matchService;
 
+    @MockBean
+    private NotificationService notificationService;
+
     private NegotiationService negotiationService;
 
     @BeforeEach
     public void setup() {
-        negotiationService = new NegotiationService(matchService);
+        negotiationService = new NegotiationService(matchService, notificationService);
     }
 
     @Test

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proposta.aceita.crmservice.entities.Interest;
 import com.proposta.aceita.crmservice.entities.Neighborhood;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
-import com.proposta.aceita.crmservice.util.CheckUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -64,10 +64,10 @@ public class InterestResponseBody {
     }
 
     public static InterestResponseBody of(Interest interest) {
-        List<BarterResponseBody> barters = CheckUtils.listIsNullOrEmpty(interest.getBarters()) ? Collections.emptyList()
+        List<BarterResponseBody> barters = CollectionUtils.isEmpty(interest.getBarters()) ? Collections.emptyList()
                 : interest.getBarters().stream().map(BarterResponseBody::of).collect(Collectors.toList());
 
-        List<Integer> neighborhoodIs = CheckUtils.listIsNullOrEmpty(interest.getNeighborhoods()) ? Collections.emptyList()
+        List<Integer> neighborhoodIs = CollectionUtils.isEmpty(interest.getNeighborhoods()) ? Collections.emptyList()
                 : interest.getNeighborhoods().stream().map(Neighborhood::getId).collect(Collectors.toList());
 
         return new InterestResponseBody(interest.getId(),

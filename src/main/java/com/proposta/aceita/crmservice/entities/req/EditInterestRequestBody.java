@@ -2,7 +2,7 @@ package com.proposta.aceita.crmservice.entities.req;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
-import com.proposta.aceita.crmservice.util.CheckUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -134,7 +134,7 @@ public class EditInterestRequestBody implements InterestRequestBody{
     }
 
     public String getStringTypes() {
-        return CheckUtils.listIsNullOrEmpty(types) ? null
+        return CollectionUtils.isEmpty(types) ? null
                 : types.stream().map(type -> PropertyType.toString(type)).collect(Collectors.joining(", "));
     }
 

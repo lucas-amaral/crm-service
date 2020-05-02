@@ -2,6 +2,7 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Property;
 import com.proposta.aceita.crmservice.entities.req.PropertyRequestBody;
+import com.proposta.aceita.crmservice.entities.res.UserResponseBody;
 import com.proposta.aceita.crmservice.repositories.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class PropertyService {
 
     public Optional<Property> getById(Integer id) {
         return propertyRepository.findById(id);
+    }
+
+    public Optional<UserResponseBody> getUserById(Integer id) {
+        return propertyRepository.findById(id)
+                .map(property -> new UserResponseBody(property.getUser().getName(), property.getUser().getUsername()));
     }
 
     public List<Property> getByUser(String username) {
