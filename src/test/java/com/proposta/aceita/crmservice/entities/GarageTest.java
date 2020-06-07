@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GarageTest {
 
     @Test
-    public void fromList() {
+    void fromList() {
         var property = new Property();
 
         var bodyBox20 = new GarageRequestBody(3, 20, "snajknjkasnsa");
@@ -28,7 +28,7 @@ public class GarageTest {
     }
 
     @Test
-    public void fromListWithEmptyList() {
+    void fromListWithEmptyList() {
         var property = new Property();
 
         assertThat(Garage.ofList(Collections.emptyList(), property)).isEqualTo(Collections.emptyList());
@@ -36,7 +36,7 @@ public class GarageTest {
     }
 
     @Test
-    public void fromListWithNull() {
+    void fromListWithNull() {
 
         assertThat(Garage.ofList(null, null)).isEqualTo(Collections.emptyList());
 

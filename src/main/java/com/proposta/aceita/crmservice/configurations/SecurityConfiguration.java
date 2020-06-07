@@ -14,8 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
-import static com.proposta.aceita.crmservice.entities.enums.Authority.ADMIN;
-import static com.proposta.aceita.crmservice.entities.enums.Authority.SYSTEM;
+import static com.proposta.aceita.crmservice.entities.enums.Authority.*;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -100,7 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
 
                     .anyRequest()
-                    .hasAuthority(ADMIN.name())
+                    .hasAnyAuthority(ADMIN.name(), USER.name())
 
                     .and()
                     .sessionManagement()

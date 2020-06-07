@@ -6,8 +6,9 @@ import com.proposta.aceita.crmservice.entities.req.EditBarterRequestBody;
 import com.proposta.aceita.crmservice.repositories.BarterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,8 +16,8 @@ import java.util.List;
 import static com.proposta.aceita.crmservice.entities.enums.BarterType.VEHICLE;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-public class BarterServiceTest {
+@ExtendWith(SpringExtension.class)
+class BarterServiceTest {
 
     @MockBean
     private BarterRepository barterRepository;
@@ -24,12 +25,12 @@ public class BarterServiceTest {
     private BarterService barterService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         barterService = new BarterService(barterRepository);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 23;
 
@@ -39,7 +40,7 @@ public class BarterServiceTest {
     }
 
     @Test
-    public void getByInterestId() {
+    void getByInterestId() {
 
         barterService.getByInterest(2);
 
@@ -47,7 +48,7 @@ public class BarterServiceTest {
     }
 
     @Test
-    public void save() {
+    void save() {
 
         var interest = new Interest();
         var body = new EditBarterRequestBody(3, null, VEHICLE, BigDecimal.TEN);
@@ -59,7 +60,7 @@ public class BarterServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var id = 23;
 

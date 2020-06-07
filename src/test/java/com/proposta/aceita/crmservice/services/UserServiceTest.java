@@ -1,28 +1,34 @@
 package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Address;
+import com.proposta.aceita.crmservice.entities.Authority;
 import com.proposta.aceita.crmservice.entities.User;
 import com.proposta.aceita.crmservice.entities.req.AddAddressRequestBody;
 import com.proposta.aceita.crmservice.entities.req.AddUserRequestBody;
+import com.proposta.aceita.crmservice.repositories.AuthorityRepository;
 import com.proposta.aceita.crmservice.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static com.proposta.aceita.crmservice.entities.enums.Authority.USER;
 import static com.proposta.aceita.crmservice.entities.enums.Sex.MALE;
 import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
-public class UserServiceTest {
+@ExtendWith(SpringExtension.class)
+class UserServiceTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private AuthorityRepository authorityRepository;
 
     @MockBean
     private AddressService addressService;
@@ -30,12 +36,12 @@ public class UserServiceTest {
     private UserService userService;
 
     @BeforeEach
-    public void setup() {
-        userService = new UserService(userRepository, addressService);
+    void setup() {
+        userService = new UserService(userRepository, authorityRepository, addressService);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var username = "joao@joao.com";
 
@@ -45,7 +51,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void list() {
+    void list() {
 
         userService.list();
 
@@ -53,26 +59,56 @@ public class UserServiceTest {
     }
 
     @Test
-    public void save() {
+    void saveFirstTime() {
+
+        var username = "joao@gmail.com";
 
         var addressBody = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
         var address = new Address(null, null, "212", "Não consegue moisés");
 
-        var body = new AddUserRequestBody("joao@gmail.com", "1234", "João", LocalDate.of(1979, 3, 24),
+        var body = new AddUserRequestBody(username, "1234", "João", LocalDate.of(1979, 3, 24),
                  FISICAL, "45230929-04", MALE, addressBody);
-        var user = new User("joao@gmail.com", "1234", "João", LocalDate.of(1979, 3, 24),
+        var user = new User(username, "1234", "João", LocalDate.of(1979, 3, 24),
                  FISICAL, "45230929-04", MALE, address, true);
 
+        when(userRepository.findById(username)).thenReturn(Optional.empty());
         when(addressService.save(addressBody)).thenReturn(Optional.of(address));
         when(userRepository.save(user)).thenReturn(user);
 
         userService.save(body);
 
         verify(userRepository).save(user);
+
+        verify(authorityRepository).save(new Authority(username, USER));
     }
 
     @Test
-    public void saveWithoutAddress() {
+    void saveWithUpdate() {
+
+        var username = "joao@gmail.com";
+
+        var addressBody = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
+        var address = new Address(null, null, "212", "Não consegue moisés");
+
+        var body = new AddUserRequestBody(username, "1234", "João", LocalDate.of(1979, 3, 24),
+                FISICAL, "45230929-04", MALE, addressBody);
+        var user = new User(username, "1234", "João", LocalDate.of(1979, 3, 24),
+                FISICAL, "45230929-04", MALE, address, true);
+
+        when(userRepository.findById(username)).thenReturn(Optional.of(user));
+        when(addressService.save(addressBody)).thenReturn(Optional.of(address));
+        when(userRepository.save(user)).thenReturn(user);
+
+        userService.save(body);
+
+        verify(userRepository).save(user);
+
+        verifyNoInteractions(authorityRepository);
+    }
+
+
+    @Test
+    void saveWithoutAddress() {
 
         var body = new AddUserRequestBody("joao@gmail.com", "1234", "João", LocalDate.of(1979, 3, 24),
                 FISICAL, "45230929-04", MALE, null);
@@ -89,7 +125,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var username = "joao@joao.com";
 

@@ -7,15 +7,16 @@ import com.proposta.aceita.crmservice.entities.enums.State;
 import com.proposta.aceita.crmservice.repositories.StreetRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-public class StreetServiceTest {
+@ExtendWith(SpringExtension.class)
+class StreetServiceTest {
 
     @MockBean
     private StreetRepository streetRepository;
@@ -23,12 +24,12 @@ public class StreetServiceTest {
     private StreetService streetService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         streetService = new StreetService(streetRepository);
     }
     
     @Test
-    public void getByZipCode() {
+    void getByZipCode() {
 
         var zipCode = "97110-564";
 
@@ -38,7 +39,7 @@ public class StreetServiceTest {
     }
 
     @Test
-    public void list() {
+    void list() {
 
         streetService.list(1, 0, 10);
 
@@ -46,7 +47,7 @@ public class StreetServiceTest {
     }
 
     @Test
-    public void create() {
+    void create() {
 
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
@@ -58,7 +59,7 @@ public class StreetServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);

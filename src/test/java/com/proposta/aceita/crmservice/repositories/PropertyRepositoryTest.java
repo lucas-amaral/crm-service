@@ -18,7 +18,7 @@ import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class PropertyRepositoryTest {
+class PropertyRepositoryTest {
 
     @Autowired
     private PropertyRepository propertyRepository;
@@ -31,7 +31,7 @@ public class PropertyRepositoryTest {
             "INSERT INTO properties(id, username, description, type, area, registration, address_id, iptu, dorms, suites, bathrooms, pool, balcony, elevator, barbecue_grill, enable, created_at) " +
                     "VALUES (76, 'joao@joao.com', 'Apartamento centro', 'APARTMENT', 267.14, 14536, null, 1432, 3, 0, 2, true, false, true, true,  true, '2020-01-20T13:45:30')"
     })
-    public void findByUsername() {
+    void findByUsername() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);

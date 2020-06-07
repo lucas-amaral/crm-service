@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BarterTest {
 
     @Test
-    public void fromList() {
+    void fromList() {
         var interest = new Interest();
 
         var body20 = new EditBarterRequestBody(3, null, VEHICLE, BigDecimal.TEN);
@@ -31,7 +31,7 @@ public class BarterTest {
     }
 
     @Test
-    public void fromListWithEmptyList() {
+    void fromListWithEmptyList() {
         var interest = new Interest();
 
         assertThat(Barter.ofList(Collections.emptyList(), interest)).isEqualTo(Collections.emptyList());
@@ -39,7 +39,7 @@ public class BarterTest {
     }
 
     @Test
-    public void fromListWithNull() {
+    void fromListWithNull() {
 
         assertThat(Barter.ofList(null, null)).isEqualTo(Collections.emptyList());
 

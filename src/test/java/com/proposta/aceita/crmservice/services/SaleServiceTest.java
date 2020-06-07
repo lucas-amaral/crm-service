@@ -7,8 +7,9 @@ import com.proposta.aceita.crmservice.repositories.SaleRepository;
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import static com.proposta.aceita.crmservice.entities.enums.PropertyType.APARTMENT;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 public class SaleServiceTest {
 
     @MockBean
@@ -32,12 +33,12 @@ public class SaleServiceTest {
     private SaleService saleService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         saleService = new SaleService(saleRepository, propertyService, matchService);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 23;
 
@@ -47,7 +48,7 @@ public class SaleServiceTest {
     }
 
     @Test
-    public void getByProperty() {
+    void getByProperty() {
 
         saleService.getByProperty(54);
 
@@ -55,7 +56,7 @@ public class SaleServiceTest {
     }
 
     @Test
-    public void save() {
+    void save() {
 
         var body = new EditSaleRequestBody(356, 234, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
@@ -72,7 +73,7 @@ public class SaleServiceTest {
     }
 
     @Test
-    public void saveWithoutProperty() {
+    void saveWithoutProperty() {
 
         var body = new EditSaleRequestBody(356, 234, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
@@ -84,7 +85,7 @@ public class SaleServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var id = 23;
 

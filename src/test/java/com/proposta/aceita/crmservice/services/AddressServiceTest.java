@@ -7,15 +7,16 @@ import com.proposta.aceita.crmservice.repositories.AddressRepository;
 import com.proposta.aceita.crmservice.repositories.StreetRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-public class AddressServiceTest {
+@ExtendWith(SpringExtension.class)
+class AddressServiceTest {
 
     @MockBean
     private AddressRepository addressRepository;
@@ -26,12 +27,12 @@ public class AddressServiceTest {
     private AddressService addressService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         addressService = new AddressService(addressRepository, streetRepository);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 23;
 
@@ -41,7 +42,7 @@ public class AddressServiceTest {
     }
 
     @Test
-    public void list() {
+    void list() {
 
         addressService.list();
 
@@ -49,7 +50,7 @@ public class AddressServiceTest {
     }
 
     @Test
-    public void save() {
+    void save() {
 
         var street = new Street("95020-320", "Centro", null);
         var body = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
@@ -63,7 +64,7 @@ public class AddressServiceTest {
     }
 
     @Test
-    public void saveWithInvalidStreetZipCode() {
+    void saveWithInvalidStreetZipCode() {
 
         var body = new AddAddressRequestBody( "95020-320", "212", "Não consegue moisés");
 
@@ -75,7 +76,7 @@ public class AddressServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var id = 23;
 

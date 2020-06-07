@@ -1,17 +1,19 @@
 package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.*;
-import com.proposta.aceita.crmservice.entities.req.*;
+import com.proposta.aceita.crmservice.entities.req.EditAddressRequestBody;
+import com.proposta.aceita.crmservice.entities.req.EditPropertyRequestBody;
+import com.proposta.aceita.crmservice.entities.req.GarageRequestBody;
 import com.proposta.aceita.crmservice.entities.res.UserResponseBody;
 import com.proposta.aceita.crmservice.repositories.PropertyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +23,8 @@ import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-public class PropertyServiceTest {
+@ExtendWith(SpringExtension.class)
+class PropertyServiceTest {
 
     @MockBean
     private PropertyRepository propertyRepository;
@@ -39,12 +41,12 @@ public class PropertyServiceTest {
     private PropertyService propertyService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         propertyService = new PropertyService(propertyRepository, userService, addressService, garageService);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 23;
 
@@ -54,7 +56,7 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void getUserById() {
+    void getUserById() {
 
         var id = 23;
 
@@ -73,7 +75,7 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void getByUser() {
+    void getByUser() {
 
         propertyService.getByUser("email@test.com");
 
@@ -81,7 +83,7 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void save() {
+    void save() {
 
         var addressBody = new EditAddressRequestBody(56, "95020-320", "212", "Perto do tio joão");
         var garageBody = new GarageRequestBody(3, 20, "snajknjkasnsa");
@@ -104,7 +106,7 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void saveWithoutAddress() {
+    void saveWithoutAddress() {
 
         var garageBody = new GarageRequestBody(3, 20, "snajknjkasnsa");
         var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, List.of(garageBody), true);
@@ -125,7 +127,7 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void saveWithoutUser() {
+    void saveWithoutUser() {
 
         var addressBody = new EditAddressRequestBody(56, "95020-320", "212", "Perto do tio joão");
         var garageBody = new GarageRequestBody(3, 20, "snajknjkasnsa");
@@ -141,7 +143,7 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void saveWithoutGarages() {
+    void saveWithoutGarages() {
 
         var addressBody = new EditAddressRequestBody(56, "95020-320", "212", "Perto do tio joão");
         var body = new EditPropertyRequestBody(234, "joao@joao.com", "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, addressBody, 23423422, 3, 2, 2, true, true, true, false, null, true);
@@ -161,7 +163,7 @@ public class PropertyServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var id = 23;
 

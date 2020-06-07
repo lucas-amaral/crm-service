@@ -6,14 +6,15 @@ import com.proposta.aceita.crmservice.entities.req.CityRequestBody;
 import com.proposta.aceita.crmservice.repositories.CityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-public class CityServiceTest {
+@ExtendWith(SpringExtension.class)
+class CityServiceTest {
 
     @MockBean
     private CityRepository cityRepository;
@@ -21,12 +22,12 @@ public class CityServiceTest {
     private CityService cityService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         cityService = new CityService(cityRepository);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 23;
 
@@ -36,7 +37,7 @@ public class CityServiceTest {
     }
 
     @Test
-    public void getByState() {
+    void getByState() {
 
         cityService.getByState(State.SC);
 
@@ -44,7 +45,7 @@ public class CityServiceTest {
     }
 
     @Test
-    public void save() {
+    void save() {
 
         var body = new CityRequestBody(null, "Caxias do Sul", State.RS);
         var city = new City(null, "Caxias do Sul", State.RS);
@@ -57,7 +58,7 @@ public class CityServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var id = 23;
 

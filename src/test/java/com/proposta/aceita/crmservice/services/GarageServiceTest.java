@@ -6,15 +6,16 @@ import com.proposta.aceita.crmservice.entities.req.GarageRequestBody;
 import com.proposta.aceita.crmservice.repositories.GarageRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-public class GarageServiceTest {
+@ExtendWith(SpringExtension.class)
+class GarageServiceTest {
 
     @MockBean
     private GarageRepository garageRepository;
@@ -22,12 +23,12 @@ public class GarageServiceTest {
     private GarageService garageService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         garageService = new GarageService(garageRepository);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 23;
 
@@ -37,7 +38,7 @@ public class GarageServiceTest {
     }
 
     @Test
-    public void getByPropertyId() {
+    void getByPropertyId() {
 
         garageService.getByPropertyId(2);
 
@@ -45,7 +46,7 @@ public class GarageServiceTest {
     }
 
     @Test
-    public void save() {
+    void save() {
 
         var property = new Property();
         var body = new GarageRequestBody(3, 20, "snajknjkasnsa");
@@ -57,7 +58,7 @@ public class GarageServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var id = 23;
 

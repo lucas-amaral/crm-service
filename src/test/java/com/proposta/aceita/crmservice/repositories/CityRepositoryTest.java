@@ -18,7 +18,7 @@ public class CityRepositoryTest {
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = { "INSERT INTO cities(id, name, state) VALUES (2, 'Caxias', 'RJ')"})
-    public void update() {
+    void update() {
         var city = new City(2, "Caxias do Sul", State.RS);
 
         assertThat(cityRepository.save(city)).isEqualTo(city);
@@ -26,7 +26,7 @@ public class CityRepositoryTest {
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = { "INSERT INTO cities(id, name, state) VALUES (2, 'Caxias do Sul', 'RS')"})
-    public void findByState() {
+    void findByState() {
         var citySm = new City(1, "Santa Maria", State.RS);
         var cityCx = new City(2, "Caxias do Sul", State.RS);
 

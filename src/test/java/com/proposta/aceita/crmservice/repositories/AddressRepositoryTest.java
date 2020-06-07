@@ -20,7 +20,7 @@ public class AddressRepositoryTest {
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql", statements = { "INSERT INTO addresses(id, street_zip_code, number, complement) VALUES (1, '97050-780', '403', 'Apartamento 203')"})
-    public void update() {
+    void update() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);

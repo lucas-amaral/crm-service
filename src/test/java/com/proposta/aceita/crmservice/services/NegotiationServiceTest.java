@@ -4,13 +4,14 @@ import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import com.proposta.aceita.crmservice.services.integrations.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-public class NegotiationServiceTest {
+@ExtendWith(SpringExtension.class)
+class NegotiationServiceTest {
 
     @MockBean
     private MatchService matchService;
@@ -21,12 +22,12 @@ public class NegotiationServiceTest {
     private NegotiationService negotiationService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         negotiationService = new NegotiationService(matchService, notificationService);
     }
 
     @Test
-    public void getByInterest() {
+    void getByInterest() {
         var interestId = 61;
 
         negotiationService.getByInterest(interestId);
@@ -36,7 +37,7 @@ public class NegotiationServiceTest {
 
 
     @Test
-    public void getBySale() {
+    void getBySale() {
         var saleId = 61;
 
         negotiationService.getBySale(saleId);
@@ -46,7 +47,7 @@ public class NegotiationServiceTest {
 
 
     @Test
-    public void deleteById() {
+    void deleteById() {
         var id = "anjass29kxkjansajkns";
 
         negotiationService.deleteById(id);
@@ -55,7 +56,7 @@ public class NegotiationServiceTest {
     }
 
     @Test
-    public void approvedBySeller() {
+    void approvedBySeller() {
         var id = "2324sdd022343";
 
         negotiationService.approvedBySeller(id);
@@ -64,7 +65,7 @@ public class NegotiationServiceTest {
     }
 
     @Test
-    public void approvedByBuyer() {
+    void approvedByBuyer() {
         var id = "2324sdd022343";
 
         negotiationService.approvedByBuyer(id);
@@ -73,7 +74,7 @@ public class NegotiationServiceTest {
     }
 
     @Test
-    public void reprovedBySeller() {
+    void reprovedBySeller() {
         var id = "2324sdd022343";
 
         negotiationService.reprovedBySeller(id);
@@ -82,7 +83,7 @@ public class NegotiationServiceTest {
     }
 
     @Test
-    public void reprovedByBuyer() {
+    void reprovedByBuyer() {
         var id = "2324sdd022343";
 
         negotiationService.reprovedByBuyer(id);

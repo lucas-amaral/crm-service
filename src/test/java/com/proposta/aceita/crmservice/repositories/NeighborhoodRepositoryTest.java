@@ -18,7 +18,7 @@ public class NeighborhoodRepositoryTest {
 
     @Test
     @Sql(scripts = "classpath:clearTables.sql")
-    public void findByCIty() {
+    void findByCIty() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
 
@@ -26,7 +26,7 @@ public class NeighborhoodRepositoryTest {
     }
 
     @Test
-    public void findAllByIdWithNull() {
+    void findAllByIdWithNull() {
         assertThat(neighborhoodRepository.findByCityId(null)).isEmpty();
     }
 

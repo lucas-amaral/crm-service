@@ -14,13 +14,13 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class StreetRepositoryTest {
+class StreetRepositoryTest {
 
     @Autowired
     private StreetRepository streetRepository;
 
     @Test
-    public void find() {
+    void find() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var expected = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
@@ -29,7 +29,7 @@ public class StreetRepositoryTest {
     }
 
     @Test
-    public void findAll() {
+    void findAll() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var expected = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);
@@ -38,7 +38,7 @@ public class StreetRepositoryTest {
     }
 
     @Test
-    public void findByNeighborhoodId() {
+    void findByNeighborhoodId() {
         var city = new City(1, "Santa Maria", State.RS);
         var neighborhood = new Neighborhood(1, "Pé de Plátano", city);
         var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", neighborhood);

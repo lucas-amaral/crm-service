@@ -8,8 +8,9 @@ import com.proposta.aceita.crmservice.repositories.InterestRepository;
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,8 +26,8 @@ import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-public class InterestServiceTest {
+@ExtendWith(SpringExtension.class)
+class InterestServiceTest {
 
     @MockBean
     private InterestRepository interestRepository;
@@ -46,12 +47,12 @@ public class InterestServiceTest {
     private InterestService interestService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         interestService = new InterestService(interestRepository, userService, neighborhoodService, barterService, matchService);
     }
 
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 23;
 
@@ -61,7 +62,7 @@ public class InterestServiceTest {
     }
 
     @Test
-    public void getUserById() {
+    void getUserById() {
 
         var id = 23;
 
@@ -79,7 +80,7 @@ public class InterestServiceTest {
     }
 
     @Test
-    public void getByUser() {
+    void getByUser() {
 
         var username = "joao@joao.com";
 
@@ -89,7 +90,7 @@ public class InterestServiceTest {
     }
 
     @Test
-    public void save() {
+    void save() {
 
         var barterBody = new EditBarterRequestBody(3, 234, VEHICLE, BigDecimal.valueOf(3432, 2));
         var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, 1, false, true, true, true, List.of(barterBody));
@@ -115,7 +116,7 @@ public class InterestServiceTest {
     }
 
     @Test
-    public void saveWithoutNeighborhoods() {
+    void saveWithoutNeighborhoods() {
 
         var barterBody = new EditBarterRequestBody(3, 234, VEHICLE, BigDecimal.valueOf(3432, 2));
         var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, 1, false, true, true, true, List.of(barterBody));
@@ -139,7 +140,7 @@ public class InterestServiceTest {
     }
 
     @Test
-    public void saveWithoutUser() {
+    void saveWithoutUser() {
 
         var barterBody = new EditBarterRequestBody(3, 234, VEHICLE, BigDecimal.valueOf(3432, 2));
         var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), null, 3, 1, 3, 1, false, true, true, true, List.of(barterBody));
@@ -154,7 +155,7 @@ public class InterestServiceTest {
     }
 
     @Test
-    public void saveWithoutBarters() {
+    void saveWithoutBarters() {
 
         var body = new EditInterestRequestBody(234, "joao@joao.com", BigDecimal.valueOf(121323,2), false, null, List.of(HOUSE, APARTMENT), List.of(2), 3, 1, 3, 1, false, true, true, true, null);
 
@@ -177,7 +178,7 @@ public class InterestServiceTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
 
         var id = 23;
 

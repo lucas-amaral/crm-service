@@ -3,13 +3,14 @@ package com.proposta.aceita.crmservice.services;
 import com.proposta.aceita.crmservice.repositories.NeighborhoodRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-public class NeighborhoodServiceTest {
+@ExtendWith(SpringExtension.class)
+class NeighborhoodServiceTest {
 
     @MockBean
     private NeighborhoodRepository neighborhoodRepository;
@@ -17,12 +18,12 @@ public class NeighborhoodServiceTest {
     private NeighborhoodService neighborhoodService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         neighborhoodService = new NeighborhoodService(neighborhoodRepository);
     }
     
     @Test
-    public void getById() {
+    void getById() {
 
         var id = 46;
 
@@ -32,7 +33,7 @@ public class NeighborhoodServiceTest {
     }
 
     @Test
-    public void getByCity() {
+    void getByCity() {
 
         neighborhoodService.getByCity(1);
 
