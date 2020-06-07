@@ -34,6 +34,10 @@ public class BarterService {
         return Optional.ofNullable(body).map(barter -> barterRepository.saveAll(Barter.ofList(barter, interest)));
     }
 
+    public Optional<Barter> save(BarterRequestBody body) {
+        return Optional.of(barterRepository.save(Barter.of(body, null)));
+    }
+
     public void delete(Integer id) {
         barterRepository.deleteById(id);
     }
