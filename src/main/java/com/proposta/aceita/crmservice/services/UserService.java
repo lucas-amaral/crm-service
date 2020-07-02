@@ -36,11 +36,14 @@ public class UserService {
 
     @Transactional
     public Optional<User> save(UserRequestBody body) {
-        saveAuthority(body);
 
         var address = addressService.save(body.getAddress()).orElse(null);
 
-        return Optional.of(userRepository.save(User.of(body, address)));
+        var user = userRepository.save(User.of(body, address));
+
+        saveAuthority(body);
+
+        return Optional.of(user);
     }
 
     private void saveAuthority(UserRequestBody body) {
