@@ -12,10 +12,10 @@ import java.util.Optional;
 @FeignClient(name = "${services.match.name}", url = "${services.match.url}", decode404 = true)
 public interface MatchClient {
 
-    @PostMapping("/interest")
+    @PostMapping("/interests")
     void saveInterest(@RequestHeader("Authorization") String authHeader, InterestRequestBody body);
 
-    @DeleteMapping("/interest/{interestId}")
+    @DeleteMapping("/interests/{interestId}")
     void deleteInterest(@RequestHeader("Authorization") String authHeader, @PathVariable Integer interestId);
 
     @PostMapping("/sales")
