@@ -1,8 +1,10 @@
 package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Interest;
+import com.proposta.aceita.crmservice.entities.User;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
 import com.proposta.aceita.crmservice.entities.res.UserResponseBody;
+import com.proposta.aceita.crmservice.exceptions.InterestException;
 import com.proposta.aceita.crmservice.repositories.InterestRepository;
 import com.proposta.aceita.crmservice.services.integrations.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,20 +46,36 @@ public class InterestService {
     }
 
     @Transactional
-    public Optional<Interest> save(InterestRequestBody body) {
+    public Optional<Interest> create(InterestRequestBody body) {
         return userService.getById(body.getUsername()).map(user -> {
-            var neighborhoods = neighborhoodService.list(body.getNeighborhoodIds());
 
-            var interest = interestRepository.save(Interest.of(body, user, neighborhoods));
+            interestRepository.findByUserUsername(user.getUsername()).map(interest -> {
+                var message = String.format("User %s already have interest: %s", user.getUsername(), interest);
 
-            updateTypes(body, interest);
+                throw new InterestException(message);
+            });
 
-            barterService.save(body.getBarters(), interest).ifPresent(interest::setBarters);
-
-            matchService.saveInterest(interest);
-
-            return interest;
+            return save(body, user);
         });
+    }
+
+    @Transactional
+    public Optional<Interest> update(InterestRequestBody body) {
+        return userService.getById(body.getUsername()).map(user -> save(body, user));
+    }
+
+    private Interest save(InterestRequestBody body, User user) {
+        var neighborhoods = neighborhoodService.list(body.getNeighborhoodIds());
+
+        var interest = interestRepository.save(Interest.of(body, user, neighborhoods));
+
+        updateTypes(body, interest);
+
+        barterService.save(body.getBarters(), interest).ifPresent(interest::setBarters);
+
+        matchService.saveInterest(interest);
+
+        return interest;
     }
 
     private void updateTypes(InterestRequestBody body, Interest interest) {

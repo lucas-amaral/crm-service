@@ -43,14 +43,14 @@ public class InterestController {
 
     @PostMapping
     public ResponseEntity<?> post(@Validated @RequestBody AddInterestRequestBody body) {
-        return interestService.save(body)
+        return interestService.create(body)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
 
     @PutMapping
     public ResponseEntity<?> put(@Validated @RequestBody EditInterestRequestBody body) {
-        return interestService.save(body)
+        return interestService.update(body)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
