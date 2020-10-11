@@ -102,8 +102,6 @@ class UserServiceTest {
         userService.save(body);
 
         verify(userRepository).save(user);
-
-        verifyNoInteractions(authorityRepository);
     }
 
 

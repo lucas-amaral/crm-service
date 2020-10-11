@@ -41,15 +41,9 @@ public class UserService {
 
         var user = userRepository.save(User.of(body, address));
 
-        saveAuthority(body);
+        authorityRepository.save(Authority.ofUser(body.getUsername()));
 
         return Optional.of(user);
-    }
-
-    private void saveAuthority(UserRequestBody body) {
-        if (getById(body.getUsername()).isEmpty()) {
-            authorityRepository.save(Authority.ofUser(body.getUsername()));
-        }
     }
 
     public void delete(String username) {
