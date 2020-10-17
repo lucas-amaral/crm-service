@@ -1,6 +1,7 @@
 package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Interest;
+import com.proposta.aceita.crmservice.entities.Neighborhood;
 import com.proposta.aceita.crmservice.entities.User;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
 import com.proposta.aceita.crmservice.entities.res.UserResponseBody;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -66,7 +69,7 @@ public class InterestService {
     }
 
     private Interest save(InterestRequestBody body, User user) {
-        var neighborhoods = CollectionUtils.isEmpty(body.getNeighborhoodIds()) ? null
+        List<Neighborhood> neighborhoods = CollectionUtils.isEmpty(body.getNeighborhoodIds()) ? Collections.emptyList()
                 : neighborhoodService.list(body.getNeighborhoodIds());
 
         var interest = interestRepository.save(Interest.of(body, user, neighborhoods));
