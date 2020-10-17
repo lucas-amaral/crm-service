@@ -3,17 +3,17 @@ package com.proposta.aceita.crmservice.entities;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 import com.proposta.aceita.crmservice.entities.req.InterestRequestBody;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
-import static com.vladmihalcea.hibernate.type.array.ListArrayType.*;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -29,9 +29,8 @@ public class Interest {
     private BigDecimal value;
     private Boolean financing;
     private BigDecimal financingValue;
-    @Type(type = "com.vladmihalcea.hibernate.type.array.ListArrayType", parameters = {@Parameter(name = SQL_ARRAY_TYPE, value = "text")})
-    @Column(columnDefinition = "text[]")
-    private List<PropertyType> types;
+    @Type(type = "com.proposta.aceita.crmservice.configurations.StringArrayUserType")
+    private String[] types;
     @JoinTable(name = "interest_neighborhoods", joinColumns = @JoinColumn(name = "interest_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "neighborhood_id", referencedColumnName = "id"))
     @OneToMany(fetch = LAZY)
@@ -61,12 +60,12 @@ public class Interest {
         this.value = value;
         this.financing = financing;
         this.financingValue = financingValue;
-        this.types = types;
+        this.types = types == null ? null : types.stream().map(Enum::toString).collect(Collectors.toList()).toArray(new String[types.size()]);
         this.neighborhoods = neighborhoods;
         this.dorms = dorms;
         this.suites = suites;
         this.bathrooms = bathrooms;
-        this.garages = this.garages;
+        this.garages = garages;
         this.pool = pool;
         this.balcony = balcony;
         this.elevator = elevator;
@@ -120,10 +119,10 @@ public class Interest {
     }
 
     public List<PropertyType> getTypes() {
-        return types;
+        return types != null ? Arrays.stream(types).map(PropertyType::valueOf).collect(Collectors.toList()) : null;
     }
 
-    public void setTypes(List<PropertyType> types) {
+    public void setTypes(String[] types) {
         this.types = types;
     }
 
@@ -225,7 +224,7 @@ public class Interest {
                 Objects.equals(value, interest.value) &&
                 Objects.equals(financing, interest.financing) &&
                 Objects.equals(financingValue, interest.financingValue) &&
-                Objects.equals(types, interest.types) &&
+                Arrays.equals(types, interest.types) &&
                 Objects.equals(neighborhoods, interest.neighborhoods) &&
                 Objects.equals(dorms, interest.dorms) &&
                 Objects.equals(suites, interest.suites) &&
@@ -235,7 +234,7 @@ public class Interest {
                 Objects.equals(balcony, interest.balcony) &&
                 Objects.equals(elevator, interest.elevator) &&
                 Objects.equals(barbecueGrill, interest.barbecueGrill) &&
-                Objects.equals(createdAt, interest.createdAt);
+                Objects.equals(barters, interest.barters);
     }
 
     @Override
@@ -251,7 +250,7 @@ public class Interest {
                 .add("value=" + value)
                 .add("financing=" + financing)
                 .add("financingValue=" + financingValue)
-                .add("types=" + types)
+                .add("types=" + Arrays.toString(types))
                 .add("neighborhoods=" + neighborhoods)
                 .add("dorms=" + dorms)
                 .add("suites=" + suites)
@@ -261,7 +260,6 @@ public class Interest {
                 .add("balcony=" + balcony)
                 .add("elevator=" + elevator)
                 .add("barbecueGrill=" + barbecueGrill)
-                .add("createdAt=" + createdAt)
                 .toString();
     }
 }

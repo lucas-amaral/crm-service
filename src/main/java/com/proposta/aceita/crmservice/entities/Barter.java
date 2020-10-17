@@ -3,8 +3,6 @@ package com.proposta.aceita.crmservice.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proposta.aceita.crmservice.entities.enums.BarterType;
 import com.proposta.aceita.crmservice.entities.req.BarterRequestBody;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
-import org.hibernate.annotations.TypeDef;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -18,7 +16,6 @@ import java.util.stream.Collectors;
 import static javax.persistence.GenerationType.*;
 
 @Entity(name = "barters")
-@TypeDef(name = "str-array", typeClass = StringArrayType.class)
 public class Barter {
     @Id
     @GeneratedValue(strategy = IDENTITY)

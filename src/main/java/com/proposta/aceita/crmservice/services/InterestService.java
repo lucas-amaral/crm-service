@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InterestService {
@@ -65,7 +66,8 @@ public class InterestService {
     }
 
     private Interest save(InterestRequestBody body, User user) {
-        var neighborhoods = neighborhoodService.list(body.getNeighborhoodIds());
+        var neighborhoods = CollectionUtils.isEmpty(body.getNeighborhoodIds()) ? null
+                : neighborhoodService.list(body.getNeighborhoodIds());
 
         var interest = interestRepository.save(Interest.of(body, user, neighborhoods));
 
@@ -80,11 +82,15 @@ public class InterestService {
 
     private void updateTypes(InterestRequestBody body, Interest interest) {
         if (!CollectionUtils.isEmpty(body.getTypes())) {
+            var types = body.getTypes() == null ? null : body.getTypes().stream().map(Enum::toString)
+                    .collect(Collectors.toList()).toArray(new String[body.getTypes().size()]);
+
             interestRepository.updateTypes(interest.getId(), body.getStringTypes());
-            interest.setTypes(body.getTypes());
+            interest.setTypes(types);
         }
     }
 
+    @Transactional
     public void delete(Integer id) {
         interestRepository.deleteById(id);
         matchService.deleteInterest(id);

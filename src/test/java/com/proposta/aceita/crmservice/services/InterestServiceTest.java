@@ -133,7 +133,7 @@ class InterestServiceTest {
 
         assertThatExceptionOfType(InterestException.class)
                 .isThrownBy(() -> interestService.create(body))
-                .matches(e -> e.getMessage().equals("User joao@joao.com already have interest: Interest[id=21413, user=User[username='joao@joao.com', name='Joao', dateOfBirth=1978-03-23, type=FISICAL, cpfCnpj='45230929-04', sex=MALE, address=Address[id=null, street=null, number='null', complement='null'], enabled=true, createdAt=null], value=13.43, financing=true, financingValue=null, types=null, neighborhoods=[Neighborhood[id=2, name='Pé de Plátano', city=null]], dorms=2, suites=2, bathrooms=3, garages=null, pool=false, balcony=true, elevator=true, barbecueGrill=true, createdAt=null]"));
+                .matches(e -> e.getMessage().equals("User joao@joao.com already have interest: Interest[id=21413, user=User[username='joao@joao.com', name='Joao', dateOfBirth=1978-03-23, type=FISICAL, cpfCnpj='45230929-04', sex=MALE, address=Address[id=null, street=null, number='null', complement='null'], enabled=true, createdAt=null], value=13.43, financing=true, financingValue=null, types=null, neighborhoods=[Neighborhood[id=2, name='Pé de Plátano', city=null]], dorms=2, suites=2, bathrooms=3, garages=1, pool=false, balcony=true, elevator=true, barbecueGrill=true]"));
 
 
         verify(interestRepository).findByUserUsername(user.getUsername());
