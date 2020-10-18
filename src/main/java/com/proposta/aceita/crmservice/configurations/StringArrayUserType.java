@@ -61,7 +61,7 @@ public class StringArrayUserType implements UserType {
             preparedStatement.setNull(i, SQL_TYPES[0]);
         } else {
             String[] castObject = (String[]) o;
-            Array array = connection.createArrayOf("string", castObject);
+            Array array = connection.createArrayOf("varchar", castObject);
             preparedStatement.setArray(i, array);
         }
     }
