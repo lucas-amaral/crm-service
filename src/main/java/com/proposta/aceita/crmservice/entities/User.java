@@ -43,7 +43,7 @@ public class User {
 
     public User(String username, String password, String name, LocalDate dateOfBirth, UserType type, String cpfCnpj, Sex sex, Address address, boolean enabled) {
         this.username = username;
-        this.password = new BCryptPasswordEncoder().encode(password);
+        this.password = password != null ? new BCryptPasswordEncoder().encode(password) : null;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.type = type;

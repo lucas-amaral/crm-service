@@ -8,8 +8,6 @@ import java.time.LocalDate;
 public interface UserRequestBody {
     String getUsername();
 
-    String getPassword();
-
     String getName();
 
     LocalDate getDateOfBirth();
@@ -21,4 +19,8 @@ public interface UserRequestBody {
     Sex getSex();
 
     AddressRequestBody getAddress();
+
+    default String getPassword() {
+        return null;
+    }
 }
