@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proposta.aceita.crmservice.entities.enums.Sex;
 import com.proposta.aceita.crmservice.entities.enums.UserType;
 import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
+import com.proposta.aceita.crmservice.util.MaskFormatterUtils;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -51,11 +52,11 @@ public class User {
         this.sex = sex;
         this.address = address;
         this.enabled = enabled;
-        }
+    }
 
     public static User of(UserRequestBody body, Address address) {
         return new User(body.getUsername(), body.getPassword(), body.getName(), body.getDateOfBirth(), body.getType(),
-                body.getCpfCnpj(), body.getSex(), address, true);
+                getFormattedCpfCnpj(body.getCpfCnpj(), body.getType()), body.getSex(), address, true);
     }
 
     public String getUsername() {
@@ -137,6 +138,10 @@ public class User {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    private static String getFormattedCpfCnpj(String cpfCnpj, UserType type) {
+        return type.equals(UserType.FISICAL) ? MaskFormatterUtils.toCpf(cpfCnpj) : cpfCnpj;
     }
 
     @Override

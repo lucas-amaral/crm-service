@@ -2,6 +2,7 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Street;
 import com.proposta.aceita.crmservice.repositories.StreetRepository;
+import com.proposta.aceita.crmservice.util.MaskFormatterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,7 @@ public class StreetService {
     }
 
     public Optional<Street> getByZipCode(String zipCode) {
-        return streetRepository.findById(zipCode);
+        return streetRepository.findById(MaskFormatterUtils.toZipCode(zipCode));
     }
 
     public Page<Street> list(Integer neighborhoodId, Integer page, Integer limit) {

@@ -1,5 +1,7 @@
 package com.proposta.aceita.crmservice.entities;
 
+import com.proposta.aceita.crmservice.util.MaskFormatterUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +22,7 @@ public class Street {
     }
 
     public Street(String zipCode, String name, Neighborhood neighborhood) {
-        this.zipCode = zipCode;
+        this.zipCode = MaskFormatterUtils.toZipCode(zipCode);
         this.name = name;
         this.neighborhood = neighborhood;
     }

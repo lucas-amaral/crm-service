@@ -16,7 +16,7 @@ public class StreetController {
         this.streetService = streetService;
     }
 
-    @GetMapping("/{zipCode:\\d{5}-\\d{3}}")
+    @GetMapping("/{zipCode}")
     public ResponseEntity<?> get(@PathVariable String zipCode) {
         return streetService.getByZipCode(zipCode)
                 .map(ResponseEntity::ok)
