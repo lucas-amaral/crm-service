@@ -9,8 +9,8 @@ class MaskFormatterUtilsTest {
 
     @Test
     void toZipCode() {
-        final var zipCodeWithHyphen = "127234-653";
-        final var zipCodeWithoutHyphen = "127234653";
+        final var zipCodeWithHyphen = "12734-653";
+        final var zipCodeWithoutHyphen = "12734653";
 
         assertThat(MaskFormatterUtils.toZipCode(zipCodeWithoutHyphen)).isEqualTo(zipCodeWithHyphen);
     }
