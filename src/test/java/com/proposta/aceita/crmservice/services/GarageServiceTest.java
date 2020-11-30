@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class GarageServiceTest {
@@ -49,12 +49,36 @@ class GarageServiceTest {
     void save() {
 
         var property = new Property();
-        var body = new GarageRequestBody(3, 20, "snajknjkasnsa");
-        var garage = new Garage(3, property, 20, "snajknjkasnsa");
+        var body = new GarageRequestBody(3, 20, "sna23j3knj32ka23sn23sa");
+        var garage = new Garage(3, property, 20, "sna23j3knj32ka23sn23sa");
 
         garageService.save(List.of(body), property);
 
         verify(garageRepository).saveAll(List.of(garage));
+
+        verifyNoMoreInteractions(garageRepository);
+    }
+
+    @Test
+    void saveWhenThereIsGarageToRemove() {
+
+        var property = new Property();
+
+        var body3 = new GarageRequestBody(3, 20, "2012029");
+        var body7 = new GarageRequestBody(null, 21, "sna23j3knj32ka23sn23sa");
+
+        var garage2 = new Garage(2, property, 12, "12092190");
+        var garage3 = new Garage(3, property, 20, "2012029");
+        var garage5 = new Garage(5, property, 39, "2389");
+        var garage7 = new Garage(null, property, 21, "sna23j3knj32ka23sn23sa");
+
+        property.setGarages(List.of(garage2, garage3, garage5));
+
+        garageService.save(List.of(body7, body3), property);
+
+        verify(garageRepository).saveAll(List.of(garage7, garage3));
+        verify(garageRepository).deleteById(2);
+        verify(garageRepository).deleteById(5);
     }
 
     @Test
@@ -62,7 +86,7 @@ class GarageServiceTest {
 
         var id = 23;
 
-        garageService.delete(id);
+        garageService.deleteRemoved(id);
 
         verify(garageRepository).deleteById(id);
     }

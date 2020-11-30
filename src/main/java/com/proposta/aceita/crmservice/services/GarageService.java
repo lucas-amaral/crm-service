@@ -6,10 +6,13 @@ import com.proposta.aceita.crmservice.entities.req.GarageRequestBody;
 import com.proposta.aceita.crmservice.repositories.GarageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GarageService {
@@ -31,12 +34,28 @@ public class GarageService {
 
     @Transactional
     public Optional<List<Garage>> save(List<GarageRequestBody> body, Property property) {
-        return Optional.ofNullable(body)
-                .flatMap(garage -> Optional.ofNullable(property)
+        deleteRemoved(body, property);
+
+        return Optional.of(body)
+                .flatMap(garage -> Optional.of(property)
                         .map(p -> garageRepository.saveAll(Garage.ofList(garage, p))));
     }
 
-    public void delete(Integer id) {
+    private void deleteRemoved(List<GarageRequestBody> body, Property property) {
+        if (!CollectionUtils.isEmpty(property.getGarages())) {
+
+            final var bodyGarageIds = body.stream()
+                    .map(GarageRequestBody::getId)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+
+            property.getGarages().stream()
+                    .filter(garage -> !bodyGarageIds.contains(garage.getId()))
+                    .forEach(garage -> deleteRemoved(garage.getId()));
+        }
+    }
+
+    public void deleteRemoved(Integer id) {
         garageRepository.deleteById(id);
     }
 }
