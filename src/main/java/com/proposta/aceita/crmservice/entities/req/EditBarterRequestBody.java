@@ -11,7 +11,6 @@ import java.util.StringJoiner;
 public class EditBarterRequestBody implements BarterRequestBody{
     @NotNull
     private final Integer id;
-    @NotNull
     private final Integer interestId;
     @NotNull
     private final BarterType type;

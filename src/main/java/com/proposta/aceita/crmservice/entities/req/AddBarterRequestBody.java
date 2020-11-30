@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class AddBarterRequestBody implements BarterRequestBody{
-    @NotNull
     private final Integer interestId;
     @NotNull
     private final BarterType type;
