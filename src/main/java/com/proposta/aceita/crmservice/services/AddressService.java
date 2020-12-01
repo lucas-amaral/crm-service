@@ -14,12 +14,12 @@ import java.util.Optional;
 public class AddressService {
 
     private final AddressRepository addressRepository;
-    private final StreetRepository streetRepository;
+    private final StreetService streetService;
 
     @Autowired
-    public AddressService(AddressRepository addressRepository, StreetRepository streetRepository) {
+    public AddressService(AddressRepository addressRepository, StreetService streetService) {
         this.addressRepository = addressRepository;
-        this.streetRepository = streetRepository;
+        this.streetService = streetService;
     }
 
     public Optional<Address> getById(Integer id) {
@@ -32,7 +32,7 @@ public class AddressService {
 
     public Optional<Address> save(AddressRequestBody body) {
         return Optional.ofNullable(body)
-                .flatMap(address -> streetRepository.findById(address.getStreetId())
+                .flatMap(address -> streetService.getByZipCode(address.getStreetId())
                         .map(street -> addressRepository.save(Address.of(address, street))));
     }
 

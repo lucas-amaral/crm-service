@@ -4,7 +4,6 @@ import com.proposta.aceita.crmservice.entities.Address;
 import com.proposta.aceita.crmservice.entities.Street;
 import com.proposta.aceita.crmservice.entities.req.AddAddressRequestBody;
 import com.proposta.aceita.crmservice.repositories.AddressRepository;
-import com.proposta.aceita.crmservice.repositories.StreetRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,13 +21,13 @@ class AddressServiceTest {
     private AddressRepository addressRepository;
 
     @MockBean
-    private StreetRepository streetRepository;
+    private StreetService streetService;
 
     private AddressService addressService;
 
     @BeforeEach
     void setup() {
-        addressService = new AddressService(addressRepository, streetRepository);
+        addressService = new AddressService(addressRepository, streetService);
     }
     
     @Test
@@ -56,7 +55,7 @@ class AddressServiceTest {
         var body = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
         var address = new Address(null, street, "212", "Não consegue moisés");
 
-        when(streetRepository.findById("95020-320")).thenReturn(Optional.of(street));
+        when(streetService.getByZipCode("95020-320")).thenReturn(Optional.of(street));
 
         addressService.save(body);
 
@@ -68,7 +67,7 @@ class AddressServiceTest {
 
         var body = new AddAddressRequestBody( "95020-320", "212", "Não consegue moisés");
 
-        when(streetRepository.findById("95020-320")).thenReturn(Optional.empty());
+        when(streetService.getByZipCode("95020-320")).thenReturn(Optional.empty());
 
         addressService.save(body);
 
