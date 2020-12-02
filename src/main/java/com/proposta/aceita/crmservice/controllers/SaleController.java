@@ -35,6 +35,13 @@ public class SaleController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/by-user")
+    public ResponseEntity<?> getByUser(@RequestParam("username") String username) {
+        return saleService.getByUser(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<?> post(@Validated @RequestBody AddSaleRequestBody body) {
         return saleService.save(body)
