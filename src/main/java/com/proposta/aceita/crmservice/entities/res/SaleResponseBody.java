@@ -30,6 +30,7 @@ public class SaleResponseBody {
     private final boolean barterProperty;
     private final BigDecimal barterPropertyValue;
 
+    private String description;
     private List<PropertyImage> images;
 
     public SaleResponseBody(@JsonProperty("id") Integer id,
@@ -146,6 +147,14 @@ public class SaleResponseBody {
 
     public BigDecimal getBarterPropertyValue() {
         return barterPropertyValue;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<PropertyImage> getImages() {

@@ -68,9 +68,10 @@ class NegotiationServiceTest {
         verify(interestService).getByUser(username);
         verify(matchService).getNegotiationsByInterest(interestId);
         verify(propertyImageService).get(21);
+        verify(saleService).getById(356);
 
-        verifyNoMoreInteractions(interestService, matchService, propertyImageService);
-        verifyNoInteractions(saleService, barterImageService);
+        verifyNoMoreInteractions(interestService, matchService, propertyImageService, saleService);
+        verifyNoInteractions(barterImageService);
     }
 
     @Test

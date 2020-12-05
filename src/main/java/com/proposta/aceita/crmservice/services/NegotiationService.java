@@ -39,9 +39,10 @@ public class NegotiationService {
             final var negotiations = matchService.getNegotiationsByInterest(interest.getId())
                     .orElse(Collections.emptyList());
 
-            negotiations.forEach(negotiation -> negotiation
-                    .getSale()
-                    .setImages(getPropertyImages(negotiation.getSale())));
+            negotiations.forEach(negotiation -> {
+                negotiation.getSale().setImages(getPropertyImages(negotiation.getSale()));
+                negotiation.getSale().setDescription(getPropertyDescription(negotiation.getSale().getId()));
+            });
 
             return negotiations;
         });
@@ -49,6 +50,10 @@ public class NegotiationService {
 
     private List<PropertyImage> getPropertyImages(SaleResponseBody sale) {
         return propertyImageService.get(sale.getPropertyId()).orElse(Collections.emptyList());
+    }
+
+    private String getPropertyDescription(Integer saleId) {
+        return saleService.getById(saleId).map(sale -> sale.getProperty().getDescription()).orElse(null);
     }
 
     public Optional<List<NegotiationResponseBody>> getForSeller(String username) {
