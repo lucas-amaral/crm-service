@@ -16,6 +16,16 @@ public class NegotiationController {
         this.negotiationService = negotiationService;
     }
 
+    @GetMapping("/sales")
+    public ResponseEntity<?> getBySale(@RequestParam("username") String username) {
+        return ResponseEntity.ok(negotiationService.getForSeller(username));
+    }
+
+    @GetMapping("/interests")
+    public ResponseEntity<?> getByInterest(@RequestParam("username") String username) {
+        return ResponseEntity.ok(negotiationService.getForBuyer(username));
+    }
+
     @GetMapping("/sales/{saleId}")
     public ResponseEntity<?> getBySale(@PathVariable Integer saleId) {
         return ResponseEntity.ok(negotiationService.getBySale(saleId));

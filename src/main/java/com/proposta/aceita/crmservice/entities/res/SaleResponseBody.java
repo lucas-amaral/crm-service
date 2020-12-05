@@ -1,9 +1,11 @@
 package com.proposta.aceita.crmservice.entities.res;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.proposta.aceita.crmservice.entities.PropertyImage;
 import com.proposta.aceita.crmservice.entities.enums.PropertyType;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -27,6 +29,8 @@ public class SaleResponseBody {
     private final BigDecimal barterVehicleValue;
     private final boolean barterProperty;
     private final BigDecimal barterPropertyValue;
+
+    private List<PropertyImage> images;
 
     public SaleResponseBody(@JsonProperty("id") Integer id,
                             @JsonProperty("propertyId") Integer propertyId,
@@ -142,6 +146,14 @@ public class SaleResponseBody {
 
     public BigDecimal getBarterPropertyValue() {
         return barterPropertyValue;
+    }
+
+    public List<PropertyImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PropertyImage> images) {
+        this.images = images;
     }
 
     @Override
