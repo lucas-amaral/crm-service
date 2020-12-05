@@ -39,10 +39,9 @@ public class NegotiationService {
             final var negotiations = matchService.getNegotiationsByInterest(interest.getId())
                     .orElse(Collections.emptyList());
 
-            negotiations.forEach(negotiation -> {
-                negotiation.getSale().setImages(getPropertyImages(negotiation.getSale()));
-                negotiation.getSale().setDescription(getPropertyDescription(negotiation.getSale().getId()));
-            });
+            negotiations.forEach(negotiation -> negotiation
+                    .getSale()
+                    .setImages(getPropertyImages(negotiation.getSale())));
 
             return negotiations;
         });
@@ -52,19 +51,15 @@ public class NegotiationService {
         return propertyImageService.get(sale.getPropertyId()).orElse(Collections.emptyList());
     }
 
-    private String getPropertyDescription(Integer saleId) {
-        return saleService.getById(saleId).map(sale -> sale.getProperty().getDescription()).orElse(null);
-    }
-
     public Optional<List<NegotiationResponseBody>> getForSeller(String username) {
         return saleService.getByUser(username).map(sales -> sales.stream().map(sale -> {
             final var negotiations = matchService.getNegotiationsBySale(sale.getId())
                     .orElse(Collections.emptyList());
 
-            negotiations.forEach(negotiation -> negotiation
-                    .getInterest()
-                    .getBarters()
-                    .forEach(this::setBarterImages));
+            negotiations.forEach(negotiation -> {
+                negotiation.getInterest().getBarters().forEach(this::setBarterImages);
+                negotiation.getSale().setDescription(sale.getProperty().getDescription());
+            });
 
             return negotiations;
         }).flatMap(Collection::stream).collect(Collectors.toList()));
