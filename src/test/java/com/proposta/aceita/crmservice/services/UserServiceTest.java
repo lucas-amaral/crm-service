@@ -5,6 +5,7 @@ import com.proposta.aceita.crmservice.entities.Authority;
 import com.proposta.aceita.crmservice.entities.User;
 import com.proposta.aceita.crmservice.entities.req.AddAddressRequestBody;
 import com.proposta.aceita.crmservice.entities.req.AddUserRequestBody;
+import com.proposta.aceita.crmservice.exceptions.UserException;
 import com.proposta.aceita.crmservice.repositories.AuthorityRepository;
 import com.proposta.aceita.crmservice.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import static com.proposta.aceita.crmservice.entities.enums.Authority.USER;
 import static com.proposta.aceita.crmservice.entities.enums.Sex.MALE;
 import static com.proposta.aceita.crmservice.entities.enums.UserType.FISICAL;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -59,7 +61,7 @@ class UserServiceTest {
     }
 
     @Test
-    void saveFirstTime() {
+    void create() {
 
         var username = "joao@gmail.com";
 
@@ -75,7 +77,7 @@ class UserServiceTest {
         when(addressService.save(addressBody)).thenReturn(Optional.of(address));
         when(userRepository.save(user)).thenReturn(user);
 
-        userService.save(body);
+        userService.create(body);
 
         verify(userRepository).save(user);
 
@@ -83,7 +85,32 @@ class UserServiceTest {
     }
 
     @Test
-    void saveWithUpdate() {
+    void createShouldThrowExceptionIfUsernameAlreadyExist() {
+
+        var username = "joao@gmail.com";
+
+        var addressBody = new AddAddressRequestBody("95020-320", "212", "Não consegue moisés");
+        var address = new Address(null, null, "212", "Não consegue moisés");
+
+        var body = new AddUserRequestBody(username, "1234", "João", LocalDate.of(1979, 3, 24),
+                FISICAL, "452309129-04", MALE, addressBody);
+        var user = new User(username, "1234", "João", LocalDate.of(1979, 3, 24),
+                FISICAL, "452.309.129-04", MALE, address, true);
+
+        when(userRepository.findById(username)).thenReturn(Optional.of(user));
+
+        assertThatExceptionOfType(UserException.class)
+                .isThrownBy(() -> userService.create(body))
+                .matches(e -> e.getMessage().equals("User joao@gmail.com already exist"));
+
+        verify(userRepository).findById(username);
+
+        verifyNoMoreInteractions(userRepository);
+        verifyNoInteractions(authorityRepository, addressService);
+    }
+
+    @Test
+    void update() {
 
         var username = "joao@gmail.com";
 

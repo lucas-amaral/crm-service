@@ -2,7 +2,9 @@ package com.proposta.aceita.crmservice.services;
 
 import com.proposta.aceita.crmservice.entities.Authority;
 import com.proposta.aceita.crmservice.entities.User;
+import com.proposta.aceita.crmservice.entities.req.AddUserRequestBody;
 import com.proposta.aceita.crmservice.entities.req.UserRequestBody;
+import com.proposta.aceita.crmservice.exceptions.UserException;
 import com.proposta.aceita.crmservice.repositories.AuthorityRepository;
 import com.proposta.aceita.crmservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,15 @@ public class UserService {
 
     public List<User> list() {
         return userRepository.findAll();
+    }
+
+    @Transactional
+    public Optional<User> create(AddUserRequestBody body) {
+        getById(body.getUsername()).ifPresent(user -> {
+            throw new UserException(String.format("User %s already exist", body.getUsername()));
+        });
+
+        return save(body);
     }
 
     @Transactional

@@ -35,7 +35,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> post(@Validated @RequestBody AddUserRequestBody body) {
-        return userService.save(body)
+        return userService.create(body)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
     }
