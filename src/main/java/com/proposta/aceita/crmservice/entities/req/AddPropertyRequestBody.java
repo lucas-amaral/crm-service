@@ -19,10 +19,10 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
     @NotNull
     private final PropertyType type;
     private final BigDecimal area;
-    private final Integer registration;
+    private final String registration;
     @NotNull
     private final AddressRequestBody address;
-    private final Integer iptu;
+    private final String iptu;
     private final Integer dorms;
     private final Integer suites;
     private final Integer bathrooms;
@@ -37,9 +37,9 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
                                   @JsonProperty("description") String description,
                                   @JsonProperty("type") PropertyType type,
                                   @JsonProperty("area") BigDecimal area,
-                                  @JsonProperty("registration") Integer registration,
+                                  @JsonProperty("registration") String registration,
                                   @JsonProperty("address") AddAddressRequestBody address,
-                                  @JsonProperty("iptu") Integer iptu,
+                                  @JsonProperty("iptu") String iptu,
                                   @JsonProperty("dorms") Integer dorms,
                                   @JsonProperty("suites") Integer suites,
                                   @JsonProperty("bathrooms") Integer bathrooms,
@@ -87,7 +87,7 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
         return area;
     }
 
-    public Integer getRegistration() {
+    public String getRegistration() {
         return registration;
     }
 
@@ -95,7 +95,7 @@ public class AddPropertyRequestBody implements PropertyRequestBody{
         return address;
     }
 
-    public Integer getIptu() {
+    public String getIptu() {
         return iptu;
     }
 

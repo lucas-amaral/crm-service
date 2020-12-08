@@ -17,11 +17,11 @@ public interface PropertyRequestBody {
 
     BigDecimal getArea();
 
-    Integer getRegistration();
+    String getRegistration();
 
     AddressRequestBody getAddress();
 
-    Integer getIptu();
+    String getIptu();
 
     Integer getDorms();
 

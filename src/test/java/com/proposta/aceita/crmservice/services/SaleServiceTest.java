@@ -63,8 +63,8 @@ public class SaleServiceTest {
     void getByUser() {
 
         var username = "joao@gmail.com";
-        var property1 = new Property(1, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
-        var property2 = new Property(2, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
+        var property1 = new Property(1, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), "232", null, "23423422", 3, 2, 2, true, true, true, false, null, true);
+        var property2 = new Property(2, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), "232", null, "23423422", 3, 2, 2, true, true, true, false, null, true);
 
         when(propertyService.getByUser(username)).thenReturn(List.of(property1, property2));
 
@@ -100,7 +100,7 @@ public class SaleServiceTest {
 
         var body = new AddSaleRequestBody(propertyId, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
-        var property = new Property(propertyId, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
+        var property = new Property(propertyId, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), "232", null, "23423422", 3, 2, 2, true, true, true, false, null, true);
         var sale = new Sale(356, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
         var saleWithoutId = new Sale(null, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
@@ -119,7 +119,7 @@ public class SaleServiceTest {
 
         var body = new EditSaleRequestBody(356, 234, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
-        var property = new Property(234, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
+        var property = new Property(234, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), "232", null, "23423422", 3, 2, 2, true, true, true, false, null, true);
         var sale = new Sale(356, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
         when(propertyService.getById(234)).thenReturn(Optional.of(property));
@@ -150,7 +150,7 @@ public class SaleServiceTest {
 
         var body = new AddSaleRequestBody(propertyId, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
-        var property = new Property(propertyId, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
+        var property = new Property(propertyId, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), "232", null, "23423422", 3, 2, 2, true, true, true, false, null, true);
         var sale = new Sale(356, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
         when(propertyService.getById(propertyId)).thenReturn(Optional.of(property));

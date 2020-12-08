@@ -29,10 +29,10 @@ public class Property {
     @Enumerated(STRING)
     private PropertyType type;
     private BigDecimal area;
-    private Integer registration;
+    private String registration;
     @ManyToOne(cascade = ALL)
     private Address address;
-    private Integer iptu;
+    private String iptu;
     private Integer dorms;
     private Integer suites;
     private Integer bathrooms;
@@ -51,7 +51,7 @@ public class Property {
     }
 
     public Property(Integer id, User user, String description, PropertyType type, BigDecimal area,
-                               Integer registration, Address address, Integer iptu, Integer dorms, Integer suites,
+                               String registration, Address address, String iptu, Integer dorms, Integer suites,
                                Integer bathrooms, Boolean pool, Boolean balcony, Boolean elevator, Boolean barbecueGrill,
                                List<Garage> garages, Boolean enable) {
         this.id = id;
@@ -120,11 +120,11 @@ public class Property {
         this.area = area;
     }
 
-    public Integer getRegistration() {
+    public String getRegistration() {
         return registration;
     }
 
-    public void setRegistration(Integer registration) {
+    public void setRegistration(String registration) {
         this.registration = registration;
     }
 
@@ -136,11 +136,11 @@ public class Property {
         this.address = address;
     }
 
-    public Integer getIptu() {
+    public String getIptu() {
         return iptu;
     }
 
-    public void setIptu(Integer iptu) {
+    public void setIptu(String iptu) {
         this.iptu = iptu;
     }
 

@@ -40,9 +40,9 @@ class PropertyRepositoryTest {
                 FISICAL, "45230929-04", MALE, address, true);
 
 
-        var property43 = new Property(43, user, "Casa bacana", HOUSE, BigDecimal.valueOf(3423.23), 13133, null, 12414,
+        var property43 = new Property(43, user, "Casa bacana", HOUSE, BigDecimal.valueOf(3423.23), "13133", null, "12414",
                 2, 3, 1, false, false, false, true, null, true);
-        var property76 = new Property(76, user, "Apartamento centro", APARTMENT, BigDecimal.valueOf(267.14), 14536, null, 1432,
+        var property76 = new Property(76, user, "Apartamento centro", APARTMENT, BigDecimal.valueOf(267.14), "14536", null, "1432",
                 3, 0, 2,true, false, true, true, null, true);
 
         assertThat(propertyRepository.findByUserUsername("joao@joao.com")).containsOnly(property43, property76);

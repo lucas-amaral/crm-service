@@ -1,0 +1,2 @@
+ALTER TABLE properties ALTER COLUMN iptu TYPE TEXT;
+ALTER TABLE properties ALTER COLUMN registration TYPE TEXT;

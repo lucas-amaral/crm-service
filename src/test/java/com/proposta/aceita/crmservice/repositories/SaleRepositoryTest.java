@@ -36,7 +36,7 @@ class SaleRepositoryTest {
         var address = new Address(1, street, "43", "Apartamento 23");
         var user = new User("joao@joao.com", "1234","Joao", LocalDate.of(1978, 3, 23),
                  FISICAL, "45230929-04", MALE, address, true);
-        var property43 = new Property(43, user, "Casa bacana", HOUSE, BigDecimal.valueOf(3423.23), 13133, null, 12414,
+        var property43 = new Property(43, user, "Casa bacana", HOUSE, BigDecimal.valueOf(3423.23), "13133", null, "12414",
                 2, 3, 1, false, false, false, true, null, true);
 
         var sale2231 = new Sale(2131, property43, BigDecimal.valueOf(230.35), true, BigDecimal.valueOf(10000, 2), false, null, false, null, null);

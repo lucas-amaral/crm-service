@@ -11,11 +11,9 @@ import java.util.StringJoiner;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EditAddressRequestBody implements AddressRequestBody {
-    @NotNull
     private Integer id;
-    @Pattern(regexp = "\\d{5}-\\d{3}")
     private String streetId;
-    @NotEmpty
+        @NotEmpty
     private String number;
     private String complement;
 

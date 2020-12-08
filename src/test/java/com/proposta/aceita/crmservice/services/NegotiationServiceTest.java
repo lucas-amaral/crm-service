@@ -78,7 +78,7 @@ class NegotiationServiceTest {
         var username = "joao@joao.com";
         var saleId = 356;
 
-        var property = new Property(21, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), 232, null, 23423422, 3, 2, 2, true, true, true, false, null, true);
+        var property = new Property(21, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), "232", null, "23423422", 3, 2, 2, true, true, true, false, null, true);
         var sale = new Sale(saleId, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
         var barter = new BarterResponseBody(213, BarterType.VEHICLE, BigDecimal.TEN);
