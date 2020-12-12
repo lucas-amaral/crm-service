@@ -1,8 +1,6 @@
 package com.proposta.aceita.crmservice.services;
 
-import com.proposta.aceita.crmservice.entities.Interest;
-import com.proposta.aceita.crmservice.entities.Property;
-import com.proposta.aceita.crmservice.entities.Sale;
+import com.proposta.aceita.crmservice.entities.*;
 import com.proposta.aceita.crmservice.entities.enums.BarterType;
 import com.proposta.aceita.crmservice.entities.res.BarterResponseBody;
 import com.proposta.aceita.crmservice.entities.res.InterestResponseBody;
@@ -54,6 +52,10 @@ class NegotiationServiceTest {
         var interestId = 214;
 
         var interest = new Interest(interestId, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        var street = new Street("97110-564", "Rua A Quatro (Vl Almeida)", new Neighborhood());
+        var address = new Address(1, street, "403B", "Ap 203");
+        var property = new Property(21, null, "Descricao", APARTMENT, BigDecimal.valueOf(2133), "232", address, "23423422", 3, 2, 2, true, true, true, false, null, true);
+        var sale = new Sale(356, property, BigDecimal.valueOf(214.55), true, BigDecimal.valueOf(100), false, null, false, null, LocalDate.of(2020, 10, 20));
 
         var interestBody = new InterestResponseBody(321, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         var saleBody = new SaleResponseBody(356, 21, null, null, null, null, null, null, false, false, true, true, null, false, null, false, null, false, null);
@@ -62,15 +64,17 @@ class NegotiationServiceTest {
 
         when(interestService.getByUser(username)).thenReturn(Optional.of(interest));
         when(matchService.getNegotiationsByInterest(interestId)).thenReturn(Optional.of(List.of(negotiation)));
+        when(saleService.getById(356)).thenReturn(Optional.of(sale));
 
         negotiationService.getForBuyer(username);
 
         verify(interestService).getByUser(username);
         verify(matchService).getNegotiationsByInterest(interestId);
         verify(propertyImageService).get(21);
+        verify(saleService).getById(356);
 
-        verifyNoMoreInteractions(interestService, matchService, propertyImageService);
-        verifyNoInteractions(saleService, barterImageService);
+        verifyNoMoreInteractions(interestService, matchService, propertyImageService, saleService);
+        verifyNoInteractions(barterImageService);
     }
 
     @Test

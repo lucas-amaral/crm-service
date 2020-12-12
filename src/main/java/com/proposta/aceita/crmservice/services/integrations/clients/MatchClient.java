@@ -27,7 +27,7 @@ public interface MatchClient {
     @GetMapping("/negotiations/sales/{saleId}")
     Optional<List<NegotiationResponseBody>> getNegotiationsBySale(@RequestHeader("Authorization") String authHeader, @PathVariable Integer saleId);
 
-    @GetMapping("/negotiations/interest/{interestId}")
+    @GetMapping("/negotiations/interests/{interestId}")
     Optional<List<NegotiationResponseBody>> getNegotiationsByInterest(@RequestHeader("Authorization") String authHeader, @PathVariable Integer interestId);
 
     @PutMapping("/negotiations/{negotiationId}/approved-by-seller")

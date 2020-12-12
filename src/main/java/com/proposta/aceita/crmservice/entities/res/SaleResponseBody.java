@@ -31,6 +31,9 @@ public class SaleResponseBody {
     private final BigDecimal barterPropertyValue;
 
     private String description;
+    private BigDecimal area;
+    private String streetName;
+
     private List<PropertyImage> images;
 
     public SaleResponseBody(@JsonProperty("id") Integer id,
@@ -155,6 +158,22 @@ public class SaleResponseBody {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public BigDecimal getArea() {
+        return area;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     public List<PropertyImage> getImages() {

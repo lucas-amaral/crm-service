@@ -1,6 +1,8 @@
 package com.proposta.aceita.crmservice.services;
 
+import com.proposta.aceita.crmservice.entities.Property;
 import com.proposta.aceita.crmservice.entities.PropertyImage;
+import com.proposta.aceita.crmservice.entities.Sale;
 import com.proposta.aceita.crmservice.entities.res.BarterResponseBody;
 import com.proposta.aceita.crmservice.entities.res.NegotiationResponseBody;
 import com.proposta.aceita.crmservice.entities.res.SaleResponseBody;
@@ -39,9 +41,14 @@ public class NegotiationService {
             final var negotiations = matchService.getNegotiationsByInterest(interest.getId())
                     .orElse(Collections.emptyList());
 
-            negotiations.forEach(negotiation -> negotiation
-                    .getSale()
-                    .setImages(getPropertyImages(negotiation.getSale())));
+            negotiations.forEach(negotiation -> {
+                final var property = getProperty(negotiation.getSale().getId());
+
+                negotiation.getSale().setImages(getPropertyImages(negotiation.getSale()));
+                negotiation.getSale().setDescription(property.getDescription());
+                negotiation.getSale().setArea(property.getArea());
+                negotiation.getSale().setStreetName(property.getAddress().getStreet().getName());
+            });
 
             return negotiations;
         });
@@ -49,6 +56,10 @@ public class NegotiationService {
 
     private List<PropertyImage> getPropertyImages(SaleResponseBody sale) {
         return propertyImageService.get(sale.getPropertyId()).orElse(Collections.emptyList());
+    }
+
+    private Property getProperty(Integer saleId) {
+        return saleService.getById(saleId).map(Sale::getProperty).orElse(new Property());
     }
 
     public Optional<List<NegotiationResponseBody>> getForSeller(String username) {
