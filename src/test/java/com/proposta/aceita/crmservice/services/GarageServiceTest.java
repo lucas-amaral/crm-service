@@ -55,14 +55,12 @@ class GarageServiceTest {
         garageService.save(List.of(body), property);
 
         verify(garageRepository).saveAll(List.of(garage));
-
-        verifyNoMoreInteractions(garageRepository);
     }
 
     @Test
     void saveWhenThereIsGarageToRemove() {
 
-        var property = new Property();
+        var property = new Property(1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         var body3 = new GarageRequestBody(3, 20, "2012029");
         var body7 = new GarageRequestBody(null, 21, "sna23j3knj32ka23sn23sa");
@@ -72,7 +70,7 @@ class GarageServiceTest {
         var garage5 = new Garage(5, property, 39, "2389");
         var garage7 = new Garage(null, property, 21, "sna23j3knj32ka23sn23sa");
 
-        property.setGarages(List.of(garage2, garage3, garage5));
+        when(garageRepository.findByPropertyId(property.getId())).thenReturn(List.of(garage2, garage3, garage5));
 
         garageService.save(List.of(body7, body3), property);
 

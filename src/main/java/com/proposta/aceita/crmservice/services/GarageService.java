@@ -34,22 +34,24 @@ public class GarageService {
 
     @Transactional
     public Optional<List<Garage>> save(List<GarageRequestBody> body, Property property) {
-        deleteRemoved(body, property);
+        deleteRemoved(body, property.getId());
 
         return Optional.of(body)
                 .flatMap(garage -> Optional.of(property)
                         .map(p -> garageRepository.saveAll(Garage.ofList(garage, p))));
     }
 
-    private void deleteRemoved(List<GarageRequestBody> body, Property property) {
-        if (!CollectionUtils.isEmpty(property.getGarages())) {
+    private void deleteRemoved(List<GarageRequestBody> body, Integer propertyId) {
+        final var propertyGarages = garageRepository.findByPropertyId(propertyId);
+
+        if (!CollectionUtils.isEmpty(propertyGarages)) {
 
             final var bodyGarageIds = body.stream()
                     .map(GarageRequestBody::getId)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
-            property.getGarages().stream()
+            propertyGarages.stream()
                     .filter(garage -> !bodyGarageIds.contains(garage.getId()))
                     .forEach(garage -> deleteRemoved(garage.getId()));
         }
