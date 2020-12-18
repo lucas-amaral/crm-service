@@ -1,0 +1,1 @@
+ALTER TABLE interests ALTER COLUMN types type TEXT ARRAY;

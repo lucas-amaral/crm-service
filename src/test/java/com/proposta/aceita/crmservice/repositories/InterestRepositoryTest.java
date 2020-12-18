@@ -110,7 +110,7 @@ class InterestRepositoryTest {
             "INSERT INTO interest_neighborhoods (interest_id, neighborhood_id) VALUES (1, 1)"
     })
     void updateTypes() {
-        interestRepository.updateTypes(1, "HOUSE");
+        interestRepository.updateTypes(1, List.of("HOUSE"));
 
         assertThat(interestRepository.findById(1))
                 .isPresent()

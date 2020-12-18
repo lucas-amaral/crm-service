@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 public interface InterestRepository extends JpaRepository<Interest, Integer> {
@@ -15,5 +16,5 @@ public interface InterestRepository extends JpaRepository<Interest, Integer> {
     @Transactional
     @Modifying
     @Query(value = "UPDATE interests i SET types = ARRAY[:types] WHERE id = :id", nativeQuery = true)
-    void updateTypes(@Param("id") Integer id, @Param("types") String types);
+    void updateTypes(@Param("id") Integer id, @Param("types") List<String> types);
 }

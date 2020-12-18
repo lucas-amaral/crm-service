@@ -7,6 +7,7 @@ import org.springframework.util.CollectionUtils;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -133,9 +134,9 @@ public class EditInterestRequestBody implements InterestRequestBody{
         return barters;
     }
 
-    public String getStringTypes() {
-        return CollectionUtils.isEmpty(types) ? null
-                : types.stream().map(type -> PropertyType.toString(type)).collect(Collectors.joining(", "));
+    public List<String> getStringTypes() {
+        return CollectionUtils.isEmpty(types) ? Collections.emptyList()
+                : types.stream().map(Enum::name).collect(Collectors.toList());
     }
 
     @Override

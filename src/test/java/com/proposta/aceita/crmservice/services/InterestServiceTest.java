@@ -165,7 +165,7 @@ class InterestServiceTest {
         var expected = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, null, List.of(neighborhood), 3, 1, 3, 1, false, true, true, true);
 
         verify(interestRepository).save(expected);
-        verify(interestRepository).updateTypes(234, "'HOUSE', 'APARTMENT'");
+        verify(interestRepository).updateTypes(234, List.of("HOUSE", "APARTMENT"));
         verify(matchService).saveInterest(interest);
     }
 
@@ -190,7 +190,7 @@ class InterestServiceTest {
         var expected = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, null, Collections.emptyList(), 3, 1, 3, 1, false, true, true, true);
 
         verify(interestRepository).save(expected);
-        verify(interestRepository).updateTypes(234, "'HOUSE', 'APARTMENT'");
+        verify(interestRepository).updateTypes(234, List.of("HOUSE", "APARTMENT"));
     }
 
     @Test
@@ -228,7 +228,7 @@ class InterestServiceTest {
         var expected = new Interest(234, user, BigDecimal.valueOf(121323,2), false, null, null, List.of(neighborhood), 3, 1, 3, 1, false, true, true, true);
 
         verify(interestRepository).save(expected);
-        verify(interestRepository).updateTypes(234, "'HOUSE', 'APARTMENT'");
+        verify(interestRepository).updateTypes(234, List.of("HOUSE", "APARTMENT"));
     }
 
     @Test

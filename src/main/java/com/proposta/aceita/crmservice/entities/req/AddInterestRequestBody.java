@@ -127,9 +127,9 @@ public class AddInterestRequestBody implements InterestRequestBody{
         return barters;
     }
 
-    public String getStringTypes() {
-        return CollectionUtils.isEmpty(types) ? null
-                : types.stream().map(type -> PropertyType.toString(type)).collect(Collectors.joining(", "));
+    public List<String> getStringTypes() {
+        return CollectionUtils.isEmpty(types) ? Collections.emptyList()
+                : types.stream().map(Enum::name).collect(Collectors.toList());
     }
 
     @Override

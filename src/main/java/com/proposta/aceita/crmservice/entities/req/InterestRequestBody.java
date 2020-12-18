@@ -38,5 +38,5 @@ public interface InterestRequestBody {
 
     List<? extends BarterRequestBody> getBarters();
 
-    String getStringTypes();
+    List<String> getStringTypes();
 }
